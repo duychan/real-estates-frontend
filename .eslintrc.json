@@ -1,23 +1,25 @@
 {
-	"root": true,
-	"ignorePatterns": ["build/", "lib/"],
-	"env": {
-		"node": true,
-		"browser": true
-	},
-	"parser": "@typescript-eslint/parser",
-	"plugins": ["@typescript-eslint"],
-	"extends": [
-		"eslint:recommended",
-		"plugin:@typescript-eslint/eslint-recommended",
-		"plugin:@typescript-eslint/recommended",
-		"plugin:react/recommended",
-		"plugin:react-hooks/recommended",
-		"prettier"
-	],
-	"rules": {
-		"@typescript-eslint/no-unused-vars": "off",
-		"@typescript-eslint/no-explicit-any": "warn",
-		"@typescript-eslint/no-var-requires": "off"
-	}
+    "root": true,
+    "ignorePatterns": ["build/", "lib/"],
+    "env": {
+        "node": true,
+        "browser": true
+    },
+    "parser": "@typescript-eslint/parser",
+    "plugins": ["@typescript-eslint"],
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:react/recommended",
+        "plugin:react-hooks/recommended",
+        "prettier"
+    ],
+    "rules": {
+        "@typescript-eslint/no-unused-vars": "off",
+        "@typescript-eslint/ban-ts-comment": "off",
+        "@typescript-eslint/no-empty-function": "off",
+        "@typescript-eslint/no-explicit-any": "warn",
+        "@typescript-eslint/no-var-requires": "off"
+    }
 }
