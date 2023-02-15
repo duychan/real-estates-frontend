@@ -27,10 +27,10 @@ const Footer: React.FC = () => {
             <div className="col footer-logo">
                 <img src={logo} className="footer-logo__css" alt="logo" />
                 <div className="footer-from">
-                    <div>Phone: 094 346 99 46</div>
+                    <div>Phone: +1 516-900-4080</div>
                     <div>
-                        Address: 9th floor, Duong Viet Building, 30 Nguyen Huu
-                        Tho Street, Hai Chau District, Da Nang City
+                        Address: 32-34 Nguyễn Bá Học, Bình Thuận, Hải Châu, Đà
+                        Nẵng
                     </div>
                 </div>
             </div>

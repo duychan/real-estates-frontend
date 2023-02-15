@@ -1,0 +1,76 @@
+.product-card {
+    width: 100%;
+    padding-top: 25px;
+}
+
+.single-card {
+    background: var(--cardBG);
+    -webkit-box-shadow: 0 2px 4px var(--box-shadColor2);
+    box-shadow: 0 2px 4px var(--box-shadColor2);
+}
+
+h3 {
+    font-size: var(--font-sz3);
+    margin-top: -10px;
+}
+h4 {
+    font-weight: 400;
+    margin-top: -10px;
+}
+.icon-address {
+    margin-right: 5px;
+    font-size: var(--font-sz3);
+}
+.single-card:hover {
+    background: var(--cardHover);
+    -webkit-box-shadow: 1 4px 4px var(--box-shadColor1);
+    box-shadow: 1 4px 4px var(--box-shadColor1);
+}
+
+.title {
+    color: var(--blackColor);
+    font-size: var(--font-sz5);
+    text-align: center;
+}
+
+.product-fees {
+    border-top: 1.5px solid var(--greyText);
+    border-bottom: 1.5px solid var(--greyText);
+    display: flex;
+    justify-content: space-between;
+}
+
+.product-type {
+    display: inline;
+    font-size: var(--font-sz2);
+    font-weight: 700;
+    color: var(--textColor);
+}
+
+.product-price {
+    font-size: var(--font-sz4);
+    font-weight: bold;
+    padding-top: 11px;
+    color: var(--blackColor);
+}
+
+.product-sub {
+    padding-top: 11px;
+    font-size: var(--font-sz1);
+    display: flex;
+    justify-content: space-between;
+}
+
+.view-more {
+    text-align: center;
+    padding: 10px;
+}
+.view-more :hover {
+    cursor: pointer;
+}
+.btn {
+    color: var(--white-color);
+    background-color: var(--bg1-color);
+    border: none;
+    padding: 5px 15px;
+}
