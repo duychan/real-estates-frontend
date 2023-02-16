@@ -1,12 +1,12 @@
 import React from "react";
 import "./App.css";
 import Footer from "./components/pageLayout/footer/footer";
+import Search from "./components/seach/search";
 function App() {
     return (
         <div>
-            <div className="App-footer">
-                <Footer />
-            </div>
+            <Search />
+            <Footer /> 
         </div>
     );
 }
