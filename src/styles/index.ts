@@ -1,3 +1,2 @@
 // @ts-ignore
-function helloWorld(): void {}
-helloWorld();
+console.log("aa");
