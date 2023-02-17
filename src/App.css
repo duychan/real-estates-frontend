@@ -26,7 +26,9 @@
     --cardHover: rgb(255, 255, 255);
     --box-shadColor1: rgba(85, 85, 114, 0.549);
     --box-shadColor2: rgba(140, 140, 141, 0.549);
+    --item-selected: #1e382c;
 }
+
 .App {
     text-align: center;
 }
@@ -52,12 +54,14 @@
     font-size: calc(10px + 2vmin);
     color: white;
 }
+
 .App-footer {
     font-size: 62.5%;
     line-height: 1.6em;
     font-family: var(--font-fa1);
     text-align: left;
 }
+
 .App-link {
     color: var(--blue1--color);
 }
@@ -66,6 +70,7 @@
     from {
         transform: rotate(0deg);
     }
+
     to {
         transform: rotate(360deg);
     }
