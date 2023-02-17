@@ -2,6 +2,10 @@
     --white-color: white;
     --blue1--color: #61dafb;
     --font-sz1: 0.9rem;
+    --font-sz2: 1.2em;
+    --font-sz3: 1.5em;
+    --font-sz4: 1.5rem;
+    --font-sz5: 1.25 rem;
     --silver-color: #666;
     --font-fa1: "Roboto", sans-serif;
     --bg1-color: #37624f;
@@ -19,6 +23,9 @@
     --inputColor: rgb(239, 239, 239);
     --bodyColor: rgb(240, 240, 246);
     --cardBG: rgb(225, 225, 235);
+    --cardHover: rgb(255, 255, 255);
+    --box-shadColor1: rgba(85, 85, 114, 0.549);
+    --box-shadColor2: rgba(140, 140, 141, 0.549);
 }
 .App {
     text-align: center;

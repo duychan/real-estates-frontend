@@ -7,13 +7,8 @@ import {
     ProfileOutlined,
     ToolOutlined
 } from "@ant-design/icons";
-import Aos from "aos";
-import "aos/dist/aos.css";
 import img1 from "../../assets/images/img2.avif";
 const Search: React.FC = () => {
-    useEffect(() => {
-        Aos.init({ duration: 1800 });
-    }, []);
     return (
         <div className="search">
             <div className="image">
@@ -26,7 +21,7 @@ const Search: React.FC = () => {
             <div className="search-content container">
                 <div className="text-div">
                     <h1 data-aos="fade-up" className="search-title">
-                        Wellcome to Ricci&Co!
+                        Wellcome to Code Engine Studio!
                     </h1>
                 </div>
 
