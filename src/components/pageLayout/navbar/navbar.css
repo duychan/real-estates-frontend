@@ -1,0 +1,54 @@
+.nav {
+	width: 100%;
+	margin: 0 auto;
+}
+
+.header-logo {
+	width: 120px;
+}
+
+.dropdown {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.dropdown p {
+	margin: 0 auto;
+	padding-right: 10px;
+}
+
+.link {
+	background-color: var(--bg1-color);
+	padding: 5px;
+	font-size: 20px;
+	color: var(--white-color);
+}
+
+.col-menu {
+	margin: auto 0;
+	padding-left: 50px;
+}
+
+.col-menu .menu {
+	border-bottom: 0px;
+}
+
+.col-menu .menu .facebook-link {
+	padding-right: 0px;
+}
+
+.ant-menu-light.ant-menu-horizontal>.ant-menu-item::after,
+.ant-menu-overflow-item.ant-menu-item::after,
+.ant-menu-overflow-item.ant-menu-item.ant-menu-item-active::after,
+.ant-menu-overflow-item.ant-menu-item.ant-menu-item-selected::after,
+.ant-menu-overflow-item.ant-menu-submenu.ant-menu-submenu-horizontal.ant-menu-submenu-active::after,
+.ant-menu-light.ant-menu-horizontal>.ant-menu-submenu::after {
+	border-bottom: 0px;
+}
+
+.ant-menu-overflow-item.ant-menu-item.ant-menu-item-selected,
+.ant-menu-light .ant-menu-submenu-selected>.ant-menu-submenu-title {
+	color: var(--item-selected);
+	font-weight: 500;
+}
