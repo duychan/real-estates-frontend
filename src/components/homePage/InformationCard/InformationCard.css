@@ -1,0 +1,57 @@
+.info-card {
+    width: 80%;
+    height: 100%;
+    margin: 100px auto;
+    padding: 10px;
+}
+
+.info-card .row {
+    margin: 20px auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.info-card .row .info-image {
+    width: 50%;
+    height: 100%;
+}
+
+.info-card .detail-info {
+    padding: 0px 20px;
+}
+
+.info-card .detail-info p {
+    text-align: left;
+    font-style: var(--font-fa1);
+    font-size: var(--font-sz7);
+}
+
+.info-card .detail-info .title {
+    font-weight: var(--font-w1);
+    font-size: var(--font-sz6);
+}
+
+.info-card .detail-info .detail1 {
+    font-size: var(--font-sz8);
+}
+
+.ant-btn {
+    background-color: var(--bg1-color);
+    color: var(--white-color);
+    border: none;
+    border-radius: 0px;
+}
+
+.ant-btn > span:hover,
+.ant-btn.ant-btn-default:hover {
+    color: var(--white-color);
+}
+
+.row-view-btn {
+    margin: 30px auto;
+}
+
+.row-view-btn .view-btn {
+    width: 150px;
+}
