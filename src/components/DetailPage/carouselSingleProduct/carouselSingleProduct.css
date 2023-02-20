@@ -1,0 +1,13 @@
+.carousel-product {
+    width: 70%;
+    margin: 0 auto;
+}
+.list-img {
+    padding-top: 10px;
+    display: flex;
+    justify-content: center;
+}
+.list-img .ant-image-img {
+    padding-right: 5px;
+    width: 200px;
+}
