@@ -1,13 +1,17 @@
 import React from "react";
 import "./App.css";
-import { AreaCard } from "./components/homePage/AreaCard/AreaCard";
-import { InformationCard } from "./components/homePage/InformationCard/InformationCard";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Register from "./page/Register/Register";
 function App() {
     return (
-        <div>
-            <AreaCard width="500px" />
-            <InformationCard />
-        </div>
+        <BrowserRouter>
+            <Routes>
+                <Route path="/register" element={<Register />} />
+            </Routes>
+            {/* <Search />
+            <ProductCard />
+            <Footer /> */}
+        </BrowserRouter>
     );
 }
 

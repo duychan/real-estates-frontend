@@ -1,0 +1,89 @@
+.register {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 100vh;
+}
+
+.register-img {
+    display: block;
+}
+
+.register-img {
+    width: 66.666667%;
+    height: 100%;
+}
+
+.register-img > img {
+    width: 100%;
+    height: 100%;
+    -o-object-fit: cover;
+    object-fit: cover;
+}
+
+.register-form {
+    --tw-bg-opacity: 1;
+    background-color: var(--white-color);
+    width: 100%;
+}
+
+.register-form {
+    height: 100vh;
+}
+
+.register-form {
+    display: flex;
+    padding-left: 1.3rem;
+    padding-right: 1.3rem;
+    background-color: var(--white-color);
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+    height: auto;
+}
+.register-form .content {
+    width: 100%;
+    padding-top: 30px;
+}
+.title {
+    margin-top: 2.5rem;
+    font-size: var(--font-sz4);
+    line-height: 1.75rem;
+    font-weight: 700;
+    line-height: 1.25;
+}
+form {
+    margin-top: 1.8rem;
+}
+.register-label {
+    display: block;
+    color: var(--silver1-color);
+    font-size: var(--font-sz4);
+}
+.ant-input {
+    width: 100%;
+    border-radius: 0.5rem;
+    border-width: 1px;
+}
+.button-login {
+    display: block;
+    margin-top: 1.5rem;
+    background-color: var(--bg2-color);
+    color: var(--silver-color);
+    font-weight: 600;
+    width: 100%;
+    border-radius: 0.5rem;
+    border-color: var(--bg2-color);
+}
+
+hr {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    width: 100%;
+    border-color: var(--silver2-color);
+}
+a {
+    color: var(--blue2--color);
+    font-weight: 600;
+    text-decoration: none;
+}

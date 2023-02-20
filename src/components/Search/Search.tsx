@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import "./search.css";
+import "./Search.css";
 import { Input, Col, Row } from "antd";
 import {
     SearchOutlined,
