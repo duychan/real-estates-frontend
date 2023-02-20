@@ -1,0 +1,23 @@
+.area-card {
+    position: relative;
+    margin: 20px 0px;
+}
+
+.area-card p {
+    text-align: center;
+    font-size: var(--font-sz3);
+    color: var(--white-color);
+    font-weight: var(--font-w2);
+    width: 100%;
+    position: absolute;
+    padding: 10px;
+    bottom: 45%;
+    left: 0;
+    box-sizing: border-box;
+    margin: 0;
+}
+
+.area-card img {
+    width: 100%;
+    opacity: 0.9;
+}
