@@ -1,19 +1,22 @@
 :root {
     --white-color: white;
     --blue1--color: #61dafb;
+    --blue2--color: rgb(59 130 246);
+    --silver1-color: #374151;
+    --silver2-color: #d1d5db;
     --font-sz1: 0.9rem;
     --font-sz2: 1.2em;
     --font-sz3: 1.5em;
     --font-sz4: 1.5rem;
-    --font-sz5: 1.25 rem;
+    --font-sz5: 1.25rem;
     --font-sz6: 1.5vw;
     --font-sz7: 1.2vw;
     --font-sz8: 1vw;
     --font-w1: 600;
-    --font-w2: 700;
     --silver-color: #666;
     --font-fa1: "Roboto", sans-serif;
     --bg1-color: #37624f;
+    --bg2-color: rgb(6 182 212);
     --PrimaryColor: hsl(199, 100%, 33%);
     --SecondaryColor: hsl(187, 85%, 43%);
     --gradientColor: linear-gradient(

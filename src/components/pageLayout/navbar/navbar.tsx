@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./navbar.css";
+import "./Navbar.css";
 import { Menu, Row, Col } from "antd";
 import RicciCoLogo from "../../../assets/images/RicciCoLogo-crop.png";
 import {
