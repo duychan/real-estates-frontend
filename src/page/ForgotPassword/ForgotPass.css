@@ -21,57 +21,31 @@
     object-fit: cover;
 }
 
-.register-form {
+.forgot-pass-form {
     --tw-bg-opacity: 1;
     background-color: var(--white-color);
-    width: 100%;
-}
-
-.register-form {
     height: 100vh;
-}
-
-.register-form {
     display: flex;
     padding-left: 1.3rem;
     padding-right: 1.3rem;
-    background-color: var(--white-color);
     justify-content: center;
     align-items: center;
     width: 30%;
-    height: auto;
 }
 
-.register-form .content {
+.forgot-pass-form .content {
     width: 100%;
-    padding-top: 30px;
 }
 
 .title {
-    margin-top: 2.5rem;
+    margin: 3rem 0rem;
     font-size: var(--font-sz4);
     line-height: 1.75rem;
     font-weight: 700;
     line-height: 1.25;
 }
 
-form {
-    margin-top: 1.8rem;
-}
-
-.register-label {
-    display: block;
-    color: var(--silver1-color);
-    font-size: var(--font-sz4);
-}
-
-.ant-input {
-    width: 100%;
-    border-radius: 0.5rem;
-    border-width: 1px;
-}
-
-.button-login {
+.button-send {
     display: block;
     margin-top: 1.5rem;
     background-color: var(--bg2-color);
@@ -82,27 +56,6 @@ form {
     border-color: var(--bg2-color);
 }
 
-hr {
-    margin-top: 1.5rem;
-    margin-bottom: 1.5rem;
-    width: 100%;
-    border-color: var(--silver2-color);
-}
-
-a {
-    color: var(--blue2--color);
-    font-weight: 600;
-    text-decoration: none;
-}
-
-.login-form-forgot {
-    float: right;
-}
-
-.ant-col-rtl .login-form-forgot {
-    float: left;
-}
-
-.register-login {
-    margin: 2rem 0;
+.email-input {
+    margin-bottom: 0;
 }
