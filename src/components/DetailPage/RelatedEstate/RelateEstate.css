@@ -1,0 +1,15 @@
+.ant-card .ant-card-cover img {
+    border-radius: 0px;
+}
+
+.estate-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.estate-addr-title {
+    font-size: var(--font-sz2);
+    font-weight: var(--font-w2);
+    margin: 0 auto;
+}
