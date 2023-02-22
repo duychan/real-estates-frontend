@@ -16,7 +16,7 @@ export const ForgotPassword: React.FC = () => {
 
             <div className="forgot-pass-form">
                 <div className="content">
-                    <h1 className="title">Forgot password?</h1>
+                    <h1 className="title-pass">Forgot password?</h1>
                     <p>
                         Enter your registered email address and we will send you
                         an email with instructions to reset your password.

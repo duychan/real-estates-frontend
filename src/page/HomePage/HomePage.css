@@ -1,0 +1,28 @@
+.info-card {
+    width: 77%;
+    height: 100%;
+    margin: 80px auto;
+}
+
+.info-card h1 {
+    text-align: center;
+    color: var(--bg1-color);
+}
+
+.info-card .col-1-card-1,
+.info-card .col-1-card-2 {
+    margin-inline-start: 0%;
+}
+
+.info-card .col-2-card-2,
+.info-card .col-3-card-2 {
+    margin-inline-start: 6%;
+}
+
+.info-card .row-view-btn {
+    margin: 30px auto;
+}
+
+.info-card .row-view-btn .view-btn {
+    width: 150px;
+}

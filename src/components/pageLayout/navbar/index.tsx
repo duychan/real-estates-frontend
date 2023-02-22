@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Navbar.css";
+import "./navbar.css";
 import { Menu, Row, Col } from "antd";
 import RicciCoLogo from "../../../assets/images/RicciCoLogo-crop.png";
 import {
@@ -20,7 +20,7 @@ export const Navbar: React.FC = () => {
     return (
         <div className="nav">
             <Row justify="center" align="top">
-                <Col span={8}>
+                <Col span={3}>
                     <img src={RicciCoLogo} className="header-logo" />
                 </Col>
                 <Col span={16} className="col-menu">

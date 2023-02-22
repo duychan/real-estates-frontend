@@ -18,14 +18,14 @@ const Search: React.FC = () => {
                 />
             </div>
 
-            <div className="search-content container">
+            <div className="search-content">
                 <div className="text-div">
                     <h1 data-aos="fade-up" className="search-title">
                         Wellcome to Code Engine Studio!
                     </h1>
                 </div>
 
-                <div data-aos="fade-up" className="card-div grid">
+                <div data-aos="fade-up" className="card-div">
                     <Row>
                         <Col
                             xs={{ span: 6, offset: 1 }}
