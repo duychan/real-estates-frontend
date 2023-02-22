@@ -15,7 +15,7 @@ const Register: React.FC = () => {
 
             <div className="register-form">
                 <div className="content">
-                    <h1 className="title">Create an account!</h1>
+                    <h1 className="title-register">Create an account!</h1>
 
                     <Form layout="vertical" autoComplete="off">
                         <Form.Item
