@@ -4,8 +4,6 @@ import { AreaCard } from "../../components/homePage/AreaCard";
 import { InformationCard } from "../../components/homePage/InformationCard";
 import ProductCard from "../../components/homePage/ProductCard";
 import Search from "../../components/homePage/Search";
-import Footer from "../../components/pageLayout/footer";
-import { Navbar } from "../../components/pageLayout/navbar";
 import "./HomePage.css";
 
 export const HomePage: React.FC = () => {

@@ -1,6 +1,11 @@
 :root {
     --white-color: white;
     --blue1--color: #61dafb;
+    --blue2--color: rgb(59 130 246);
+    --silver1-color: #374151;
+    --red-color: red;
+    --black-color: black;
+    --silver2-color: #d1d5db;
     --font-sz1: 0.9rem;
     --font-sz2: 1.2em;
     --font-sz3: 1.5em;
@@ -14,6 +19,9 @@
     --font-w1: 600;
     --font-w2: 700;
     --font-w3: 500;
+    --font-sz9: 2rem;
+    --font-w1: 600;
+    --font-w2: 400;
     --silver-color: #666;
     --font-fa1: "Roboto", sans-serif;
     --bg1-color: #37624f;
