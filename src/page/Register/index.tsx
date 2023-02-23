@@ -60,7 +60,6 @@ const Register: React.FC = () => {
                         </Form.Item>
 
                         <Form.Item
-                            style={{ margin: "1rem 0 " }}
                             label="Password:"
                             name="password"
                             rules={[
@@ -92,7 +91,6 @@ const Register: React.FC = () => {
                         </Form.Item>
                         <Form.Item
                             label="Confirm Password"
-                            style={{ margin: "1rem 0 " }}
                             name="confirmpassword"
                             dependencies={["password"]}
                             rules={[
@@ -122,7 +120,10 @@ const Register: React.FC = () => {
                             />
                         </Form.Item>
                         <Form.Item>
-                            <Button className="button-login" htmlType="submit">
+                            <Button
+                                className="button-register"
+                                htmlType="submit"
+                            >
                                 REGISTER
                             </Button>
                         </Form.Item>

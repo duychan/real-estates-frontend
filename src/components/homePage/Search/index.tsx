@@ -33,6 +33,7 @@ const Search: React.FC = () => {
                         >
                             <label htmlFor="date">Search by location:</label>
                             <Input
+                                className="input-search"
                                 placeholder="search location"
                                 suffix={<EnvironmentOutlined />}
                             ></Input>
@@ -43,6 +44,7 @@ const Search: React.FC = () => {
                         >
                             <label htmlFor="date">Search by properties:</label>
                             <Input
+                                className="input-search"
                                 placeholder="search properties"
                                 suffix={<ProfileOutlined />}
                             ></Input>
@@ -53,6 +55,7 @@ const Search: React.FC = () => {
                         >
                             <label htmlFor="date">Search by features:</label>
                             <Input
+                                className="input-search"
                                 placeholder="search features"
                                 suffix={<ToolOutlined />}
                             ></Input>

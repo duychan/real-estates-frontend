@@ -22,7 +22,6 @@
 }
 
 .register-form {
-    --tw-bg-opacity: 1;
     background-color: var(--white-color);
     width: 100%;
 }
@@ -44,19 +43,22 @@
 
 .register-form .content {
     width: 100%;
-    padding-top: 30px;
+}
+
+.ant-form-vertical .ant-form-item-label {
+    padding-bottom: 1px;
 }
 
 .title-register {
-    margin-top: 2.5rem;
+    margin-top: 1rem;
     font-size: var(--font-sz4);
     line-height: 1.75rem;
-    font-weight: 700;
+    font-weight: var(--font-w2);
     line-height: 1.25;
 }
 
 form {
-    margin-top: 1.8rem;
+    margin-top: 1.2rem;
 }
 
 .register-label {
@@ -71,12 +73,22 @@ form {
     border-width: 1px;
 }
 
+.button-register {
+    display: block;
+    margin-top: 1.2rem;
+    background-color: var(--bg2-color);
+    color: var(--silver-color);
+    font-weight: var(--font-w1);
+    width: 100%;
+    border-radius: 0.5rem;
+    border-color: var(--bg2-color);
+}
 .button-login {
     display: block;
     margin-top: 1.5rem;
     background-color: var(--bg2-color);
     color: var(--silver-color);
-    font-weight: 600;
+    font-weight: var(--font-w1);
     width: 100%;
     border-radius: 0.5rem;
     border-color: var(--bg2-color);

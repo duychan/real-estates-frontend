@@ -1,5 +1,5 @@
 import React from "react";
-import "./areaCard.css";
+import "./AreaCard.css";
 import area from "../../../assets/images/area.jpg";
 import styled from "styled-components";
 import { IAreaCard } from "./AreaCardType";

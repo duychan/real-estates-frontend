@@ -13,10 +13,9 @@ export const LoginPage: React.FC = () => {
                     alt=""
                 />
             </div>
-
             <div className="register-form">
                 <div className="content">
-                    <h1 className="title">Log in to your account!</h1>
+                    <h1 className="title-register">Log in to your account!</h1>
 
                     <Form autoComplete="off" layout="vertical">
                         <Form.Item
