@@ -1,6 +1,6 @@
 import { Button, Col, Row } from "antd";
 import React from "react";
-import { AreaCard } from "../../components/homePage/AreaCard";
+import { AreaCard } from "../../components/homePage/areaCard";
 import { InformationCard } from "../../components/homePage/InformationCard";
 import ProductCard from "../../components/homePage/ProductCard";
 import Search from "../../components/homePage/Search";

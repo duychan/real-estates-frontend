@@ -1,0 +1,111 @@
+.comment-item {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.comment-item .comment-content {
+    text-align: left;
+    padding: 0 15px;
+    width: 100%;
+    margin: 15px 0;
+}
+
+.comment-user {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.comment-user-name {
+    padding-right: 20px;
+    color: var(--bg1-color);
+}
+
+.comment-time {
+    color: var(--silver-color);
+}
+
+.comment-sentence {
+    color: var(--silver1-color);
+    line-height: 1.5;
+}
+
+.comment-action {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 14vw;
+    flex-wrap: wrap;
+}
+
+.comment-react {
+    color: var(--bg4-color);
+}
+
+.comment-editor {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin-top: 20px;
+}
+
+.comment-editor-text {
+    width: 100%;
+}
+
+.ant-spin-nested-loading {
+    max-height: 400px;
+    overflow: auto;
+}
+
+.comment-editor-button {
+    background-color: var(--bg1-color);
+    color: var(--white-color);
+}
+
+.comment-editor-button > span {
+    color: var(--white-color);
+}
+
+.comment-editor-button > span:hover {
+    color: var(--white-color);
+}
+
+.comment-textarea:hover,
+.comment-textarea:focus {
+    border: 1px solid var(--bg1-color);
+}
+
+.comment-content-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.comment-edit {
+    font-size: var(--font-sz15);
+    margin: 0 15px;
+    cursor: pointer;
+}
+
+.comment-edit:hover,
+.comment-delete:hover {
+    color: var(--bg1-color);
+}
+
+.comment-delete {
+    font-size: var(--font-sz15);
+    cursor: pointer;
+}
+
+.comment-action-status {
+    padding-left: 8px;
+    cursor: auto;
+}
+
+.comment-component-style {
+    margin: 10px 0;
+}

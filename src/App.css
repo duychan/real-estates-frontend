@@ -20,11 +20,12 @@
     --font-w2: 700;
     --font-w3: 500;
     --font-sz9: 2rem;
-    --font-w1: 600;
+    --font-sz15: 1rem;
     --font-w2: 400;
     --silver-color: #666;
     --font-fa1: "Roboto", sans-serif;
     --bg1-color: #37624f;
+    --bg4-color: #69c69e;
     --PrimaryColor: hsl(199, 100%, 33%);
     --SecondaryColor: hsl(187, 85%, 43%);
     --gradientColor: linear-gradient(
