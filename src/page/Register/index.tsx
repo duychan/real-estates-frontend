@@ -6,9 +6,14 @@ import { Link } from "react-router-dom";
 const Register: React.FC = () => {
     return (
         <div className="register">
+            <div className="register-title">
+                <h1 className="register-title-text">
+                    Welcome to CES Real Estate!
+                </h1>
+            </div>
             <div className="register-img">
                 <img
-                    src="https://images.unsplash.com/photo-1445272885371-027f17af0130?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1032&q=80"
+                    src="https://images.unsplash.com/photo-1489370321024-e0410ad08da4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
                     alt=""
                 />
             </div>

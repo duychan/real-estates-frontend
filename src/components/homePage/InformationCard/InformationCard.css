@@ -34,9 +34,14 @@
     text-align: justify;
 }
 
-.see-more {
+.information-card-button {
     background-color: var(--bg1-color);
     color: var(--white-color);
     border: none;
     border-radius: 0px;
+}
+
+.information-card-button > span:hover,
+.information-card-button .ant-btn-default:hover {
+    color: var(--white-color);
 }

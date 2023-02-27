@@ -81,13 +81,13 @@ h4 {
     padding: 10px;
 }
 
-.view-more :hover {
-    cursor: pointer;
+.product-card-button-viewmore {
+    background-color: var(--bg1-color);
+    color: var(--white-color);
+    width: 150px;
 }
 
-.btn {
+.product-card-button-viewmore:hover,
+.product-card-button-viewmore > span :hover {
     color: var(--white-color);
-    background-color: var(--bg1-color);
-    border: none;
-    padding: 5px 15px;
 }
