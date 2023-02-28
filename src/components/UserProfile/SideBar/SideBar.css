@@ -1,0 +1,25 @@
+.sidebar {
+    width: 100%;
+    border: none;
+}
+
+.sidebar-menu {
+    width: 100%;
+    height: auto;
+    border: 0.1em solid var(--bg3-color);
+    background-color: var(--bg6-color);
+    margin-top: 30px;
+}
+
+.ant-menu-inline.ant-menu-root {
+    box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px,
+        rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;
+}
+.ant-menu .ant-menu-item .ant-menu-item-icon {
+    font-size: var(--font-sz3);
+    color: var(--silver3-color);
+}
+
+.sidebar-title {
+    color: var(--silver3-color);
+}

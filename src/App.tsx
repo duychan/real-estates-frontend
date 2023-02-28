@@ -7,6 +7,8 @@ import Register from "./page/Register";
 import { ForgotPassword } from "./page/ForgotPassword";
 import { MainLayout } from "./components/pageLayout";
 import SearchProperty from "./components/SearchResultPage/SearchProperty";
+import UserInformation from "./components/UserProfile/UserInfomation";
+import SideBar from "./components/UserProfile/SideBar/";
 function App() {
     return (
         <Routes>
@@ -14,6 +16,7 @@ function App() {
                 <Route path="/" element={<Navigate replace to="/home" />} />
                 <Route path="/home" element={<HomePage />} />
                 <Route path="/search-page" element={<SearchProperty />} />
+                <Route path="/myprofile/*" element={<SideBar />} />
             </Route>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<Register />} />
