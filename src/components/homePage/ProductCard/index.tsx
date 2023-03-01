@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import "./ProductCard.css";
 import { Card, Button } from "antd";
 import { EnvironmentOutlined } from "@ant-design/icons";
+import area from "../../../assets/images/area.jpg";
 import Aos from "aos";
 import "aos/dist/aos.css";
 const ProductCard: React.FC = () => {
@@ -9,48 +10,30 @@ const ProductCard: React.FC = () => {
         Aos.init({ duration: 1800 });
     }, []);
     return (
-        <div className="product-card">
-            <div className="title-productcard">
-                <h1>List Product</h1>
+        <Card
+            hoverable
+            className="product-card-single"
+            cover={<img alt="example" src={area} />}
+        >
+            <div className="product-card-info">
+                <h3 className="product-card-name">Hoi An Ancient Town</h3>
+                <p className="product-card-address">
+                    <EnvironmentOutlined className="product-card-icon-address" />
+                    Hai Chau
+                </p>
             </div>
-            <div className="product-list">
-                <Card
-                    hoverable
-                    className="single-card"
-                    style={{ width: 350 }}
-                    cover={
-                        <img
-                            alt="example"
-                            src="http://localhost:3001/static/media/hoian.bcbcc7a9ae5480126213.jpg"
-                        />
-                    }
-                >
-                    <div className="product-info">
-                        <h3 className="product-name">Hoi An Ancient Town</h3>
-                        <h4 className="product-address">
-                            <EnvironmentOutlined className="icon-address" />
-                            Hai Chau
-                        </h4>
-                    </div>
-                    <div className="product-fees">
-                        <div className="product-type">
-                            <p>Apartment</p>
-                        </div>
-                        <div className="product-price">100</div>
-                    </div>
-                    <div className="product-sub">
-                        <div className="product-bedroom">Bedrooms: 5</div>
-                        <div className="product-bathroom">Bathrooms: 5</div>
-                        <div className="product-area">Size: 500m^2</div>
-                    </div>
-                </Card>
+            <div className="product-card-fees">
+                <div className="product-card-type">
+                    <p>Apartment</p>
+                </div>
+                <div className="product-card-price">100</div>
             </div>
-            <div className="view-more">
-                <Button className="product-card-button-viewmore">
-                    View more
-                </Button>
+            <div className="product-card-sub">
+                <div className="product-bedroom">Bedrooms: 5</div>
+                <div className="product-bathroom">Bathrooms: 5</div>
+                <div className="product-area">Size: 500m^2</div>
             </div>
-        </div>
+        </Card>
     );
 };
 export default ProductCard;
