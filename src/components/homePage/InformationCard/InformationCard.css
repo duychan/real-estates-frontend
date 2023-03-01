@@ -34,14 +34,9 @@
     text-align: justify;
 }
 
-.ant-btn {
+.see-more {
     background-color: var(--bg1-color);
     color: var(--white-color);
     border: none;
     border-radius: 0px;
-}
-
-.ant-btn > span:hover,
-.ant-btn.ant-btn-default:hover {
-    color: var(--white-color);
 }

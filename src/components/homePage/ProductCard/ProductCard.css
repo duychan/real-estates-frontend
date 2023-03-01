@@ -38,7 +38,7 @@ h4 {
     box-shadow: 1 4px 4px var(--box-shadColor1);
 }
 
-.title {
+.title-productcard {
     color: var(--blackColor);
     font-size: var(--font-sz5);
     text-align: center;

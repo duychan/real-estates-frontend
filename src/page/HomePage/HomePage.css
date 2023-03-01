@@ -25,4 +25,6 @@
 
 .info-card .row-view-btn .view-btn {
     width: 150px;
+    background-color: var(--bg1-color);
+    color: var(--white-color);
 }

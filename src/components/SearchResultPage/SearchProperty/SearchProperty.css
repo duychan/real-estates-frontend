@@ -1,0 +1,119 @@
+.search-property {
+    width: 80%;
+    height: 100%;
+    margin: 0 auto;
+}
+
+.ant-layout {
+    background-color: var(--white-color);
+}
+
+.ant-layout .ant-layout-sider-children {
+    border: 1px solid var(--silver2-color);
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+.ant-menu-light.ant-menu-root.ant-menu-inline {
+    height: auto;
+    padding-bottom: 1.2rem;
+    border-bottom: 1px solid var(--silver2-color);
+}
+
+.search-property-title {
+    font-size: var(--font-sz16);
+    font-weight: var(--font-w12);
+}
+
+.search-property-menu {
+    height: 100%;
+    border-right: none;
+}
+.search-property-hr {
+    margin-top: 1.2rem;
+    margin-bottom: 1.2rem;
+    border-top: 0.1em solid var(--silver2-color);
+}
+
+.search-property-filter {
+    text-align: center;
+    font-size: var(--font-sz10);
+    padding-top: 15px;
+    padding-bottom: 20px;
+    color: var(--bg1-color);
+}
+
+.search-property-icon-filter {
+    font-size: var(--font-sz4);
+    padding-right: 10px;
+}
+
+.ant-menu .ant-menu-submenu-title .ant-menu-item-icon {
+    font-size: var(--font-sz16);
+}
+
+.search-property-input-location {
+    width: 80%;
+    margin: 10px 25px;
+}
+
+.ant-menu-light.ant-menu-inline .ant-menu-sub.ant-menu-inline {
+    background: var(--white-color);
+    width: 100%;
+}
+
+.search-property-price {
+    display: inline-block;
+    width: 40%;
+    margin-left: 24px;
+    margin-top: 10px;
+}
+
+.search-property-input-price {
+    width: 80%;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+}
+
+.search-property-input-facilities {
+    width: 90%;
+}
+
+.search-property-facilities {
+    display: block;
+    margin-left: 25px;
+}
+
+.search-property-price-title {
+    font-size: var(--font-sz11);
+}
+
+.search-property-type-checkbox {
+    margin-left: 28px;
+    margin-top: 10px;
+    font-size: var(--font-sz3);
+    color: var(--bg1-color);
+}
+
+.search-property-type-radio {
+    display: block;
+    margin-left: 28px;
+    margin-top: 10px;
+}
+
+.search-property-header-sort {
+    margin-left: 28px;
+}
+
+.search-property-sort-title {
+    font-size: var(--font-sz3);
+    min-width: 40%;
+    width: 100%;
+}
+
+.search-property-header {
+    display: flex;
+    padding-top: 20px;
+    padding-left: 20px;
+}

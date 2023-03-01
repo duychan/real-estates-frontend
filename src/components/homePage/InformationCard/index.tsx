@@ -31,7 +31,7 @@ export const InformationCard: React.FC<IInforCard> = ({ flexDir }) => {
                     To answer that question, I like to write about science-based
                     ways to solve practical problems.
                 </p>
-                <Button>See more</Button>
+                <Button className="see-more">See more</Button>
             </div>
         </Article>
     );

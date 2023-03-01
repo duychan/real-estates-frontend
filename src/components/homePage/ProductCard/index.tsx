@@ -10,7 +10,7 @@ const ProductCard: React.FC = () => {
     }, []);
     return (
         <div className="product-card">
-            <div className="title">
+            <div className="title-productcard">
                 <h1>List Product</h1>
             </div>
             <div className="product-list">
@@ -51,5 +51,4 @@ const ProductCard: React.FC = () => {
         </div>
     );
 };
-
 export default ProductCard;
