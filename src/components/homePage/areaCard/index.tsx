@@ -10,11 +10,22 @@ export const AreaCardStyle = styled.div.attrs<IAreaCard>(({ width }) => ({
     width: ${({ width }: { width: string }) => width};
 `;
 
-export const AreaCard: React.FC<IAreaCard> = ({ width }) => {
+export const ImgStyle = styled.img.attrs<string>(({ height }) => ({
+    height: height
+}))`
+    height: ${({ height }: { height: string }) => height};
+`;
+
+export const AreaCard: React.FC<IAreaCard> = ({
+    width,
+    height,
+    imageCard,
+    contentCard
+}) => {
     return (
         <AreaCardStyle width={width} className="area-card">
-            <img src={area} />
-            <p>Wyndham</p>
+            <ImgStyle height={height ?? "100%"} src={imageCard} />
+            <p>{contentCard}</p>
         </AreaCardStyle>
     );
 };
