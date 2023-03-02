@@ -1,28 +1,29 @@
 .search {
     width: 100%;
-    height: 750px;
+    height: 100%;
+}
+
+.image {
+    height: 100%;
 }
 
 .search img {
-    position: absolute;
-    height: auto;
+    position: relative;
+    height: 100%;
     width: 100%;
     -o-object-fit: cover;
     object-fit: cover;
 }
 
 .search-content {
+    position: absolute;
     width: 80%;
-    height: -webkit-max-content;
-    height: -moz-max-content;
-    height: max-content;
     margin: auto auto;
-    padding-top: 200px;
+    top: 45%;
+    left: 0;
+    right: 0;
     display: flex;
-    row-gap: 3rem;
     -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -ms-flex-direction: column;
     flex-direction: column;
     color: var(--white-color);
 }
@@ -31,14 +32,9 @@
     padding: 1rem 0;
 }
 
-.small-text {
-    font-size: 15px;
-    text-transform: uppercase;
-}
-
 .search-title {
     position: relative;
-    font-size: 2rem;
+    font-size: var(--font-sz9);
     width: max-content;
 }
 

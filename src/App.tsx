@@ -13,8 +13,8 @@ function App() {
             <Route element={<MainLayout />}>
                 <Route path="/" element={<Navigate replace to="/home" />} />
                 <Route path="/home" element={<HomePage />} />
+                <Route path="/search-page" element={<SearchProperty />} />
             </Route>
-            <Route path="/search-page" element={<SearchProperty />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<Register />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />

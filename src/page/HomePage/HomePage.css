@@ -28,3 +28,13 @@
     background-color: var(--bg1-color);
     color: var(--white-color);
 }
+
+.view-btn {
+    background-color: var(--bg1-color);
+    color: var(--white-color);
+}
+
+.view-btn:hover,
+.view-btn > span :hover {
+    color: var(--white-color);
+}

@@ -23,7 +23,7 @@ export const Navbar: React.FC = () => {
                 <Col span={3}>
                     <img src={RicciCoLogo} className="header-logo" />
                 </Col>
-                <Col span={16} className="col-menu">
+                <Col span={16} offset={2} className="col-menu">
                     <Menu className="menu" theme="light" mode="horizontal">
                         {["Buy", "Rent", "Sell", "Contact"].map(item => (
                             <Menu.Item key={`item-${item}`}>{item}</Menu.Item>

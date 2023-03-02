@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import "./ProductCard.css";
-import { Card, Avatar } from "antd";
+import { Card, Button } from "antd";
 import { EnvironmentOutlined } from "@ant-design/icons";
 import Aos from "aos";
 import "aos/dist/aos.css";
@@ -46,7 +46,9 @@ const ProductCard: React.FC = () => {
                 </Card>
             </div>
             <div className="view-more">
-                <button className="btn">View more </button>
+                <Button className="product-card-button-viewmore">
+                    View more
+                </Button>
             </div>
         </div>
     );

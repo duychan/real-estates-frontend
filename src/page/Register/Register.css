@@ -21,6 +21,14 @@
     object-fit: cover;
 }
 
+.register-title {
+    position: absolute;
+    top: 15%;
+    left: 5%;
+    font-size: var(--font-sz7);
+    color: var(--white-color);
+}
+
 .register-form {
     background-color: var(--white-color);
     width: 100%;

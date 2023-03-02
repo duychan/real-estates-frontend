@@ -21,7 +21,7 @@ const Search: React.FC = () => {
             <div className="search-content">
                 <div className="text-div">
                     <h1 data-aos="fade-up" className="search-title">
-                        Wellcome to Code Engine Studio!
+                        Welcome to Code Engine Studio!
                     </h1>
                 </div>
 
