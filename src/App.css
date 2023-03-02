@@ -20,12 +20,12 @@
     --font-sz8: 1vw;
     --font-sz9: 2vw;
     --font-sz10: 20px;
+    --font-sz20: 1.3rem;
     --font-w1: 600;
     --font-w2: 700;
     --font-w3: 500;
     --font-sz9: 2rem;
     --font-sz15: 1rem;
-    --font-w2: 400;
     --font-sz13: 1.8rem;
     --font-sz14: 1.1rem;
     --font-sz16: 1.3rem;
@@ -33,6 +33,7 @@
     --font-w12: 400;
     --font-w9: 400;
     --bg6-color: rgba(253, 253, 253, 0.897);
+    --font-w5: 400;
     --silver-color: #666;
     --font-fa1: "Roboto", sans-serif;
     --bg1-color: #37624f;

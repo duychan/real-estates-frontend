@@ -5,6 +5,7 @@ import { InformationCard } from "../../components/homePage/InformationCard";
 import ProductCard from "../../components/homePage/ProductCard";
 import Search from "../../components/homePage/Search";
 import "./HomePage.css";
+import area from "../../../assets/images/area.jpg";
 
 export const HomePage: React.FC = () => {
     return (
@@ -18,13 +19,21 @@ export const HomePage: React.FC = () => {
                         lg={{ span: 10, offset: 1 }}
                         className="col-1-card-1"
                     >
-                        <AreaCard width="115%" />
+                        <AreaCard
+                            width="115%"
+                            imageCard={area}
+                            contentCard="Wyndham"
+                        />
                     </Col>
                     <Col
                         xs={{ span: 10, offset: 3 }}
                         lg={{ span: 10, offset: 3 }}
                     >
-                        <AreaCard width="115%" />
+                        <AreaCard
+                            width="115%"
+                            imageCard={area}
+                            contentCard="Wyndham"
+                        />
                     </Col>
                 </Row>
                 <Row justify={"space-between"} align="middle">
@@ -33,21 +42,33 @@ export const HomePage: React.FC = () => {
                         lg={{ span: 7, offset: 0 }}
                         className="col-1-card-2"
                     >
-                        <AreaCard width="105%" />
+                        <AreaCard
+                            width="105%"
+                            imageCard={area}
+                            contentCard="Wyndham"
+                        />
                     </Col>
                     <Col
                         xs={{ span: 7, offset: 0 }}
                         lg={{ span: 7, offset: 0 }}
                         className="col-2-card-2"
                     >
-                        <AreaCard width="105%" />
+                        <AreaCard
+                            width="105%"
+                            imageCard={area}
+                            contentCard="Wyndham"
+                        />
                     </Col>
                     <Col
                         xs={{ span: 7, offset: 1 }}
                         lg={{ span: 7, offset: 1 }}
                         className="col-3-card-2"
                     >
-                        <AreaCard width="105%" />
+                        <AreaCard
+                            width="105%"
+                            imageCard={area}
+                            contentCard="Wyndham"
+                        />
                     </Col>
                 </Row>
             </div>
