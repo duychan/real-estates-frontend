@@ -3,6 +3,7 @@
     --blue1--color: #61dafb;
     --blue2--color: rgb(59 130 246);
     --silver1-color: #374151;
+    --silver3-color: rgb(121, 130, 129);
     --red-color: red;
     --bg2-color: rgb(6 182 212);
     --black-color: black;
@@ -33,7 +34,10 @@
     --silver-color: #666;
     --font-fa1: "Roboto", sans-serif;
     --bg1-color: #37624f;
+    --bg2-color: #36795a;
     --bg4-color: #69c69e;
+    --bg6-color: rgba(253, 253, 253, 0.897);
+    --bg3-color: rgba(5, 5, 5, 0.06);
     --PrimaryColor: hsl(199, 100%, 33%);
     --SecondaryColor: hsl(187, 85%, 43%);
     --gradientColor: linear-gradient(

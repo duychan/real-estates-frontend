@@ -24,25 +24,6 @@ const Register: React.FC = () => {
 
                     <Form layout="vertical" autoComplete="off">
                         <Form.Item
-                            label="Username:"
-                            name="username"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: "Please enter your name"
-                                },
-                                { whitespace: true },
-                                { min: 3 }
-                            ]}
-                            hasFeedback
-                        >
-                            <Input
-                                placeholder="Enter Username"
-                                prefix={<UserOutlined />}
-                                size="large"
-                            />
-                        </Form.Item>
-                        <Form.Item
                             label="E-mail:"
                             name="email"
                             rules={[

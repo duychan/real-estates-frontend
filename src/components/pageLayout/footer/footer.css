@@ -8,7 +8,6 @@
     display: flex;
     flex-wrap: wrap;
     margin-left: -4px;
-
     padding: 0 180px;
     height: auto;
     background-color: var(--bg1-color);
