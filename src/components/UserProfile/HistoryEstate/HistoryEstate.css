@@ -1,4 +1,14 @@
-.product-card-single {
+.history-estate {
+    width: 100%;
+    display: inline;
+}
+
+.history-estate-product-list {
+    position: relative;
+    text-align: center;
+}
+
+.history-estate-single-card {
     background: var(--bg6-color);
     -webkit-box-shadow: 0 2px 4px var(--box-shadColor2);
     box-shadow: 0 2px 4px var(--box-shadColor2);
@@ -7,47 +17,49 @@
     width: 320px;
 }
 
-.product-card-name {
+.history-estate-product-name {
     font-size: var(--font-sz3);
+    margin-bottom: 10px;
     margin-top: -10px;
 }
 
-.product-card-address {
+.history-estate-product-address {
     font-weight: var(--font-w9);
-    margin-top: -10px;
+    margin-block-start: 0;
+    margin-block-end: 10px;
 }
 
-.product-card-icon-address {
+.history-estate-icon-address {
     margin-right: 5px;
     font-size: var(--font-sz3);
 }
 
-.product-card-info {
+.history-estate-product-info {
     text-align: left;
 }
 
-.product-card-fees {
+.history-estate-product-fees {
     border-top: 1.5px solid var(--greyText);
     border-bottom: 1.5px solid var(--greyText);
     display: flex;
     justify-content: space-between;
 }
 
-.product-card-type {
+.history-estate-product-type {
     display: inline;
     font-size: var(--font-sz2);
     font-weight: var(--font-w2);
     color: var(--textColor);
 }
 
-.product-card-price {
+.history-estate-product-price {
     font-size: var(--font-sz4);
     font-weight: bold;
     padding-top: 11px;
     color: var(--blackColor);
 }
 
-.product-card-sub {
+.history-estate-product-sub {
     padding-top: 11px;
     font-size: var(--font-sz1);
     display: flex;
