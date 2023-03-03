@@ -82,7 +82,7 @@ export const HomePage: React.FC = () => {
                     <ProductCard />
                 </div>
                 <div className="view-more">
-                    <button className="btn">View more </button>
+                    <Button className="view-btn">View more </Button>
                 </div>
             </div>
 

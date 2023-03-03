@@ -8,8 +8,8 @@ import "./ChangePass.css";
 
 export const ChangePassword: React.FC = () => {
     return (
-        <div className="user-profile">
-            <h1 className="user-profile-title">Password settings</h1>
+        <div className="change-password">
+            <h1 className="change-password__title">Password settings</h1>
             <Form layout="vertical">
                 <Row>
                     <Col xs={{ span: 9, offset: 1 }}>
@@ -19,9 +19,9 @@ export const ChangePassword: React.FC = () => {
                             rules={PasswordRule}
                             hasFeedback
                         >
-                            <div className="user-profile-name">
+                            <div className="change-password__name">
                                 <Input.Password
-                                    className="user-profile-input"
+                                    className="change-password__input"
                                     placeholder="Password"
                                 />
                             </div>
@@ -34,9 +34,9 @@ export const ChangePassword: React.FC = () => {
                             rules={ConfirmPasswordRule}
                             hasFeedback
                         >
-                            <div className="user-profile-name">
+                            <div className="change-password__name">
                                 <Input.Password
-                                    className="user-profile-input"
+                                    className="change-password__input"
                                     placeholder="Password"
                                 />
                             </div>
@@ -46,7 +46,10 @@ export const ChangePassword: React.FC = () => {
 
                 <Divider />
                 <Col xs={{ offset: 1 }}>
-                    <Button className="user-profile-button" htmlType="submit">
+                    <Button
+                        className="change-password__button"
+                        htmlType="submit"
+                    >
                         SET NEW PASSWORD
                     </Button>
                 </Col>

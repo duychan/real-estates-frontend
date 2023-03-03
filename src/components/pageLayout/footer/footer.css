@@ -61,8 +61,7 @@
 }
 
 .about-info:hover {
-    transform: translateX(7px);
-    font-size: var(--font-sz1);
+    font-size: var(--font-sz15);
 }
 
 .follow-icon {

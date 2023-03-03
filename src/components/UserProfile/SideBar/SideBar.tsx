@@ -21,7 +21,7 @@ export const routesSideBar: SideBarItems[] = [
     {
         key: "/myprofile/history-estate",
         icon: <AuditOutlined />,
-        label: "List of Estate"
+        label: "My Estate"
     },
     {
         key: "/myprofile/contact-detail",

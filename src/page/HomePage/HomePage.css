@@ -12,6 +12,7 @@
 .list-estate .list-estate-card {
     display: flex;
     justify-content: center;
+
     align-items: center;
 }
 
@@ -49,9 +50,9 @@
     cursor: pointer;
 }
 
-.btn {
-    color: var(--white-color);
-    background-color: var(--bg1-color);
+.view-btn {
     border: none;
-    padding: 6px 15px;
+    width: 150px;
+    background-color: var(--bg1-color);
+    color: var(--white-color);
 }

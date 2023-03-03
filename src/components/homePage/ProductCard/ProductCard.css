@@ -10,6 +10,7 @@
 .product-card-name {
     font-size: var(--font-sz3);
     margin-top: -10px;
+    font-weight: var(--font-w3);
 }
 
 .product-card-address {

@@ -1,29 +1,29 @@
-.user-profile {
+.change-password {
     width: 90%;
     padding: 10px 20px;
     margin-left: 20px;
     margin-top: 30px;
     border: 0.1em solid var(--bg3-color);
-    margin-bottom: 20px;
+    margin-bottom: 81.5px;
     background-color: var(--bg6-color);
     box-shadow: var(--box-shadColor3) 0px 2px 5px 0px,
         var(--box-shadColor4) 0px 1px 1px 0px;
 }
 
-.user-profile-title {
+.change-password__title {
     font-size: var(--font-sz4);
     font-weight: var(--font-w1);
     padding-left: 50px;
 }
 
-.user-profile-input {
+.change-password__input {
     border-top: none;
     border-left: none;
     border-right: none;
     border-radius: 0;
 }
 
-.user-profile-button {
+.change-password__button {
     background-color: var(--bg1-color);
     color: var(--white-color);
     font-weight: var(--font-w3);
@@ -36,6 +36,6 @@
     align-items: center;
 }
 
-.user-profile-button:hover {
+.change-password__button:hover {
     background-color: var(--bg2-color);
 }

@@ -9,6 +9,7 @@ import { MainLayout } from "./components/pageLayout";
 import SearchProperty from "./components/SearchResultPage/SearchProperty";
 import SideBar from "./components/UserProfile/SideBar/";
 import { SingleEstate } from "./page/SingleEstate";
+
 function App() {
     return (
         <Routes>

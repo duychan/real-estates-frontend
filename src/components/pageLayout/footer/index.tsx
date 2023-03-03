@@ -11,9 +11,9 @@ import logo from "../../../assets/images/logo.jpg";
 const Footer: React.FC = () => {
     const ourAgencyItem = ["Services", "Insurance", "Agency", "Payment"];
     const updateItem = [
-        "Updated Market",
+        "Updated Estate",
         "Upcoming Available",
-        "Local Hightlight"
+        "Updated Local Hightlight"
     ];
     const companyItem = [
         "Terms of Use",
