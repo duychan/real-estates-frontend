@@ -19,12 +19,17 @@ export const Navbar: React.FC = () => {
 
     const [currency, setCurrency] = useState<string>(currencyList.usd);
     const [language, setLanguage] = useState<string>(languageList.en);
+    const navigate = useNavigate();
 
     return (
         <div className="nav">
             <Row justify="center" align="top">
                 <Col span={3}>
-                    <img src={RicciCoLogo} className="header-logo" />
+                    <img
+                        src={RicciCoLogo}
+                        className="header-logo"
+                        onClick={() => navigate("/")}
+                    />
                 </Col>
                 <Col span={16} offset={2} className="col-menu">
                     <Menu className="menu" theme="light" mode="horizontal">

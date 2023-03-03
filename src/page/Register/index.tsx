@@ -3,6 +3,11 @@ import "./Register.css";
 import { Input, Form, Button } from "antd";
 import { UserOutlined, MailOutlined, LockOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
+import {
+    ConfirmPasswordRule,
+    EmailRule,
+    PasswordRule
+} from "../../common/helper/Validator";
 const Register: React.FC = () => {
     return (
         <div className="register">
@@ -26,16 +31,7 @@ const Register: React.FC = () => {
                         <Form.Item
                             label="E-mail:"
                             name="email"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: "Please enter your email"
-                                },
-                                {
-                                    type: "email",
-                                    message: "Please enter a valid email"
-                                }
-                            ]}
+                            rules={EmailRule}
                             hasFeedback
                         >
                             <Input
@@ -48,25 +44,7 @@ const Register: React.FC = () => {
                         <Form.Item
                             label="Password:"
                             name="password"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: "Please input your password!"
-                                },
-                                { min: 6 },
-                                { whitespace: true },
-                                {
-                                    validator: (_, value) =>
-                                        value &&
-                                        /(?=.*?[A-Z])/.test(value) &&
-                                        /(?=.*?[a-z])/.test(value) &&
-                                        /(?=.*?[0-9])/.test(value)
-                                            ? Promise.resolve()
-                                            : Promise.reject(
-                                                  "Password must contain at least 6 characters, 1 capital and 1 number"
-                                              )
-                                }
-                            ]}
+                            rules={PasswordRule}
                             hasFeedback
                         >
                             <Input.Password
@@ -79,24 +57,7 @@ const Register: React.FC = () => {
                             label="Confirm Password"
                             name="confirmpassword"
                             dependencies={["password"]}
-                            rules={[
-                                {
-                                    required: true
-                                },
-                                ({ getFieldValue }) => ({
-                                    validator(_, value) {
-                                        if (
-                                            !value ||
-                                            getFieldValue("password") === value
-                                        ) {
-                                            return Promise.resolve();
-                                        }
-                                        return Promise.reject(
-                                            "The two passwords that you entered does not match."
-                                        );
-                                    }
-                                })
-                            ]}
+                            rules={ConfirmPasswordRule}
                             hasFeedback
                         >
                             <Input.Password

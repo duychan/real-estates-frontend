@@ -3,6 +3,7 @@ import React from "react";
 import "../Register/Register.css";
 import { UserOutlined, MailOutlined, LockOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
+import { EmailRule, PasswordRule } from "../../common/helper/Validator";
 
 export const LoginPage: React.FC = () => {
     return (
@@ -26,16 +27,7 @@ export const LoginPage: React.FC = () => {
                         <Form.Item
                             name={"email"}
                             label="E-mail"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: "Please enter your email"
-                                },
-                                {
-                                    type: "email",
-                                    message: "Please enter a valid email"
-                                }
-                            ]}
+                            rules={EmailRule}
                             hasFeedback
                         >
                             <Input
@@ -51,17 +43,7 @@ export const LoginPage: React.FC = () => {
                             name="password"
                             label="Password"
                             style={{ margin: "1rem 0 " }}
-                            rules={[
-                                {
-                                    required: true,
-                                    message: "Please input your password!"
-                                },
-                                {
-                                    min: 6,
-                                    message:
-                                        "Password must be at least 6 characters"
-                                }
-                            ]}
+                            rules={PasswordRule}
                             hasFeedback
                         >
                             <Input.Password

@@ -1,0 +1,41 @@
+.user-profile {
+    width: 90%;
+    padding: 10px 20px;
+    margin-left: 20px;
+    margin-top: 30px;
+    border: 0.1em solid var(--bg3-color);
+    margin-bottom: 20px;
+    background-color: var(--bg6-color);
+    box-shadow: var(--box-shadColor3) 0px 2px 5px 0px,
+        var(--box-shadColor4) 0px 1px 1px 0px;
+}
+
+.user-profile-title {
+    font-size: var(--font-sz4);
+    font-weight: var(--font-w1);
+    padding-left: 50px;
+}
+
+.user-profile-input {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+}
+
+.user-profile-button {
+    background-color: var(--bg1-color);
+    color: var(--white-color);
+    font-weight: var(--font-w3);
+    border: 0;
+    border-radius: 6px;
+    box-sizing: border-box;
+    display: block;
+    height: 45px;
+    padding: 0.8rem;
+    align-items: center;
+}
+
+.user-profile-button:hover {
+    background-color: var(--bg2-color);
+}

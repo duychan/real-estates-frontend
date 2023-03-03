@@ -61,6 +61,8 @@
     --box-shadColor1: rgba(85, 85, 114, 0.549);
     --box-shadColor2: rgba(140, 140, 141, 0.549);
     --item-selected: #1e382c;
+    --box-shadColor3: rgba(50, 50, 105, 0.15);
+    --box-shadColor4: rgba(0, 0, 0, 0.05);
 }
 
 .App {
@@ -97,6 +99,7 @@
     from {
         transform: rotate(0deg);
     }
+
     to {
         transform: rotate(360deg);
     }
