@@ -3,6 +3,7 @@ import React from "react";
 import "./ForgotPass.css";
 import { MailOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
+import { EmailRule } from "../../common/helper/Validator";
 
 export const ForgotPassword: React.FC = () => {
     return (
@@ -31,16 +32,7 @@ export const ForgotPassword: React.FC = () => {
                         <Form.Item
                             name={"email"}
                             className="email-input"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: "Please enter your email"
-                                },
-                                {
-                                    type: "email",
-                                    message: "Please enter a valid email"
-                                }
-                            ]}
+                            rules={EmailRule}
                             hasFeedback
                         >
                             <Input
