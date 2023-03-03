@@ -13,7 +13,7 @@
     justify-content: space-between;
 }
 
-.dropdown .dropdown-p {
+.dropdown .dropdown-text {
     margin: 0 auto;
     padding-right: 10px;
 }
@@ -27,7 +27,7 @@
 
 .col-menu {
     margin: auto 0;
-    padding-left: 15%;
+    padding-left: 10%;
 }
 
 .col-menu .menu {
@@ -51,4 +51,25 @@
 .ant-menu-light .ant-menu-submenu-selected > .ant-menu-submenu-title {
     color: var(--item-selected);
     font-weight: var(--font-w3);
+}
+
+.user-button {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 0 auto;
+}
+.user-button-p {
+    margin: 0 auto;
+    padding: 0 10px;
+}
+.user-button-p:hover {
+    background-color: var(--cardBG);
+}
+.user-button-divider {
+    background-color: var(--bg1-color);
+    height: 1.3em;
+}
+.sidebar-title {
+    color: var(--silver3-color);
 }

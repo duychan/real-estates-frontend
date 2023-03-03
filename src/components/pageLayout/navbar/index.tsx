@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import "./navbar.css";
-import { Menu, Row, Col } from "antd";
+import { Menu, Row, Col, Avatar } from "antd";
 import RicciCoLogo from "../../../assets/images/RicciCoLogo-crop.png";
 import {
     FacebookOutlined,
     InstagramOutlined,
     CaretDownOutlined
 } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
+import { AvatarUser } from "./AvatarUser";
+import { LoginUser } from "./LoginUser";
 
 export const Navbar: React.FC = () => {
     const SubMenu = Menu.SubMenu;
@@ -31,7 +34,7 @@ export const Navbar: React.FC = () => {
                         <SubMenu
                             title={
                                 <div className="dropdown">
-                                    <p className="dropdown-p">{`Language: ${language}`}</p>
+                                    <p className="dropdown-text">{`Language: ${language}`}</p>
                                     <CaretDownOutlined />
                                 </div>
                             }
@@ -61,7 +64,7 @@ export const Navbar: React.FC = () => {
                         <SubMenu
                             title={
                                 <div className="dropdown">
-                                    <p className="dropdown-p">{`Currency: ${currency} `}</p>
+                                    <p className="dropdown-text">{`Currency: ${currency} `}</p>
                                     <CaretDownOutlined />
                                 </div>
                             }
@@ -93,6 +96,10 @@ export const Navbar: React.FC = () => {
                         </Menu.Item>
                         <Menu.Item key="instagramLink">
                             <InstagramOutlined className="link" />
+                        </Menu.Item>
+                        <AvatarUser />
+                        <Menu.Item>
+                            <LoginUser />
                         </Menu.Item>
                     </Menu>
                 </Col>
