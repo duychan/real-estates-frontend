@@ -4,13 +4,9 @@ import { Menu, Row, Col } from "antd";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import UserInformation from "../UserInfomation";
 import { routesSideBar } from "./SideBar";
-import {
-    IdcardOutlined,
-    AuditOutlined,
-    PhoneOutlined,
-    LockOutlined,
-    LogoutOutlined
-} from "@ant-design/icons";
+import HistoryEstate from "../HistoryEstate";
+import ContactDetail from "../ContactDetail";
+import { ChangePassword } from "../ChangePassword";
 
 const SideBar: React.FC = () => {
     const navigate = useNavigate();
@@ -47,15 +43,15 @@ const SideBar: React.FC = () => {
                         />
                         <Route
                             path="/history-estate"
-                            element={<div>hisorty estate</div>}
+                            element={<HistoryEstate />}
                         />
                         <Route
                             path="/contact-detail"
-                            element={<div>contact</div>}
+                            element={<ContactDetail />}
                         />
                         <Route
                             path="/change-password"
-                            element={<div>change password</div>}
+                            element={<ChangePassword />}
                         />
                     </Routes>
                 </Col>

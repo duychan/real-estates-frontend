@@ -1,11 +1,15 @@
 .history-estate {
     width: 100%;
     display: inline;
+    margin-top: 20px;
 }
 
 .history-estate-product-list {
-    position: relative;
-    text-align: center;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    margin-left: 20px;
 }
 
 .history-estate-single-card {
@@ -19,6 +23,7 @@
 
 .history-estate-product-name {
     font-size: var(--font-sz3);
+    font-weight: var(--font-w2);
     margin-bottom: 10px;
     margin-top: -10px;
 }
