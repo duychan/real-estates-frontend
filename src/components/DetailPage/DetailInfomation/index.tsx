@@ -22,7 +22,7 @@ const DetailInfomation: React.FC = () => {
 
     return (
         <div className="detail-product">
-            <div className="content">
+            <div className="detail-product-content">
                 <div className="product-name">
                     <h2>Ba Huyen Thanh Quan Street</h2>
                     <div className="favorite">
@@ -53,12 +53,12 @@ const DetailInfomation: React.FC = () => {
                 <div className="detail-info">
                     <Row>
                         <Col xs={{ span: 8, offset: 0 }}>
-                            <p>
+                            <p className="detail-product-p">
                                 <BedIcon className="icon-detail__svg" />
                                 Bedroom: 2
                             </p>
 
-                            <p>
+                            <p className="detail-product-p">
                                 <SearchOutlined className="icon-detail" />
                                 Neighborhood: Near New Phuong Dong{" "}
                             </p>
@@ -67,11 +67,11 @@ const DetailInfomation: React.FC = () => {
                             xs={{ span: 9, offset: 2 }}
                             lg={{ span: 6, offset: 3 }}
                         >
-                            <p>
+                            <p className="detail-product-p">
                                 <FullscreenExitOutlined className="icon-detail" />
                                 Area: 100m^2
                             </p>
-                            <p>
+                            <p className="detail-product-p">
                                 <BathIcon className="icon-detail__svg" />
                                 Bathroom: 2
                             </p>

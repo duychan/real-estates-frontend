@@ -6,10 +6,15 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .estate-addr-title {
     font-size: var(--font-sz2);
     font-weight: var(--font-w2);
     margin: 0 auto;
+}
+
+.estate-info .estate-info-text {
+    font-size: var(--font-sz16);
 }

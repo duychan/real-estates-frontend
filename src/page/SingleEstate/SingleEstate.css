@@ -1,0 +1,35 @@
+.related-estate {
+    width: 100%;
+    margin: 100px 0;
+}
+
+.related-estate-list {
+    display: flex;
+    justify-content: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.related-estate-title {
+    text-align: center;
+    color: var(--bg1-color);
+}
+
+.single-estate {
+    margin-top: 10px;
+}
+
+.related-estate .row-view-btn {
+    margin: 30px auto;
+}
+
+.related-estate .row-view-btn .view-btn {
+    width: 150px;
+    background-color: var(--bg1-color);
+    color: var(--white-color);
+}
+
+.single-estate-comment {
+    margin: 0 auto;
+    margin-top: 50px;
+}

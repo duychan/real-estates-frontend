@@ -1,4 +1,3 @@
-// @ts-ignore
 export const typeArr: string[] = [
     "Apartment",
     "House",
@@ -29,3 +28,9 @@ export const sortOptions: { value: string; label: string }[] = [
         label: "Highest price"
     }
 ];
+
+export const pi = 3.14;
+export const semicircle = 180;
+export const earthRadius = 6371008;
+export const earthCircumstance = 2 * pi * earthRadius;
+export const numberOfTile = 1;

@@ -12,6 +12,7 @@ export const RelatedCardStyle = styled(Card).attrs<IRelateEstate>(
 )`
     width: ${({ width }: { width: string }) => width};
     border-radius: 0%;
+    margin: 0 10px;
 `;
 
 export const RelatedEstate: React.FC<IRelateEstate> = ({ width }) => {
@@ -29,9 +30,9 @@ export const RelatedEstate: React.FC<IRelateEstate> = ({ width }) => {
                 </p>
             </div>
             <div className="estate-info">
-                <p>Bedrooms: 2</p>
-                <p>Bathrooms: 2</p>
-                <p>Estate size: 2m2</p>
+                <p className="estate-info-text">Bedrooms: 2</p>
+                <p className="estate-info-text">Bathrooms: 2</p>
+                <p className="estate-info-text">Estate size: 2m2</p>
             </div>
         </RelatedCardStyle>
     );

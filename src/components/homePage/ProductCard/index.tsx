@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import "./ProductCard.css";
-import { Card, Button } from "antd";
+import { Card } from "antd";
 import { EnvironmentOutlined } from "@ant-design/icons";
 import area from "../../../assets/images/area.jpg";
 import Aos from "aos";

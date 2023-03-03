@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./CarouselSingleProduct.css";
+import "./carouselSingleProduct.css";
 import { Image } from "antd";
 import HeroSlider, { Slide, Nav } from "hero-slider";
 
