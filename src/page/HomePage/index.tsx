@@ -5,7 +5,7 @@ import { InformationCard } from "../../components/homePage/InformationCard";
 import ProductCard from "../../components/homePage/ProductCard";
 import Search from "../../components/homePage/Search";
 import "./HomePage.css";
-import area from "../../../assets/images/area.jpg";
+import area from "../../assets/images/area.jpg";
 
 export const HomePage: React.FC = () => {
     return (
@@ -72,7 +72,20 @@ export const HomePage: React.FC = () => {
                     </Col>
                 </Row>
             </div>
-            <ProductCard />
+            <div className="list-estate">
+                <div className="title-productcard">
+                    <h1>List Product</h1>
+                </div>
+                <div className="list-estate-card">
+                    <ProductCard />
+                    <ProductCard />
+                    <ProductCard />
+                </div>
+                <div className="view-more">
+                    <button className="btn">View more </button>
+                </div>
+            </div>
+
             <div className="info-card">
                 <h1>News</h1>
                 <InformationCard />

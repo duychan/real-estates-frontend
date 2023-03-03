@@ -1,11 +1,11 @@
 .detail-product {
     margin: 30px auto;
-    width: 70%;
+    width: 80%;
     border: 1px solid var(--bg1-color);
     border-radius: 10px;
 }
 
-.content {
+.detail-product-content {
     padding: 15px 45px 15px 45px;
 }
 
@@ -75,7 +75,7 @@ h4 {
     margin-top: 5px;
 }
 
-p {
+.detail-product-p {
     font-size: var(--font-sz2);
 }
 

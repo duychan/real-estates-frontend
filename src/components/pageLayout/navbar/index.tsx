@@ -31,7 +31,7 @@ export const Navbar: React.FC = () => {
                         <SubMenu
                             title={
                                 <div className="dropdown">
-                                    <p>{`Language: ${language}`}</p>
+                                    <p className="dropdown-p">{`Language: ${language}`}</p>
                                     <CaretDownOutlined />
                                 </div>
                             }
@@ -61,7 +61,7 @@ export const Navbar: React.FC = () => {
                         <SubMenu
                             title={
                                 <div className="dropdown">
-                                    <p>{`Currency: ${currency} `}</p>
+                                    <p className="dropdown-p">{`Currency: ${currency} `}</p>
                                     <CaretDownOutlined />
                                 </div>
                             }

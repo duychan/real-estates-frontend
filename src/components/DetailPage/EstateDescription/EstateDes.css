@@ -1,0 +1,13 @@
+.estate-description {
+    width: 70%;
+    margin: 50px auto;
+    text-align: center;
+}
+.estate-description-title {
+    text-align: center;
+    color: var(--bg1-color);
+}
+.estate-description-text {
+    text-align: justify;
+    font-size: var(--font-sz1);
+}

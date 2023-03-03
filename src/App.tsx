@@ -10,6 +10,7 @@ import UserInformation from "./components/UserProfile/UserInfomation";
 import SideBar from "./components/UserProfile/SideBar/";
 import Register from "./page/Register";
 import { SearchEstateResult } from "./components/SearchResultPage/SearchEstateResult";
+import { SingleEstate } from "./page/SingleEstate";
 function App() {
     return (
         <Routes>
@@ -18,6 +19,7 @@ function App() {
                 <Route path="/home" element={<HomePage />} />
                 <Route path="/search-page" element={<SearchProperty />} />
                 <Route path="/myprofile/*" element={<SideBar />} />
+                <Route path="/single-estate" element={<SingleEstate />} />
             </Route>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<Register />} />
