@@ -1,12 +1,20 @@
 import React, { useEffect } from "react";
 import "./Register.css";
 import { Input, Form, Button } from "antd";
-import { UserOutlined, MailOutlined, LockOutlined } from "@ant-design/icons";
+import {
+    UserOutlined,
+    MailOutlined,
+    LockOutlined,
+    IdcardOutlined
+} from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import {
     ConfirmPasswordRule,
     EmailRule,
-    PasswordRule
+    PasswordRule,
+    FirstNameRule,
+    LastNameRule,
+    IDCard
 } from "../../common/helper/Validator";
 const Register: React.FC = () => {
     return (
@@ -29,6 +37,40 @@ const Register: React.FC = () => {
 
                     <Form layout="vertical" autoComplete="off">
                         <Form.Item
+                            label="First Name:"
+                            name="firstname"
+                            rules={FirstNameRule}
+                            hasFeedback
+                        >
+                            <Input
+                                placeholder="First Name"
+                                prefix={<UserOutlined />}
+                            />
+                        </Form.Item>
+                        <Form.Item
+                            label="Last Name:"
+                            name="lastname"
+                            rules={LastNameRule}
+                            hasFeedback
+                        >
+                            <Input
+                                placeholder="Last Name"
+                                prefix={<UserOutlined />}
+                            />
+                        </Form.Item>
+
+                        <Form.Item
+                            label="National ID:"
+                            name="nationalid"
+                            rules={IDCard}
+                            hasFeedback
+                        >
+                            <Input
+                                placeholder="Enter ID"
+                                prefix={<IdcardOutlined />}
+                            />
+                        </Form.Item>
+                        <Form.Item
                             label="E-mail:"
                             name="email"
                             rules={EmailRule}
@@ -37,7 +79,6 @@ const Register: React.FC = () => {
                             <Input
                                 placeholder="Enter Email Address"
                                 prefix={<MailOutlined />}
-                                size="large"
                             />
                         </Form.Item>
 
@@ -50,7 +91,6 @@ const Register: React.FC = () => {
                             <Input.Password
                                 placeholder="Enter Password"
                                 prefix={<LockOutlined />}
-                                size="large"
                             />
                         </Form.Item>
                         <Form.Item
@@ -63,7 +103,6 @@ const Register: React.FC = () => {
                             <Input.Password
                                 placeholder="Enter Confirm Password"
                                 prefix={<LockOutlined />}
-                                size="large"
                             />
                         </Form.Item>
                         <Form.Item>
@@ -76,9 +115,9 @@ const Register: React.FC = () => {
                         </Form.Item>
                     </Form>
 
-                    <hr />
+                    <hr className="register-hr" />
 
-                    <p style={{ margin: "2rem 0 " }}>
+                    <p className="register-link">
                         Already have an account? <Link to="/login">Login!</Link>
                     </p>
                 </div>
