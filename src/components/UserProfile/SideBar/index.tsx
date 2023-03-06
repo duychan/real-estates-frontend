@@ -18,8 +18,8 @@ const SideBar: React.FC = () => {
                         className="sidebar-menu"
                         theme="light"
                         mode="inline"
-                        defaultSelectedKeys={["/myprofile"]}
-                        defaultOpenKeys={["sub1"]}
+                        defaultSelectedKeys={["/user-profile"]}
+                        defaultOpenKeys={["/user-profile"]}
                         onClick={({ key }) => {
                             navigate(key);
                         }}

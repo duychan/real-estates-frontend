@@ -3,6 +3,7 @@ import "./HistoryEstate.css";
 import { Card, Avatar } from "antd";
 import { EnvironmentOutlined } from "@ant-design/icons";
 import area from "../../../assets/images/area.jpg";
+import { PaginationComponent } from "../../../common/sharedComponent/Pagination";
 
 const HistoryEstate: React.FC = () => {
     return (
@@ -107,6 +108,13 @@ const HistoryEstate: React.FC = () => {
                         </div>
                     </div>
                 </Card>
+            </div>
+            <div className="history-estate-pagination">
+                <PaginationComponent
+                    pageSize={4}
+                    totalItem={50}
+                    defaultCurrent={1}
+                />
             </div>
         </div>
     );

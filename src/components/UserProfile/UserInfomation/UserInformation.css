@@ -22,7 +22,29 @@
 
 .user-profile-img {
     border-radius: 50%;
-    width: 100%;
+    border: 0;
+    width: 150px;
+    height: 150px;
+}
+
+.user-profile-input-avatar {
+    position: absolute;
+    top: 45%;
+    left: 28%;
+}
+
+.user-profile-input-img {
+    opacity: 0;
+    width: 28%;
+    position: absolute;
+    top: 20%;
+}
+
+.user-profile-label-img {
+    text-decoration: underline;
+    cursor: pointer;
+    color: var(--silver3-color);
+    font-size: var(--font-sz7);
 }
 
 .ant-form-vertical .ant-form-item-label > label {
