@@ -70,3 +70,8 @@
     display: flex;
     justify-content: space-between;
 }
+
+.history-estate-pagination {
+    text-align: end;
+    margin-bottom: 20px;
+}

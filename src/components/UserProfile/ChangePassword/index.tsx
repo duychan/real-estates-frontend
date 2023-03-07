@@ -11,6 +11,21 @@ export const ChangePassword: React.FC = () => {
         <div className="change-password">
             <h1 className="change-password__title">Password settings</h1>
             <Form layout="vertical">
+                <Col xs={{ span: 9, offset: 1 }}>
+                    <Form.Item
+                        label="Enter current password:"
+                        name="currentPassword"
+                        rules={PasswordRule}
+                        hasFeedback
+                    >
+                        <div className="change-password__name">
+                            <Input.Password
+                                className="change-password__input"
+                                placeholder="Current Password"
+                            />
+                        </div>
+                    </Form.Item>
+                </Col>
                 <Row>
                     <Col xs={{ span: 9, offset: 1 }}>
                         <Form.Item
