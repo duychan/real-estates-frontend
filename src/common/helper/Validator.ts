@@ -46,3 +46,23 @@ export const EmailRule: Rule[] = [
         message: "Please enter a valid email"
     }
 ];
+export const FirstNameRule: Rule[] = [
+    {
+        required: true,
+        message: "Please enter your First Name"
+    },
+    { whitespace: true }
+];
+export const LastNameRule: Rule[] = [
+    {
+        required: true,
+        message: "Please enter your Last Name"
+    },
+    { whitespace: true }
+];
+export const IDCard: Rule[] = [
+    {
+        required: true,
+        message: "Please enter your ID "
+    }
+];
