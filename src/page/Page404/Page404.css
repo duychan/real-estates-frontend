@@ -1,0 +1,38 @@
+.page404 {
+    background: var(--white-color);
+    width: 100%;
+}
+
+.page404-title {
+    width: 100%;
+    background-image: url(../../assets/images/404page.gif);
+    height: 380px;
+    background-position: center;
+}
+.page404-h1 {
+    margin-block-start: 1rem;
+    text-align: center;
+    font-size: var(--font-sz18);
+    color: var(--bg1-color);
+}
+
+.page404-content {
+    text-align: center;
+}
+
+.page404-h2 {
+    font-size: var(--font-sz9);
+    color: var(--bg2-color);
+}
+
+.page404-p {
+    font-weight: var(--font-w3);
+}
+
+.page404-link {
+    color: var(--white-color);
+    padding: 10px 20px;
+    background: var(--bg5-color);
+    margin: 30px 0;
+    display: inline-block;
+}

@@ -9,6 +9,7 @@ import { MainLayout } from "./components/pageLayout";
 import SearchProperty from "./components/SearchResultPage/SearchProperty";
 import SideBar from "./components/UserProfile/SideBar/";
 import { SingleEstate } from "./page/SingleEstate";
+import { Page404 } from "./page/Page404";
 
 function App() {
     return (
@@ -23,6 +24,7 @@ function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<Register />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="*" element={<Page404 />} />
         </Routes>
     );
 }

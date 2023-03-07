@@ -63,6 +63,8 @@
     --item-selected: #1e382c;
     --box-shadColor3: rgba(50, 50, 105, 0.15);
     --box-shadColor4: rgba(0, 0, 0, 0.05);
+    --font-sz18: 6rem;
+    --bg5-color: #36795a;
 }
 
 .App {
