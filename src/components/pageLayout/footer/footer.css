@@ -11,6 +11,8 @@
     padding: 0 180px;
     height: auto;
     background-color: var(--bg1-color);
+    position: relative;
+    bottom: 0;
 }
 
 .col {
@@ -45,7 +47,7 @@
 
 .about-header {
     margin-bottom: 15px;
-    font-size: 1rem;
+    font-size: var(--font-sz15);
     font-weight: bold;
 }
 
@@ -68,7 +70,7 @@
     margin-right: 10px;
     color: var(--white-color);
     display: inline-block;
-    font-size: 30px;
+    font-size: var(--font-sz24);
 }
 
 .follow-icon:hover {

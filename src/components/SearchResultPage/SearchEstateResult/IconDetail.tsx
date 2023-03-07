@@ -4,15 +4,15 @@ import { IIconDetail } from "./SearchResultType";
 import "./SearchResult.css";
 
 export const IconDetail: React.FC<IIconDetail> = ({
-    key,
+    keyIcon,
     title,
     iconContent,
     icon
 }) => {
     return (
-        <span key={key}>
+        <span key={keyIcon}>
             <Tooltip title={title}>
-                <span>{iconContent}</span>
+                <span className="icon-content">{iconContent}</span>
                 {icon}
             </Tooltip>
         </span>

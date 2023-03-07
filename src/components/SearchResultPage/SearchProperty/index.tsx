@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import "./SearchProperty.css";
 import {
     Layout,
@@ -28,6 +28,12 @@ import styled from "styled-components";
 import { typeArr } from "../../../common/constants";
 import { sizeArr } from "../../../common/constants";
 import { sortOptions } from "../../../common/constants";
+import { Content } from "antd/es/layout/layout";
+import { SearchEstateResult } from "../SearchEstateResult";
+import { PaginationComponent } from "../../../common/sharedComponent/Pagination";
+import { ISearchEstateResult } from "../SearchEstateResult/SearchResultType";
+import { usePagination } from "../../../common/hooks/Pagination/usePagination";
+import { ReactComponent as NoData } from "../../../assets/icon/No-data-pana.svg";
 
 const StyleCollapsedIn = styled(MenuFoldOutlined)`
     font-size: var(--font-sz9);
@@ -35,10 +41,69 @@ const StyleCollapsedIn = styled(MenuFoldOutlined)`
 const StyleCollapsedOut = styled(MenuUnfoldOutlined)`
     font-size: var(--font-sz9);
 `;
-
+const PageSize = 4;
 const SearchProperty: React.FC = () => {
     const [value, setValue] = useState(0);
+    const [currentPage, setCurrentPage] = useState(1);
 
+    const estateResultList: ISearchEstateResult[] = [
+        {
+            estateId: "1",
+            estateName: "Toa nha ABC",
+            estateAddress: "52 Hoang Dieu, Hai Chau, Da Nang",
+            estatePrice: "2500",
+            estateBedroom: 2,
+            estateBathroom: 2,
+            estateArea: 100,
+            estateType: "Apartment"
+        },
+        {
+            estateId: "2",
+            estateName: "Toa nha ABC",
+            estateAddress: "52 Hoang Dieu, Hai Chau, Da Nang",
+            estatePrice: "2500",
+            estateBedroom: 2,
+            estateBathroom: 2,
+            estateArea: 100,
+            estateType: "Apartment"
+        },
+        {
+            estateId: "3",
+            estateName: "Toa nha ABC",
+            estateAddress: "52 Hoang Dieu, Hai Chau, Da Nang",
+            estatePrice: "2500",
+            estateBedroom: 2,
+            estateBathroom: 2,
+            estateArea: 100,
+            estateType: "Apartment"
+        },
+        {
+            estateId: "4",
+            estateName: "Toa nha ABC",
+            estateAddress: "52 Hoang Dieu, Hai Chau, Da Nang",
+            estatePrice: "2500",
+            estateBedroom: 2,
+            estateBathroom: 2,
+            estateArea: 100,
+            estateType: "Apartment"
+        },
+        {
+            estateId: "5",
+            estateName: "Toa nha ABC",
+            estateAddress: "52 Hoang Dieu, Hai Chau, Da Nang",
+            estatePrice: "2500",
+            estateBedroom: 2,
+            estateBathroom: 2,
+            estateArea: 100,
+            estateType: "Apartment"
+        }
+    ];
+
+    const currentData = usePagination<ISearchEstateResult>({
+        arrayData: estateResultList,
+        currentPage,
+        pageSize: PageSize
+    });
     const onChange = (e: RadioChangeEvent) => {
         setValue(e.target.value);
     };
@@ -220,6 +285,41 @@ const SearchProperty: React.FC = () => {
                             />
                         </div>
                     </div>
+                    <Content className="search-result-content">
+                        <div className="search-result-content-card">
+                            {estateResultList.length > 0 ? (
+                                currentData.map(item => {
+                                    const { estateId } = item;
+                                    return (
+                                        <SearchEstateResult
+                                            width="45%"
+                                            key={estateId}
+                                            {...item}
+                                        />
+                                    );
+                                })
+                            ) : (
+                                <div className="search-result-no-data">
+                                    <NoData className="search-result-no-data-img" />
+                                    <p className="search-result-empty-content">
+                                        No real estate is found
+                                    </p>
+                                </div>
+                            )}
+                        </div>
+                        <div className="search-result-content-pagination">
+                            {estateResultList.length > 0 && (
+                                <PaginationComponent
+                                    pageSize={PageSize}
+                                    totalItem={estateResultList.length}
+                                    defaultCurrent={1}
+                                    handleGetCurrentPage={(page: number) => {
+                                        setCurrentPage(page);
+                                    }}
+                                />
+                            )}
+                        </div>
+                    </Content>
                 </Layout>
             </Layout>
         </div>
