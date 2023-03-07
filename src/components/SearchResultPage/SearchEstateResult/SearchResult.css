@@ -1,9 +1,9 @@
 .estate-result-info {
-    width: 70%;
+    width: 100%;
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    align-items: center;
+    align-items: baseline;
 }
 .estate-result-header {
     display: flex;
@@ -12,17 +12,17 @@
     height: 30px;
 }
 .estate-result-price {
-    font-size: var(--font-sz20);
+    font-size: var(--font-sz28);
     font-weight: var(--font-w2);
     color: var(--bg1-color);
 }
 
 .estate-result-addr-detail {
-    font-size: var(--font-sz1);
+    font-size: var(--font-sz8);
 }
 
 .estate-result-addr-title {
-    font-size: var(--font-sz1);
+    font-size: var(--font-sz23);
     font-weight: var(--font-w3);
     color: var(--item-selected);
 }
@@ -30,4 +30,14 @@
 .estate-result-detail {
     padding-left: 5px;
     cursor: auto;
+}
+
+.estate-result-info-detail {
+    font-size: var(--font-sz8);
+    color: var(--item-selected);
+    margin: 0;
+}
+
+.icon-content {
+    font-size: var(--font-sz8);
 }

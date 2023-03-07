@@ -16,10 +16,18 @@ export const ResultEstateCardStyle = styled(Card).attrs<ISearchEstateResult>(
 )`
     width: ${({ width }: { width: string }) => width};
     border-radius: 0%;
+    margin: 10px;
 `;
 
 export const SearchEstateResult: React.FC<ISearchEstateResult> = ({
-    width
+    width,
+    estateName,
+    estateAddress,
+    estatePrice,
+    estateType,
+    estateBedroom,
+    estateBathroom,
+    estateArea
 }) => {
     return (
         <ResultEstateCardStyle
@@ -29,30 +37,29 @@ export const SearchEstateResult: React.FC<ISearchEstateResult> = ({
         >
             <div className="estate-result-address">
                 <div className="estate-result-header">
-                    <p className="estate-result-addr-title">
-                        K146/5B Nguyen Hoang, Hai Chau, Da Nang
-                    </p>
-                    <p className="estate-result-price">$25000</p>
+                    <p className="estate-result-addr-title">{estateName}</p>
+                    <p className="estate-result-price">{`$${estatePrice}`}</p>
                 </div>
-                <p className="estate-result-addr-detail">Apartment</p>
+                <p className="estate-result-addr-detail">{estateAddress}</p>
             </div>
             <div className="estate-result-info">
+                <p className="estate-result-info-detail">{estateType}</p>
                 <IconDetail
-                    key="estate-bedroom"
+                    keyIcon="estate-bedroom"
                     title="Bedroom"
-                    iconContent="3"
+                    iconContent={String(estateBedroom)}
                     icon={<BedIcon className="estate-result-detail" />}
                 />
                 <IconDetail
-                    key="estate-bathroom"
+                    keyIcon="estate-bathroom"
                     title="Bathroom"
-                    iconContent="5"
+                    iconContent={String(estateBathroom)}
                     icon={<BathIcon className="estate-result-detail" />}
                 />
                 <IconDetail
-                    key="estate-house-size"
+                    keyIcon="estate-house-size"
                     title="HouseSize"
-                    iconContent="2m^2"
+                    iconContent={`${estateArea}m^2`}
                     icon={<HouseSizeIcon className="estate-result-detail" />}
                 />
             </div>

@@ -6,7 +6,8 @@ import { IPagination } from "./PaginationType";
 export const PaginationComponent: React.FC<IPagination> = ({
     pageSize,
     totalItem,
-    defaultCurrent
+    defaultCurrent,
+    handleGetCurrentPage
 }) => {
     return (
         <Pagination
@@ -14,6 +15,9 @@ export const PaginationComponent: React.FC<IPagination> = ({
             defaultCurrent={defaultCurrent}
             pageSize={pageSize}
             total={totalItem}
+            onChange={page => {
+                handleGetCurrentPage(page);
+            }}
         />
     );
 };

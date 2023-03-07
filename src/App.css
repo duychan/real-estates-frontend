@@ -19,7 +19,7 @@
     --font-sz7: 1.2vw;
     --font-sz8: 1vw;
     --font-sz9: 2vw;
-    --font-sz10: 20px;
+    --font-sz18: 25px;
     --font-sz20: 1.3rem;
     --font-sz17: 0.8rem;
     --font-sz10: 40px;
@@ -65,6 +65,10 @@
     --box-shadColor4: rgba(0, 0, 0, 0.05);
     --font-sz18: 6rem;
     --bg5-color: #36795a;
+    --font-sz28: 1.55vw;
+    --font-sz23: 1.35vw;
+    --font-sz24: 30px;
+    --font-sz25: rgba(149, 157, 165, 0.2);
 }
 
 .App {
