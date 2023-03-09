@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./HistoryEstate.css";
 import { Card, Avatar } from "antd";
 import { EnvironmentOutlined } from "@ant-design/icons";
@@ -6,6 +6,8 @@ import area from "../../../assets/images/area.jpg";
 import { PaginationComponent } from "../../../common/sharedComponent/Pagination";
 
 const HistoryEstate: React.FC = () => {
+    const [currentPage, setCurrentPage] = useState(1);
+
     return (
         <div className="history-estate">
             <div className="history-estate-product-list">
@@ -114,6 +116,9 @@ const HistoryEstate: React.FC = () => {
                     pageSize={4}
                     totalItem={50}
                     defaultCurrent={1}
+                    handleGetCurrentPage={(page: number) =>
+                        setCurrentPage(page)
+                    }
                 />
             </div>
         </div>
