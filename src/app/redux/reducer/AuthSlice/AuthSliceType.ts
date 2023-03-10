@@ -13,7 +13,7 @@ export interface IAuthState {
     messageResponse: string;
     data: {
         user: IUserInformation;
-        token: string;
+        token: string | null;
     };
     isLoading: boolean;
 }

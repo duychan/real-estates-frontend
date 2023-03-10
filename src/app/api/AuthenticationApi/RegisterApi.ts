@@ -5,7 +5,7 @@ export const getRegisterAPI = async (userRegister: IUserRegisterInput) => {
     return await BaseApi.post("/users/signup", userRegister)
         .then(response => {
             if (response.data.message === "success") {
-                localStorage.setItem("registerToken", response.data.token);
+                localStorage.setItem("loginToken", response.data.data.token);
             }
             return response.data;
         })

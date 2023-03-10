@@ -2,8 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 import { UserLogin, UserProfile } from "../../action/AuthAction";
 import { IAuthState } from "./AuthSliceType";
 import { SignupUser } from "../../action/AuthAction";
+import { RootState } from "../../store";
 
-const userToken = localStorage.getItem("userToken") ?? "";
+const userToken = localStorage.getItem("loginToken") ?? null;
 const initialState: IAuthState = {
     isLoading: false,
     messageResponse: "",
@@ -22,43 +23,88 @@ const initialState: IAuthState = {
     }
 };
 
-const AuthSlice = createSlice({
+export const AuthSlice = createSlice({
     name: "auth",
     initialState,
     reducers: {
         logout: (state: IAuthState) => {
-            state.messageResponse = "";
-            state.isLoading = false;
-            state.data.user = initialState.data.user;
             localStorage.removeItem("loginToken");
+            return {
+                ...state,
+                messageResponse: "",
+                data: {
+                    user: initialState.data.user,
+                    token: null
+                },
+                isLoading: false
+            };
         }
     },
     extraReducers: builder => {
         builder
             .addCase(UserLogin.pending, state => {
-                state.isLoading = true;
+                return { ...state, isLoading: true };
             })
             .addCase(UserLogin.fulfilled, (state, action) => {
-                state.messageResponse = action.payload.message;
-                state.isLoading = false;
-                state.data.user = action.payload.data.user;
-                state.data.user.imgUser = "";
+                const {
+                    data = { user: {}, token: null },
+                    message = ""
+                } = action.payload;
+
+                return {
+                    ...state,
+                    messageResponse: message,
+                    data,
+                    isLoading: false
+                };
+            })
+            .addCase(UserLogin.rejected, state => {
+                return { ...state, messageResponse: "CANNOT CONNECT SERVER!" };
             });
 
-        builder.addCase(UserProfile.fulfilled, (state, action) => {
-            state.messageResponse = action.payload.message;
-            state.data.user = action.payload.data.record;
-            state.data.user.imgUser = "";
-        });
-        builder.addCase(SignupUser.pending, (state, action) => {
-            state.isLoading = true;
-        });
-        builder.addCase(SignupUser.fulfilled, (state, action) => {
-            state.messageResponse = action.payload.message;
-            state.data = action.payload.data;
-            state.isLoading = false;
-        });
+        builder
+            .addCase(UserProfile.fulfilled, (state, action) => {
+                const {
+                    payload: { message = "" }
+                } = action;
+
+                return {
+                    ...state,
+                    messageResponse: message,
+                    data: {
+                        ...state.data,
+                        user: action.payload.data?.record ?? {}
+                    }
+                };
+            })
+            .addCase(UserProfile.rejected, state => {
+                return { ...state, messageResponse: "CANNOT CONNECT SERVER!" };
+            });
+        builder
+            .addCase(SignupUser.pending, (state, action) => {
+                return { ...state, isLoading: true };
+            })
+            .addCase(SignupUser.fulfilled, (state, action) => {
+                const {
+                    data = { user: {}, token: null },
+                    message = ""
+                } = action.payload;
+
+                return {
+                    ...state,
+                    messageResponse: message,
+                    data,
+                    isLoading: false
+                };
+            })
+            .addCase(SignupUser.rejected, state => {
+                return { ...state, messageResponse: "CANNOT CONNECT SERVER!" };
+            });
     }
 });
 export default AuthSlice.reducer;
 export const { logout } = AuthSlice.actions;
+export const getUserToken = (state: RootState) => state.auth.data.token;
+export const getUser = (state: RootState) => state.auth.data.user;
+export const getMessageResponse = (state: RootState) =>
+    state.auth.messageResponse;

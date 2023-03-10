@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback } from "react";
 import "./Register.css";
 import { Input, Form, Button, message } from "antd";
 import {
@@ -43,17 +43,6 @@ const Register: React.FC = () => {
     const onFinish = (user: IUserRegisterInput) => {
         dispatch(SignupUser(user));
     };
-
-    useEffect(() => {
-        if (messageResponse === "success") {
-            success();
-            setTimeout(() => {
-                navigate("/");
-            }, timeOut);
-        } else {
-            error();
-        }
-    }, [error, messageResponse, navigate, success]);
 
     return (
         <div className="register">

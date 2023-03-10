@@ -1,11 +1,19 @@
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, message } from "antd";
 import React from "react";
 import "../Register/Register.css";
-import { UserOutlined, MailOutlined, LockOutlined } from "@ant-design/icons";
+import { MailOutlined, LockOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { EmailRule, PasswordRule } from "../../common/helper/Validator";
+import { IUserLoginInput } from "../../app/api/AuthenticationApi/AuthType";
+import { useAppDispatch } from "../../app/redux/store";
+import { UserLogin } from "../../app/redux/action/AuthAction";
 
 export const LoginPage: React.FC = () => {
+    const dispatch = useAppDispatch();
+
+    const handleLogin = (values: IUserLoginInput) => {
+        dispatch(UserLogin(values));
+    };
     return (
         <div className="register">
             <div className="register-title">
@@ -23,7 +31,11 @@ export const LoginPage: React.FC = () => {
                 <div className="register-content">
                     <h1 className="title-register">Log in to your account!</h1>
 
-                    <Form autoComplete="off" layout="vertical">
+                    <Form
+                        autoComplete="off"
+                        layout="vertical"
+                        onFinish={handleLogin}
+                    >
                         <Form.Item
                             name={"email"}
                             label="E-mail"
@@ -63,7 +75,9 @@ export const LoginPage: React.FC = () => {
                             </a>
                         </Form.Item>
 
-                        <Button className="button-login">LOGIN</Button>
+                        <Button className="button-login" htmlType="submit">
+                            LOGIN
+                        </Button>
                     </Form>
 
                     <hr />
