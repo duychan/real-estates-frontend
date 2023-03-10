@@ -33,7 +33,7 @@ export const Navbar: React.FC = () => {
                 </Col>
                 <Col span={16} offset={2} className="col-menu">
                     <Menu className="menu" theme="light" mode="horizontal">
-                        {["Buy", "Rent", "Sell", "Contact"].map(item => (
+                        {["Rent", "Contact Us"].map(item => (
                             <Menu.Item key={`item-${item}`}>{item}</Menu.Item>
                         ))}
                         <SubMenu
@@ -96,12 +96,6 @@ export const Navbar: React.FC = () => {
                                 ))}
                             </MenuItemGroup>
                         </SubMenu>
-                        <Menu.Item key="facebookLink" className="facebook-link">
-                            <FacebookOutlined className="link" />
-                        </Menu.Item>
-                        <Menu.Item key="instagramLink">
-                            <InstagramOutlined className="link" />
-                        </Menu.Item>
                         <AvatarUser />
                         <Menu.Item>
                             <LoginUser />
