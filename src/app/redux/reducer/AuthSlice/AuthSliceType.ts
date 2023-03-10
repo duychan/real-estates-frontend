@@ -5,10 +5,15 @@ export interface IUserInformation {
     email: string;
     createAt: string;
     imgUser: string;
+    nationalId: string;
+    updateAt: string;
 }
 
 export interface IAuthState {
+    messageResponse: string;
+    data: {
+        user: IUserInformation;
+        token: string;
+    };
     isLoading: boolean;
-    message: string;
-    user: IUserInformation;
 }

@@ -19,7 +19,7 @@
     position: absolute;
     width: 80%;
     margin: auto auto;
-    top: 45%;
+    top: 40%;
     left: 0;
     right: 0;
     display: flex;
@@ -34,7 +34,7 @@
 
 .search-title {
     position: relative;
-    font-size: var(--font-sz9);
+    font-size: var(--font-sz30);
     width: max-content;
 }
 
@@ -43,7 +43,7 @@
     content: "";
     background: var(--SecondaryColor);
     height: 5px;
-    width: 300px;
+    width: 200px;
     right: 5px;
     bottom: 2px;
     z-index: -1;

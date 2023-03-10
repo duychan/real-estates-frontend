@@ -63,12 +63,13 @@
     --item-selected: #1e382c;
     --box-shadColor3: rgba(50, 50, 105, 0.15);
     --box-shadColor4: rgba(0, 0, 0, 0.05);
-    --font-sz18: 6rem;
+    --font-sz31: 6rem;
     --bg5-color: #36795a;
     --font-sz28: 1.55vw;
     --font-sz23: 1.35vw;
     --font-sz24: 30px;
     --font-sz25: rgba(149, 157, 165, 0.2);
+    --font-sz30: 3rem;
 }
 
 .App {

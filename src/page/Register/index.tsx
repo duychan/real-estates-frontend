@@ -1,13 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import "./Register.css";
-import { Input, Form, Button } from "antd";
+import { Input, Form, Button, message } from "antd";
 import {
     UserOutlined,
     MailOutlined,
     LockOutlined,
     IdcardOutlined
 } from "@ant-design/icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
     ConfirmPasswordRule,
     EmailRule,
@@ -16,7 +16,45 @@ import {
     LastNameRule,
     IDCard
 } from "../../common/helper/Validator";
+import { useSelector } from "react-redux";
+import { RootState, useAppDispatch } from "../../app/redux/store";
+import { SignupUser } from "../../app/redux/action/AuthAction";
+import { IUserRegisterInput } from "../../app/api/AuthenticationApi/AuthType";
+const timeOut = 2000;
+
 const Register: React.FC = () => {
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+    const [messageApi, contextHolder] = message.useMessage();
+    const { messageResponse } = useSelector((state: RootState) => state.auth);
+    const success = useCallback(() => {
+        messageApi.open({
+            type: "success",
+            content: "Login successful!"
+        });
+    }, [messageApi]);
+    const error = useCallback(() => {
+        messageApi.open({
+            type: "error",
+            content: messageResponse
+        });
+    }, [messageApi, messageResponse]);
+
+    const onFinish = (user: IUserRegisterInput) => {
+        dispatch(SignupUser(user));
+    };
+
+    useEffect(() => {
+        if (messageResponse === "success") {
+            success();
+            setTimeout(() => {
+                navigate("/");
+            }, timeOut);
+        } else {
+            error();
+        }
+    }, [error, messageResponse, navigate, success]);
+
     return (
         <div className="register">
             <div className="register-title">
@@ -35,10 +73,14 @@ const Register: React.FC = () => {
                 <div className="register-content">
                     <h1 className="title-register">Create an account!</h1>
 
-                    <Form layout="vertical" autoComplete="off">
+                    <Form
+                        layout="vertical"
+                        autoComplete="off"
+                        onFinish={onFinish}
+                    >
                         <Form.Item
                             label="First Name:"
-                            name="firstname"
+                            name="firstName"
                             rules={FirstNameRule}
                             hasFeedback
                         >
@@ -49,7 +91,7 @@ const Register: React.FC = () => {
                         </Form.Item>
                         <Form.Item
                             label="Last Name:"
-                            name="lastname"
+                            name="lastName"
                             rules={LastNameRule}
                             hasFeedback
                         >
@@ -58,10 +100,9 @@ const Register: React.FC = () => {
                                 prefix={<UserOutlined />}
                             />
                         </Form.Item>
-
                         <Form.Item
                             label="National ID:"
-                            name="nationalid"
+                            name="nationalId"
                             rules={IDCard}
                             hasFeedback
                         >
@@ -95,7 +136,7 @@ const Register: React.FC = () => {
                         </Form.Item>
                         <Form.Item
                             label="Confirm Password"
-                            name="confirmpassword"
+                            name="passwordConfirm"
                             dependencies={["password"]}
                             rules={ConfirmPasswordRule}
                             hasFeedback
@@ -117,11 +158,12 @@ const Register: React.FC = () => {
 
                     <hr className="register-hr" />
 
-                    <p className="register-link">
+                    <p>
                         Already have an account? <Link to="/login">Login!</Link>
                     </p>
                 </div>
             </div>
+            {messageResponse !== "" ? <> {contextHolder}</> : null}
         </div>
     );
 };
