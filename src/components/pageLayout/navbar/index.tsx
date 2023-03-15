@@ -36,83 +36,81 @@ export const Navbar: React.FC = () => {
 
     return (
         <div className="nav">
-            <Row justify="center" align="top">
-                <Col span={3}>
-                    <img
-                        src={RicciCoLogo}
-                        className="header-logo"
-                        onClick={() => navigate("/")}
-                    />
-                </Col>
-                <Col span={16} offset={2} className="col-menu">
-                    <Menu className="menu" theme="light" mode="horizontal">
-                        {["Rent", "Contact Us"].map(item => (
-                            <Menu.Item key={`item-${item}`}>{item}</Menu.Item>
-                        ))}
-                        <SubMenu
-                            title={
-                                <div className="dropdown">
-                                    <p className="dropdown-text">{`Language: ${language}`}</p>
-                                    <CaretDownOutlined />
-                                </div>
-                            }
-                            key="Language"
-                        >
-                            <MenuItemGroup>
-                                {Object.keys(languageList).map(key => (
-                                    <Menu.Item
-                                        key={key}
-                                        onClick={() =>
-                                            setLanguage(
-                                                languageList[
-                                                    key as keyof typeof languageList
-                                                ]
-                                            )
-                                        }
-                                    >
-                                        {
+            <img
+                src={RicciCoLogo}
+                className="header-logo"
+                onClick={() => navigate("/")}
+            />
+            <div className="nav-menu">
+                <Menu className="menu" theme="light" mode="horizontal">
+                    {["Rent", "Contact Us"].map(item => (
+                        <Menu.Item key={`item-${item}`} className="nav-text">
+                            {item}
+                        </Menu.Item>
+                    ))}
+                    <SubMenu
+                        title={
+                            <div className="dropdown">
+                                <p className="dropdown-text">{`Language: ${language}`}</p>
+                                <CaretDownOutlined />
+                            </div>
+                        }
+                        key="Language"
+                    >
+                        <MenuItemGroup>
+                            {Object.keys(languageList).map(key => (
+                                <Menu.Item
+                                    key={key}
+                                    onClick={() =>
+                                        setLanguage(
                                             languageList[
                                                 key as keyof typeof languageList
                                             ]
-                                        }
-                                    </Menu.Item>
-                                ))}
-                            </MenuItemGroup>
-                        </SubMenu>
-                        <SubMenu
-                            title={
-                                <div className="dropdown">
-                                    <p className="dropdown-text">{`Currency: ${currency} `}</p>
-                                    <CaretDownOutlined />
-                                </div>
-                            }
-                            key="Currency"
-                        >
-                            <MenuItemGroup>
-                                {Object.keys(currencyList).map(key => (
-                                    <Menu.Item
-                                        key={key}
-                                        onClick={() =>
-                                            setCurrency(
-                                                currencyList[
-                                                    key as keyof typeof currencyList
-                                                ]
-                                            )
-                                        }
-                                    >
-                                        {
+                                        )
+                                    }
+                                >
+                                    {
+                                        languageList[
+                                            key as keyof typeof languageList
+                                        ]
+                                    }
+                                </Menu.Item>
+                            ))}
+                        </MenuItemGroup>
+                    </SubMenu>
+                    <SubMenu
+                        title={
+                            <div className="dropdown">
+                                <p className="dropdown-text">{`Currency: ${currency} `}</p>
+                                <CaretDownOutlined />
+                            </div>
+                        }
+                        key="Currency"
+                    >
+                        <MenuItemGroup>
+                            {Object.keys(currencyList).map(key => (
+                                <Menu.Item
+                                    key={key}
+                                    onClick={() =>
+                                        setCurrency(
                                             currencyList[
                                                 key as keyof typeof currencyList
                                             ]
-                                        }
-                                    </Menu.Item>
-                                ))}
-                            </MenuItemGroup>
-                        </SubMenu>
-                        <UserAuth />
-                    </Menu>
-                </Col>
-            </Row>
+                                        )
+                                    }
+                                >
+                                    {
+                                        currencyList[
+                                            key as keyof typeof currencyList
+                                        ]
+                                    }
+                                </Menu.Item>
+                            ))}
+                        </MenuItemGroup>
+                    </SubMenu>
+                    <UserAuth />
+                </Menu>
+            </div>
         </div>
     );
 };

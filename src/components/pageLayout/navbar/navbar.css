@@ -1,6 +1,9 @@
 .nav {
-    width: 100%;
+    width: 80%;
     margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .header-logo {
@@ -17,26 +20,16 @@
 .dropdown .dropdown-text {
     margin: 0 auto;
     padding-right: 10px;
+    font-size: var(--font-sz15);
 }
 
-.link {
-    background-color: var(--bg1-color);
-    padding: 5px;
-    font-size: var(--font-sz19);
-    color: var(--white-color);
+.nav-menu {
+    width: 70%;
 }
 
-.col-menu {
-    margin: auto 0;
-    padding-left: 10%;
-}
-
-.col-menu .menu {
+.nav-menu .menu {
     border-bottom: 0px;
-}
-
-.col-menu .menu .facebook-link {
-    padding-right: 0px;
+    justify-content: flex-end;
 }
 
 .ant-menu-light.ant-menu-horizontal > .ant-menu-item::after,
@@ -63,6 +56,7 @@
 .user-button-p {
     margin: 0 auto;
     padding: 0 10px;
+    font-size: var(--font-sz15);
 }
 .user-button-p:hover {
     background-color: var(--cardBG);
@@ -73,4 +67,8 @@
 }
 .sidebar-title {
     color: var(--silver3-color);
+}
+
+.nav-text {
+    font-size: var(--font-sz15);
 }
