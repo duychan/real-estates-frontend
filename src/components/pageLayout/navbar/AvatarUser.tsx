@@ -62,7 +62,11 @@ export const AvatarUser: React.FC = () => {
                     </Menu.Item>
                 ))}
                 <MenuDivider />
-                <Menu.Item icon={<LogoutOutlined />} onClick={handleLogout}>
+                <Menu.Item
+                    key={"user-logout"}
+                    icon={<LogoutOutlined />}
+                    onClick={handleLogout}
+                >
                     Logout
                 </Menu.Item>
             </MenuItemGroup>
