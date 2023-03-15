@@ -1,0 +1,47 @@
+.upload-image {
+    margin: 0 auto;
+    padding: 20px 80px;
+    width: 80%;
+    box-shadow: var(--box-shadColor3) 0px 2px 5px 0px,
+        var(--box-shadColor4) 0px 1px 1px 0px;
+    border: 0.1em solid var(--bg3-color);
+    background-color: var(--bg6-color);
+}
+
+.upload-image-label {
+    color: var(--bg1-color);
+    font-weight: var(--font-w2);
+    font-size: var(--font-sz9);
+    margin-block-end: 1px;
+}
+
+.upload-image-hr {
+    background-color: var(--box-shadColor3);
+}
+
+.upload-image-description {
+    font-size: var(--font-sz12);
+    color: var(--silver3-color);
+}
+
+.upload-image-h1 {
+    font-size: var(--font-sz4);
+    color: var(--bg5-color);
+    font-weight: var(--font-w11);
+}
+.ant-upload-wrapper .ant-upload-list {
+    overflow-x: scroll;
+    white-space: nowrap;
+    scroll-snap-align: end;
+}
+.ant-upload-wrapper.ant-upload-picture-card-wrapper
+    .ant-upload.ant-upload-select {
+    width: 20%;
+    height: 185px;
+}
+.ant-upload-wrapper.ant-upload-picture-card-wrapper
+    .ant-upload-list.ant-upload-list-picture-card
+    .ant-upload-list-item-container {
+    width: 20%;
+    height: 20%;
+}
