@@ -90,6 +90,13 @@
     font-size: var(--font-sz11);
 }
 
+.ant-checkbox-group {
+    display: grid;
+}
+.ant-checkbox-wrapper + .ant-checkbox-wrapper {
+    margin-inline-start: 0px;
+    margin-top: 10px;
+}
 .search-property-type-checkbox {
     margin-left: 28px;
     margin-top: 10px;

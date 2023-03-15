@@ -1,9 +1,8 @@
-export const typeArr: string[] = [
-    "Apartment",
-    "House",
-    "Studio",
-    "Private Room",
-    "Shared Room"
+export const typeArr: { value: string; label: string }[] = [
+    { value: "1", label: "Apartment" },
+    { value: "2", label: "House" },
+    { value: "3", label: "Private Room" },
+    { value: "4", label: "Shared Room" }
 ];
 
 export const sizeArr: string[] = [
