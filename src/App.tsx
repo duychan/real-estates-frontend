@@ -13,7 +13,7 @@ import { Page404 } from "./page/Page404";
 import ProtectedRoute from "./common/ProtectedRoute";
 import { useSelector } from "react-redux";
 import { getUserToken } from "./app/redux/reducer/AuthSlice";
-
+import UploadImage from "./components/UploadPage/UploadImage";
 const UserAuth = (navigateComponent: ReactNode) => {
     const userToken = useSelector(getUserToken);
     const isAuth = userToken !== null;
@@ -32,6 +32,7 @@ function App() {
                     <Route path="/myprofile/*" element={<SideBar />} />
                 </Route>
                 <Route path="/single-estate" element={<SingleEstate />} />
+                <Route path="/upload-estate" element={<UploadImage />} />
             </Route>
 
             <Route path="/login" element={UserAuth(<LoginPage />)} />
