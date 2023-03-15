@@ -218,16 +218,11 @@ const SearchProperty: React.FC = () => {
                                 <SettingOutlined className="search-property-menu-icon" />
                             }
                         >
-                            {typeArr.map((item, index) => {
-                                return (
-                                    <div
-                                        className="search-property-type-checkbox"
-                                        key={`update-item-${index}`}
-                                    >
-                                        <Checkbox value={item}>{item}</Checkbox>
-                                    </div>
-                                );
-                            })}
+                            <div className="search-property-type-checkbox">
+                                <Checkbox.Group
+                                    options={typeArr}
+                                ></Checkbox.Group>
+                            </div>
                         </SubMenu>
                         <hr className="search-property-hr" />
                         <SubMenu
