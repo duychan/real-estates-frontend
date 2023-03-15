@@ -4,17 +4,48 @@ import { LogoutOutlined } from "@ant-design/icons";
 import MenuDivider from "antd/es/menu/MenuDivider";
 import { useNavigate } from "react-router-dom";
 import { routesSideBar } from "../../UserProfile/SideBar/SideBar";
+import { useAppDispatch } from "../../../app/redux/store";
+import { getUser, logout } from "../../../app/redux/reducer/AuthSlice";
+import { useSelector } from "react-redux";
+import styled from "styled-components";
+
+const AvatarNameStyle = styled.p`
+    color: var(--bg1-color);
+    margin: auto 0;
+    line-height: 2.2;
+    font-size: var(--font-sz19);
+    background-color: var(--cardBG);
+`;
+
 export const AvatarUser: React.FC = () => {
     const SubMenu = Menu.SubMenu;
     const MenuItemGroup = Menu.ItemGroup;
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
+    const { firstName, lastName, imgUser } = useSelector(getUser);
+    const handleLogout = () => {
+        dispatch(logout());
+        navigate("/");
+    };
+
+    const avatarName =
+        firstName && lastName
+            ? firstName[0].toUpperCase() + lastName[0].toUpperCase()
+            : "";
+
     return (
         <SubMenu
             title={
                 <Avatar
-                    src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-                    alt="Han Solo"
-                    size={40}
+                    src={
+                        imgUser ? (
+                            imgUser
+                        ) : (
+                            <AvatarNameStyle>{avatarName}</AvatarNameStyle>
+                        )
+                    }
+                    alt=""
+                    size={45}
                 />
             }
             key="avatar-user"
@@ -31,7 +62,9 @@ export const AvatarUser: React.FC = () => {
                     </Menu.Item>
                 ))}
                 <MenuDivider />
-                <Menu.Item icon={<LogoutOutlined />}>Logout</Menu.Item>
+                <Menu.Item icon={<LogoutOutlined />} onClick={handleLogout}>
+                    Logout
+                </Menu.Item>
             </MenuItemGroup>
         </SubMenu>
     );
