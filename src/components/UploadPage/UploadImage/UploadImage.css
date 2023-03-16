@@ -1,5 +1,5 @@
 .upload-image {
-    margin: 0 auto;
+    margin: 30px auto;
     padding: 20px 80px;
     width: 80%;
     box-shadow: var(--box-shadColor3) 0px 2px 5px 0px,
@@ -30,7 +30,7 @@
     font-weight: var(--font-w11);
 }
 .ant-upload-wrapper .ant-upload-list {
-    overflow-x: scroll;
+    overflow-x: auto;
     white-space: nowrap;
     scroll-snap-align: end;
 }

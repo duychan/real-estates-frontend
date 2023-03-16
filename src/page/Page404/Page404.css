@@ -6,6 +6,7 @@
 .page404-title {
     width: 100%;
     background-image: url(../../assets/images/404page.gif);
+    background-repeat: no-repeat;
     height: 380px;
     background-position: center;
 }

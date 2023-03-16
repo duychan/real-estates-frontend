@@ -1,0 +1,21 @@
+.input-infomation-h1 {
+    font-size: var(--font-sz4);
+    color: var(--bg5-color);
+    font-weight: var(--font-w11);
+}
+.input-information-number {
+    width: 60%;
+}
+.input-information-button {
+    background-color: var(--bg1-color);
+    color: var(--white-color);
+    font-weight: var(--font-w3);
+    border: 0;
+    border-radius: 6px;
+    box-sizing: border-box;
+    display: block;
+    height: 45px;
+    width: 100px;
+    padding: 0.8rem;
+    align-items: center;
+}

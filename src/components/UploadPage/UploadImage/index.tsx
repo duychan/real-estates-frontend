@@ -3,7 +3,8 @@ import "./UploadImage.css";
 import { PlusOutlined } from "@ant-design/icons";
 import { Modal, Upload, message } from "antd";
 import type { RcFile, UploadProps } from "antd/es/upload";
-import type { UploadChangeParam, UploadFile } from "antd/es/upload/interface";
+import type { UploadFile } from "antd/es/upload/interface";
+import InputInformation from "../InputInformation";
 
 const getBase64 = (file: RcFile | Blob): Promise<string> =>
     new Promise((resolve, reject) => {
@@ -98,6 +99,7 @@ const UploadImage: React.FC = () => {
                     />
                 </Modal>
             </div>
+            <InputInformation />
         </div>
     );
 };

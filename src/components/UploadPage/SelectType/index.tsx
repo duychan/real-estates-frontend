@@ -8,6 +8,7 @@ const SelecType: React.FC = () => {
             <Select
                 className="select-type-option"
                 defaultValue="1"
+                size="large"
                 options={typeArr}
             />
         </div>
