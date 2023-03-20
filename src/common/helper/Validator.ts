@@ -82,7 +82,42 @@ export const AddressRule: Rule[] = [
 export const PhoneNumberRule: Rule[] = [
     {
         required: true,
-        message: "Please enter your Address "
+        message: "Please enter your Phone Number "
     },
     { whitespace: true }
+];
+
+export const NameEstateRule: Rule[] = [
+    {
+        required: true,
+        message: "Please enter your Estate Title "
+    },
+    { whitespace: true }
+];
+
+export const AreaEstateRule: Rule[] = [
+    {
+        required: true,
+        message: "Please enter your Estate Area "
+    }
+];
+
+export const BathRoomRule: Rule[] = [
+    {
+        required: true,
+        message: "Please enter your Estate BathRoom "
+    }
+];
+
+export const BedRoomRule: Rule[] = [
+    {
+        required: true,
+        message: "Please enter your Estate BedRoom "
+    }
+];
+export const PriceEstateRule: Rule[] = [
+    {
+        required: true,
+        message: "Please enter your Estate Price "
+    }
 ];

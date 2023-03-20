@@ -30,9 +30,9 @@ function App() {
                 <Route element={<ProtectedRoute />}>
                     <Route path="/search-page" element={<SearchProperty />} />
                     <Route path="/myprofile/*" element={<SideBar />} />
+                    <Route path="/upload-estate" element={<UploadImage />} />
                 </Route>
                 <Route path="/single-estate" element={<SingleEstate />} />
-                <Route path="/upload-estate" element={<UploadImage />} />
             </Route>
 
             <Route path="/login" element={UserAuth(<LoginPage />)} />
