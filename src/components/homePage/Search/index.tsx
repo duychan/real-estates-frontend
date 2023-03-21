@@ -1,14 +1,29 @@
 import React, { useEffect } from "react";
 import "./Search.css";
-import { Input, Col, Row } from "antd";
+import { Input, Col, Row, Form, Button, InputNumber } from "antd";
+import { useNavigate } from "react-router-dom";
 import {
     SearchOutlined,
     EnvironmentOutlined,
     ProfileOutlined,
-    ToolOutlined
+    ToolOutlined,
+    MoneyCollectOutlined
 } from "@ant-design/icons";
-import img1 from "../../assets/images/img2.avif";
+import SelecType from "../../UploadPage/SelectType";
+import { ISelectOption } from "../../UploadPage/SelectType/SelectItemType";
+import { useDispatch, useSelector } from "react-redux";
+import { ISearchHomePage } from "./SearchType";
+import { useAppDispatch } from "../../../app/redux/store";
+import { SearchHomePage } from "../../../app/redux/action/SearchResultAction";
+
 const Search: React.FC = () => {
+    const navigate = useNavigate();
+    const dispatch = useAppDispatch();
+    const onFinish = (query: ISearchHomePage) => {
+        dispatch(SearchHomePage(query));
+    };
+    const [form] = Form.useForm();
+
     return (
         <div className="search">
             <div className="image">
@@ -26,46 +41,68 @@ const Search: React.FC = () => {
                 </div>
 
                 <div data-aos="fade-up" className="card-div">
-                    <Row>
-                        <Col
-                            xs={{ span: 6, offset: 1 }}
-                            lg={{ span: 6, offset: 2 }}
-                        >
-                            <label htmlFor="date">Search by location:</label>
-                            <Input
-                                className="input-search"
-                                placeholder="search location"
-                                suffix={<EnvironmentOutlined />}
-                            ></Input>
-                        </Col>
-                        <Col
-                            xs={{ span: 5, offset: 1 }}
-                            lg={{ span: 6, offset: 1 }}
-                        >
-                            <label htmlFor="date">Search by properties:</label>
-                            <Input
-                                className="input-search"
-                                placeholder="search properties"
-                                suffix={<ProfileOutlined />}
-                            ></Input>
-                        </Col>
-                        <Col
-                            xs={{ span: 5, offset: 1 }}
-                            lg={{ span: 6, offset: 1 }}
-                        >
-                            <label htmlFor="date">Search by features:</label>
-                            <Input
-                                className="input-search"
-                                placeholder="search features"
-                                suffix={<ToolOutlined />}
-                            ></Input>
-                        </Col>
-                    </Row>
-                    <div className="search-options flex">
-                        <SearchOutlined className="search-icon" />
+                    <Form layout="vertical" form={form} onFinish={onFinish}>
+                        <Row>
+                            <Col
+                                xs={{ span: 6, offset: 1 }}
+                                lg={{ span: 6, offset: 2 }}
+                            >
+                                <Form.Item
+                                    label="Search by location:"
+                                    name="address"
+                                >
+                                    <Input
+                                        size="large"
+                                        placeholder="search location"
+                                        suffix={<EnvironmentOutlined />}
+                                    ></Input>
+                                </Form.Item>
+                            </Col>
+                            <Col xs={{ span: 6, offset: 1 }}>
+                                <Form.Item label="Search by types:" name="type">
+                                    <SelecType
+                                        handleChangeValue={(
+                                            value:
+                                                | ISelectOption
+                                                | ISelectOption[]
+                                        ) => {
+                                            form.setFieldValue("type", value);
+                                        }}
+                                    />
+                                </Form.Item>
+                            </Col>
 
-                        <span>SEARCH</span>
-                    </div>
+                            <Col
+                                xs={{ span: 6, offset: 2 }}
+                                lg={{ span: 6, offset: 1 }}
+                            >
+                                <Form.Item
+                                    label="Search by minimum price:"
+                                    name="price"
+                                >
+                                    <InputNumber
+                                        size="large"
+                                        className="input-search"
+                                        addonAfter="VNĐ"
+                                        formatter={value =>
+                                            ` ${value}`.replace(
+                                                /\B(?=(\d{3})+(?!\d))/g,
+                                                ","
+                                            )
+                                        }
+                                        min={0}
+                                    ></InputNumber>
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                        <Button
+                            htmlType="submit"
+                            className="search-options flex"
+                            icon={<SearchOutlined />}
+                        >
+                            SEARCH
+                        </Button>
+                    </Form>
                 </div>
             </div>
         </div>

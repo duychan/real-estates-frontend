@@ -3,11 +3,13 @@ import { useDispatch } from "react-redux";
 import { middleware } from "yargs";
 import authReducer from "./reducer/AuthSlice";
 import uploadEstateReducer from "./reducer/UploadSlice";
+import searchHomePageReducer from "./reducer/SearchHomePageSlice";
 
 const store = configureStore({
     reducer: {
         auth: authReducer,
-        uploadEstate: uploadEstateReducer
+        uploadEstate: uploadEstateReducer,
+        searchHomePage: searchHomePageReducer
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware({
