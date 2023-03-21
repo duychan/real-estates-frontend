@@ -41,7 +41,6 @@
     --bg1-color: #37624f;
     --bg2-color: #36795a;
     --bg4-color: #69c69e;
-    --bg6-color: rgba(253, 253, 253, 0.897);
     --bg3-color: rgba(5, 5, 5, 0.06);
     --PrimaryColor: hsl(199, 100%, 33%);
     --SecondaryColor: hsl(187, 85%, 43%);
@@ -71,6 +70,7 @@
     --font-sz25: rgba(149, 157, 165, 0.2);
     --font-sz30: 3rem;
     --font-sz19: 20px;
+    --icon-color1: rgba(0, 0, 0, 0.45);
 }
 
 .App {

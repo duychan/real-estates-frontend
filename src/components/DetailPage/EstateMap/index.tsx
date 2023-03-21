@@ -1,6 +1,14 @@
 import { LatLngExpression } from "leaflet";
 import React from "react";
-import { Circle, MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import {
+    Circle,
+    MapContainer,
+    Marker,
+    Popup,
+    TileLayer,
+    Tooltip,
+    useMapEvents
+} from "react-leaflet";
 import { IEstateMap } from "./EstateMapType";
 import "./EstateMap.css";
 import "leaflet/dist/leaflet.css";
@@ -21,31 +29,52 @@ const markerRelatedIcon = new L.Icon({
     iconSize: [25, 25]
 });
 
+const redOptions = { color: "red" };
+
 export const EstateMap: React.FC<IEstateMap> = ({
-    positionCenter,
-    estateNearCenter,
-    radius = 100
+    positionCenter = [0, 0],
+    estateNearCenter = [],
+    radius = 100,
+    mapRef,
+    ZOOM_LEVEL = 0,
+    popupMarker = "",
+    isPopupAlwaysShowed = false,
+    isGetLocationByClick = false,
+    handleGetCurrentLocation = () => {}
 }) => {
-    const redOptions = { color: "red" };
     const getLatLngBounds = () => {
-        const latLngs = estateNearCenter.map(position => {
+        const latLngs = estateNearCenter?.map(position => {
             return L.latLng(position[0], position[1]);
         });
-        const bounds = L.latLngBounds(latLngs);
+        const bounds = L.latLngBounds(latLngs ?? []) ?? {
+            _southWest: { lat: 0, lng: 0 },
+            _northEast: { lat: 0, lng: 0 }
+        };
         return bounds;
     };
 
     const latlngBound = getLatLngBounds();
-    const centerPoint = new L.LatLng(positionCenter[0], positionCenter[1]);
-    const northBoundPoint = latlngBound.getNorthEast();
-    const southBoundPoint = latlngBound.getSouthWest();
-    const centerToNorth = centerPoint.distanceTo(northBoundPoint);
-    const centerToSouth = centerPoint.distanceTo(southBoundPoint);
+
+    const centerPoint = new L.LatLng(
+        positionCenter[0] ?? 0,
+        positionCenter[1] ?? 0
+    );
+    const northBoundPoint = latlngBound.getNorthEast() ?? { lat: 0, lng: 0 };
+    const southBoundPoint = latlngBound.getSouthWest() ?? { lat: 0, lng: 0 };
+    const centerToNorth =
+        (northBoundPoint.lat !== 0 &&
+            northBoundPoint.lng !== 0 &&
+            centerPoint.distanceTo(northBoundPoint ?? {})) ||
+        0;
+    const centerToSouth =
+        (southBoundPoint.lat !== 0 &&
+            southBoundPoint.lng !== 0 &&
+            centerPoint.distanceTo(southBoundPoint ?? {})) ||
+        0;
     const radiusBound =
         Math.max(centerToNorth, centerToSouth) <= radius
             ? Math.max(centerToNorth, centerToSouth)
             : radius;
-
     const zoom = Math.floor(
         Math.log2(
             (Math.cos((positionCenter[0] * pi) / semicircle) *
@@ -55,12 +84,25 @@ export const EstateMap: React.FC<IEstateMap> = ({
         )
     );
 
+    const MapEvents = (): JSX.Element => {
+        useMapEvents({
+            click(e) {
+                handleGetCurrentLocation([
+                    e.latlng.lat ?? 0,
+                    e.latlng.lng ?? 0
+                ]);
+            }
+        });
+        return <></>;
+    };
+
     return (
         <MapContainer
             center={positionCenter as LatLngExpression}
-            zoom={zoom}
+            zoom={ZOOM_LEVEL !== 0 ? ZOOM_LEVEL : zoom}
             scrollWheelZoom={true}
             touchZoom={true}
+            ref={mapRef as React.MutableRefObject<L.Map>}
         >
             <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -71,12 +113,9 @@ export const EstateMap: React.FC<IEstateMap> = ({
                 position={positionCenter as LatLngExpression}
                 icon={markerCenterIcon}
             >
-                <Popup>
-                    Latitude: {positionCenter[0]} <br /> Longitude:
-                    {positionCenter[1]}
-                </Popup>
+                <Tooltip permanent={isPopupAlwaysShowed}>{popupMarker}</Tooltip>
             </Marker>
-            {estateNearCenter.map((position, idx) => (
+            {estateNearCenter?.map((position, idx) => (
                 <Marker position={position} key={idx} icon={markerRelatedIcon}>
                     <Popup>
                         Latitude: {position[0]} <br /> Longitude:
@@ -84,13 +123,17 @@ export const EstateMap: React.FC<IEstateMap> = ({
                     </Popup>
                 </Marker>
             ))}
-            <Circle
-                center={positionCenter as LatLngExpression}
-                pathOptions={redOptions}
-                radius={radiusBound} //meters
-            >
-                <Popup>Related Estate</Popup>
-            </Circle>
+
+            {estateNearCenter.length > 0 && (
+                <Circle
+                    center={positionCenter as LatLngExpression}
+                    pathOptions={redOptions}
+                    radius={radiusBound} //meters
+                >
+                    <Popup>Related Estate</Popup>
+                </Circle>
+            )}
+            {isGetLocationByClick && <MapEvents />}
         </MapContainer>
     );
 };

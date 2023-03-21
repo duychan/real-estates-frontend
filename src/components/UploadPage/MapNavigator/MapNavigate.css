@@ -1,0 +1,89 @@
+.map-navigator {
+    width: 100%;
+    text-align: center;
+}
+.map-city-addr {
+    width: 80%;
+    margin: 10px auto;
+    color: var(--font-color29);
+    height: 40px;
+    font-size: var(--font-sz15);
+}
+.map-button-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.current-location-icon {
+    width: 30px;
+}
+.map-input-addr {
+    width: 100%;
+}
+.map-current-locate {
+    width: 80%;
+    margin: 10px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--font-color29);
+    height: 40px;
+    font-size: var(--font-sz15);
+}
+.map-addr-step {
+    width: 80%;
+    margin: 10px auto;
+}
+
+.addr-select {
+    color: var(--font-color29);
+    font-size: var(--font-sz15);
+}
+
+.ant-divider-with-text.map-addr-divider {
+    width: 80%;
+    min-width: 80%;
+    margin: 10px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.addr-selected > .ant-steps-item-container,
+.addr-step-line > .ant-steps-item-container > .ant-steps-item-tail::after,
+.addr-selected-line > .ant-steps-item-container > .ant-steps-item-tail::after {
+    display: none;
+}
+
+.map-find-location {
+    width: 25%;
+    margin: 10px auto;
+    color: var(--white-color);
+    background-color: var(--bg5-color);
+    height: 40px;
+    font-size: var(--font-sz15);
+}
+.map-show-location {
+    margin: 30px auto;
+}
+.map-navigate-popup-marker {
+    text-align: center;
+}
+
+.map-show-location-submit {
+    margin: 10px auto;
+    color: var(--white-color);
+    background-color: var(--bg5-color);
+}
+.map-show-location-button {
+    width: 80%;
+    text-align: left;
+    margin: 0 auto;
+}
+.error-location {
+    color: var(--red-color);
+    font-size: var(--font-sz15);
+}
+.map-address-icon {
+    color: var(--icon-color1);
+}

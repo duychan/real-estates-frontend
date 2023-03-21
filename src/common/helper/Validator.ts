@@ -87,6 +87,35 @@ export const PhoneNumberRule: Rule[] = [
     { whitespace: true }
 ];
 
+export const CityRule: Rule[] = [
+    {
+        required: true,
+        message: "Please input your city/province!"
+    },
+    { whitespace: true }
+];
+export const DistrictRule: Rule[] = [
+    {
+        required: true,
+        message: "Please input your district!"
+    },
+    { whitespace: true }
+];
+export const WardRule: Rule[] = [
+    {
+        required: true,
+        message: "Please input your ward!"
+    },
+    { whitespace: true }
+];
+export const AddressNumberRule: Rule[] = [
+    {
+        required: true,
+        message: "Please input your house number and street!"
+    },
+    { whitespace: true }
+];
+
 export const NameEstateRule: Rule[] = [
     {
         required: true,

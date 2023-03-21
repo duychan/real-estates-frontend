@@ -28,6 +28,12 @@ export const SingleEstate: React.FC = () => {
                 positionCenter={estateAddressLatLng}
                 estateNearCenter={estateNearCenter}
                 radius={100}
+                popupMarker={
+                    <div>
+                        Latitude: ${estateAddressLatLng[0]} <br /> Longitude: $
+                        {estateAddressLatLng[1]}
+                    </div>
+                }
             />
 
             <div className="single-estate-comment">
