@@ -102,6 +102,13 @@ export const AreaEstateRule: Rule[] = [
     }
 ];
 
+export const TypeRule: Rule[] = [
+    {
+        required: true,
+        message: "This estate must have type of it "
+    }
+];
+
 export const BathRoomRule: Rule[] = [
     {
         required: true,
