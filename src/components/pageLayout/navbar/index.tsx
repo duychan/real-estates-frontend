@@ -8,6 +8,7 @@ import { AvatarUser } from "./AvatarUser";
 import { LoginUser } from "./LoginUser";
 import { useDispatch } from "react-redux";
 import { logout } from "../../../app/redux/reducer/AuthSlice";
+import { NavbarItems } from "../../../common/constants";
 
 export const Navbar: React.FC = () => {
     const SubMenu = Menu.SubMenu;
@@ -43,9 +44,15 @@ export const Navbar: React.FC = () => {
             />
             <div className="nav-menu">
                 <Menu className="menu" theme="light" mode="horizontal">
-                    {["Rent", "Contact Us"].map(item => (
-                        <Menu.Item key={`item-${item}`} className="nav-text">
-                            {item}
+                    {NavbarItems.map(({ label, key }) => (
+                        <Menu.Item
+                            key={key}
+                            className="nav-text"
+                            onClick={() => {
+                                navigate(key);
+                            }}
+                        >
+                            {label}
                         </Menu.Item>
                     ))}
                     <SubMenu

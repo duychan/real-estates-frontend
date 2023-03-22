@@ -1,8 +1,8 @@
-export const typeArr: { value: string; label: string }[] = [
-    { value: "1", label: "Apartment" },
-    { value: "2", label: "House" },
-    { value: "3", label: "Private Room" },
-    { value: "4", label: "Shared Room" }
+export const typeArr: string[] = [
+    "Apartment",
+    "House",
+    "Private Room",
+    "Shared Room"
 ];
 
 export const sizeArr: string[] = [
@@ -33,3 +33,14 @@ export const semicircle = 180;
 export const earthRadius = 6371008;
 export const earthCircumstance = 2 * pi * earthRadius;
 export const numberOfTile = 1;
+
+export const NavbarItems: { label: string; key: string }[] = [
+    {
+        label: "Rent",
+        key: "/upload-estate"
+    },
+    {
+        label: "Contact Us",
+        key: "/"
+    }
+];
