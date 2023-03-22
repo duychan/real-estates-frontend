@@ -5,13 +5,15 @@ import authReducer from "./reducer/AuthSlice";
 import uploadEstateReducer from "./reducer/UploadSlice";
 import searchHomePageReducer from "./reducer/SearchHomePageSlice";
 import getAllEstateReducer from "./reducer/GetAllEstate";
+import notificationReducer from "./reducer/NotificationSlice";
 
 const store = configureStore({
     reducer: {
         auth: authReducer,
         uploadEstate: uploadEstateReducer,
         searchHomePage: searchHomePageReducer,
-        getAllEstate: getAllEstateReducer
+        getAllEstate: getAllEstateReducer,
+        notification: notificationReducer
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware({

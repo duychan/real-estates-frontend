@@ -12,6 +12,7 @@ import {
     IMapNavigate
 } from "./MapNavigateType";
 import {
+    AddressNumberRule,
     CityRule,
     DistrictRule,
     WardRule
@@ -31,7 +32,8 @@ const EmptyOption: IAddressOption = { value: "", label: "" };
 const ZOOM_LEVEL = 18;
 
 export const MapNavigator: React.FC<IMapNavigate> = ({
-    handleGetEstateLocation
+    handleGetEstateLocation,
+    errorCoordinate = ""
 }) => {
     const [current, setCurrent] = useState<number>(0);
     const [city, setCity] = useState<IAddressOption>(EmptyOption);
@@ -52,6 +54,7 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
         0,
         0
     ]);
+
     const [isLocationChange, setIsLocationChange] = useState<boolean>(false);
     const [errorLocation, setErrorLocation] = useState<string>("");
 
@@ -59,6 +62,12 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
 
     const [form] = Form.useForm();
     const mapRef = useRef<L.Map>();
+
+    useEffect(() => {
+        if (errorCoordinate) {
+            setErrorLocation(errorCoordinate);
+        }
+    }, [errorCoordinate]);
 
     useEffect(() => {
         form.resetFields(["district", "ward"]);
@@ -134,6 +143,7 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
                     const lng = response.data?.records?.lng ?? 0;
                     if (lat !== 0 && lng !== 0) {
                         setEstateLocation([lat, lng]);
+
                         handleGetEstateLocation({ lat: lat, lng: lng });
                         setIsShowCurrentLocation(true);
                         mapRef.current?.flyTo(
@@ -237,7 +247,7 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
                         }}
                     >
                         <div className="map-button-content">
-                            City/Province,District
+                            City/Province - District - Ward - House number
                             <Tooltip title="Estate Address">
                                 <RightOutlined className="map-address-icon" />
                             </Tooltip>
@@ -349,6 +359,24 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
                                             />
                                         </Item>
                                     )
+                                },
+                                {
+                                    title: "House number, Street",
+                                    className:
+                                        district.value === ""
+                                            ? "addr-selected"
+                                            : "",
+                                    description: ward.value !== "" && (
+                                        <Item
+                                            name="addressNumber"
+                                            rules={AddressNumberRule}
+                                        >
+                                            <Input
+                                                placeholder="House number, Street"
+                                                className="map-city-addr"
+                                            />
+                                        </Item>
+                                    )
                                 }
                             ]}
                             className="map-addr-step"
@@ -357,12 +385,7 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
                         <></>
                     )}
                 </div>
-                <Item name={"addressNumber"}>
-                    <Input
-                        placeholder="House number, Street"
-                        className="map-city-addr"
-                    />
-                </Item>
+
                 <div>
                     <Button className="map-find-location" htmlType="submit">
                         Find location

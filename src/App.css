@@ -71,6 +71,8 @@
     --font-sz19: 20px;
     --icon-color1: rgba(0, 0, 0, 0.45);
     --font-sz39: 2vw;
+    --font-sz38: 14px;
+    --font-color13: rgba(0, 0, 0, 0.88);
 }
 
 .App {

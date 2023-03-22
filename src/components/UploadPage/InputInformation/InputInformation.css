@@ -19,3 +19,11 @@
     padding: 0.8rem;
     align-items: center;
 }
+.input-information-form .ant-col {
+    min-height: 35px;
+}
+.address-title {
+    font-size: var(--font-sz38);
+    color: var(--font-color13);
+    font-weight: var(--font-w3);
+}

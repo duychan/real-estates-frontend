@@ -1,9 +1,11 @@
 import React, { useCallback, useState } from "react";
 import "./UploadImage.css";
 import { PlusOutlined } from "@ant-design/icons";
-import { Modal, Upload, message } from "antd";
+import { Modal, Upload } from "antd";
 import type { RcFile, UploadProps } from "antd/es/upload";
 import type { UploadFile } from "antd/es/upload/interface";
+import { useAppDispatch } from "../../../app/redux/store";
+import { setErrorNotification } from "../../../app/redux/reducer/NotificationSlice";
 interface IGetImage {
     handleChangeValue: (value: UploadFile[]) => void;
 }
@@ -21,6 +23,7 @@ const UploadImage: React.FC<IGetImage> = ({ handleChangeValue }) => {
     const [previewTitle, setPreviewTitle] = useState("");
     const [fileList, setFileList] = useState<UploadFile[]>([]);
     const handleCancel = () => setPreviewOpen(false);
+    const dispatch = useAppDispatch();
 
     const handlePreview = async (file: UploadFile) => {
         if (!file.url && !file.preview) {
@@ -52,7 +55,11 @@ const UploadImage: React.FC<IGetImage> = ({ handleChangeValue }) => {
             const isDup = await fileListBase64.some(file => file === b64file);
 
             if (isDup) {
-                message.error("Duplicate images, please upload again!");
+                dispatch(
+                    setErrorNotification(
+                        "Duplicate images, please upload again!"
+                    )
+                );
             } else {
                 setFileList(newFileList);
                 handleChangeValue(newFileList);

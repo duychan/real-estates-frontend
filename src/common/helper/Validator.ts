@@ -147,3 +147,9 @@ export const PriceEstateRule: Rule[] = [
         message: "Please enter your Estate Price "
     }
 ];
+export const AddressNumberRule: Rule[] = [
+    {
+        required: true,
+        message: "Please input your house number and street!"
+    }
+];

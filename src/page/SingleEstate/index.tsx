@@ -24,17 +24,19 @@ export const SingleEstate: React.FC = () => {
             <CarouselSingleProduct />
             <DetailInfomation />
             <EstateDescription />
-            <EstateMap
-                positionCenter={estateAddressLatLng}
-                estateNearCenter={estateNearCenter}
-                radius={100}
-                popupMarker={
-                    <div>
-                        Latitude: ${estateAddressLatLng[0]} <br /> Longitude: $
-                        {estateAddressLatLng[1]}
-                    </div>
-                }
-            />
+            <div className="estate-map">
+                <EstateMap
+                    positionCenter={estateAddressLatLng}
+                    estateNearCenter={estateNearCenter}
+                    radius={100}
+                    popupMarker={
+                        <div>
+                            Latitude: ${estateAddressLatLng[0]} <br />{" "}
+                            Longitude: ${estateAddressLatLng[1]}
+                        </div>
+                    }
+                />
+            </div>
 
             <div className="single-estate-comment">
                 <h1 className="related-estate-title">Comment</h1>

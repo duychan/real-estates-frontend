@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Input, InputNumber, Col, Row, Button, UploadFile } from "antd";
 import { useNavigate } from "react-router-dom";
 import "./InputInformation.css";
@@ -14,65 +14,102 @@ import {
 } from "../../../common/helper/Validator";
 import UploadImage from "../UploadImage";
 import { IEstateUpload } from "./EstateUploadType";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { getUser } from "../../../app/redux/reducer/AuthSlice";
 import { ISelectOption } from "../SelectType/SelectItemType";
 import { RcFile } from "antd/es/upload";
-import { uploadEstate } from "../../../app/api/UploadEstateApi";
-import { setUploadFormData } from "../../../app/redux/reducer/UploadSlice";
-import { RootState } from "../../../app/redux/store";
+import {
+    getFormData,
+    isLoading,
+    setUploadFormData
+} from "../../../app/redux/reducer/UploadSlice";
+import { useAppDispatch } from "../../../app/redux/store";
 import { IUploadAction } from "../../../app/redux/reducer/UploadSlice/UploadSliceType";
+import { MapNavigator } from "../MapNavigator";
+import { ICoordinates } from "../MapNavigator/MapNavigateType";
+import { setErrorNotification } from "../../../app/redux/reducer/NotificationSlice";
+import { UploadNewEstate } from "../../../app/redux/action/UploadEstateAction";
 
 const InputInformation = () => {
     const navigate = useNavigate();
     const { _id } = useSelector(getUser);
     const [form] = Form.useForm();
-    const dispatch = useDispatch();
-    const { formData: formDataEstate } = useSelector(
-        (state: RootState) => state.uploadEstate
-    );
+    const dispatch = useAppDispatch();
+    const formDataEstate = useSelector(getFormData);
+
+    const isLoadingUpload = useSelector(isLoading);
+    const [addressEstate, setAddressEstate] = useState<ICoordinates>({
+        lat: 0,
+        lng: 0
+    });
+    const [errorLocation, setErrorLocation] = useState<string>("");
+
     const onFinish = (estate: IEstateUpload) => {
-        const [coverImg, ...rest] = estate.thumbnail;
+        if (estate.thumbnail === undefined) {
+            dispatch(
+                setErrorNotification(
+                    "Please choose at least one photo about your real estate!"
+                )
+            );
+        } else if (addressEstate.lat !== 0 && addressEstate.lng !== 0) {
+            const [coverImg, ...rest] = estate.thumbnail;
+            const fileList = estate.thumbnail?.map(
+                (file: UploadFile) => file.originFileObj as RcFile
+            );
 
-        const fileList = estate.thumbnail.map(
-            (file: UploadFile) => file.originFileObj as RcFile
-        );
-        const estateAction: IUploadAction = {
-            owner: _id,
-            name: estate.name,
-            address: "192 Nguyen Luong Bang",
-            area: estate.area,
-            price: estate.price,
-            currentStatus: "641805bed27ac809a60a9cd3",
-            type: estate.type.key,
-            coverImg: coverImg,
-            fileList: fileList,
-            bedRoom: estate.bedRoom,
-            bathRoom: estate.bathRoom,
-            description: estate.description,
-            _id: "",
-            updateAt: "",
-            createAt: ""
-        };
-        dispatch(setUploadFormData(estateAction));
+            const estateAction: IUploadAction = {
+                owner: _id,
+                name: estate.name,
+                address: "",
+                area: estate.area,
+                price: estate.price,
+                currentStatus: "641805bed27ac809a60a9cd3",
+                type: estate.type.key,
+                coverImg: coverImg,
+                fileList: fileList,
+                bedRoom: estate.bedRoom,
+                bathRoom: estate.bathRoom,
+                description: estate.description ?? "",
+                _id: "",
+                updateAt: "",
+                createAt: "",
+                coordinates: addressEstate
+            };
+            dispatch(setUploadFormData(estateAction));
 
-        if (formDataEstate !== null) {
-            uploadEstate(formDataEstate).then(res => {
-                navigate("/single-estate/" + res.data.records._id);
-            });
+            if (formDataEstate.values !== null) {
+                dispatch(UploadNewEstate(formDataEstate)).then(res => {
+                    const _idEstateUpload =
+                        res.payload.data?.records?._id ?? "";
+                    const message = res.payload?.message ?? "";
+
+                    if (_idEstateUpload !== "") {
+                        navigate(`/single-estate/${_idEstateUpload}`);
+                    } else if (message !== "") {
+                        dispatch(setErrorNotification(message));
+                    }
+                });
+            } else {
+                dispatch(setErrorNotification("Error"));
+            }
         } else {
-            alert("error");
+            setErrorLocation("Please choose your location!");
         }
     };
 
     return (
         <div className="input-information">
             <div className="input-information-form">
-                <Form layout="vertical" onFinish={onFinish} form={form}>
+                <Form
+                    layout="vertical"
+                    onFinish={onFinish}
+                    form={form}
+                    id="uploadForm"
+                >
                     <Form.Item name="thumbnail">
                         <UploadImage
                             handleChangeValue={(value: UploadFile[]) => {
-                                form.setFieldValue("thumbnail", value);
+                                form.setFieldsValue({ thumbnail: value });
                             }}
                         />
                     </Form.Item>
@@ -94,7 +131,7 @@ const InputInformation = () => {
                                 handleChangeValue={(
                                     value: ISelectOption | ISelectOption[]
                                 ) => {
-                                    form.setFieldValue("type", value);
+                                    form.setFieldsValue({ type: value });
                                 }}
                             />
                         </Form.Item>
@@ -161,14 +198,22 @@ const InputInformation = () => {
                     <Form.Item name="description" label="Description:">
                         <TextArea rows={5} />
                     </Form.Item>
-
-                    <Button
-                        className="input-information-button"
-                        htmlType="submit"
-                    >
-                        SUBMIT
-                    </Button>
                 </Form>
+                <p className="address-title">Address:</p>
+                <MapNavigator
+                    handleGetEstateLocation={(address: ICoordinates) => {
+                        setAddressEstate(address);
+                    }}
+                    errorCoordinate={errorLocation}
+                />
+                <Button
+                    className="input-information-button"
+                    htmlType="submit"
+                    form="uploadForm"
+                    loading={isLoadingUpload}
+                >
+                    SUBMIT
+                </Button>
             </div>
         </div>
     );
