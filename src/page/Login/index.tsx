@@ -14,6 +14,7 @@ export const LoginPage: React.FC = () => {
     const handleLogin = (values: IUserLoginInput) => {
         dispatch(UserLogin(values));
     };
+
     return (
         <div className="register">
             <div className="register-title">
