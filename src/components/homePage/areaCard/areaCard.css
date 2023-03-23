@@ -1,18 +1,19 @@
 .area-card {
     position: relative;
-    margin: 20px 0px;
+    margin: 3rem auto;
 }
 
 .area-card p {
     text-align: center;
-    font-size: var(--font-sz9);
+    font-size: var(--font-sz39);
     color: var(--white-color);
+    background-color: var(--box-shadColor2);
     font-weight: var(--font-w2);
-    width: 100%;
+    width: 70%;
     position: absolute;
     padding: 10px;
-    bottom: 45%;
-    left: 0;
+    bottom: 10%;
+    left: 15%;
     box-sizing: border-box;
     margin: 0;
 }
@@ -20,4 +21,20 @@
 .area-card img {
     width: 100%;
     opacity: 0.8;
+}
+
+.area-swiper {
+    height: 500px;
+    width: 100%;
+}
+.area-swiper .swiper-button-prev::after,
+.area-swiper .swiper-button-next::after {
+    color: var(--silver-color);
+    font-size: 30px;
+}
+.area-swiper .swiper-button-prev,
+.area-swiper .swiper-button-next {
+    background-color: var(--cardBG);
+    padding: 30px;
+    border-radius: 50%;
 }

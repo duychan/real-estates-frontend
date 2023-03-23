@@ -16,19 +16,10 @@
     align-items: center;
 }
 
-.info-card h1 {
+.info-card-header {
     text-align: center;
     color: var(--bg1-color);
-}
-
-.info-card .col-1-card-1,
-.info-card .col-1-card-2 {
-    margin-inline-start: 0%;
-}
-
-.info-card .col-2-card-2,
-.info-card .col-3-card-2 {
-    margin-inline-start: 6%;
+    font-size: var(--font-sz13);
 }
 
 .info-card .row-view-btn {
@@ -55,4 +46,12 @@
     width: 150px;
     background-color: var(--bg1-color);
     color: var(--white-color);
+}
+
+.info-card-area-card {
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
 }
