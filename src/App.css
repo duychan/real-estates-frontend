@@ -18,7 +18,6 @@
     --font-sz6: 1.5vw;
     --font-sz7: 1.2vw;
     --font-sz8: 1vw;
-    --font-sz9: 2vw;
     --font-sz18: 25px;
     --font-sz20: 1.3rem;
     --font-sz17: 0.8rem;
@@ -71,6 +70,7 @@
     --font-sz30: 3rem;
     --font-sz19: 20px;
     --icon-color1: rgba(0, 0, 0, 0.45);
+    --font-sz39: 2vw;
 }
 
 .App {

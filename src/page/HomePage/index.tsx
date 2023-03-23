@@ -1,80 +1,39 @@
-import { Button, Col, Row } from "antd";
-import React from "react";
-import { AreaCard } from "../../components/homePage/AreaCard";
+import { Button, Row } from "antd";
+import React, { useEffect, useState } from "react";
 import { InformationCard } from "../../components/homePage/InformationCard";
 import ProductCard from "../../components/homePage/ProductCard";
 import Search from "../../components/homePage/Search";
 import "./HomePage.css";
-import area from "../../assets/images/area.jpg";
+import { AreaSlider } from "../../components/homePage/AreaCard";
+import { getDistricts } from "../../app/api/MapApi";
+import { ILocation } from "../../app/api/MapApi/MapType";
+
+const DaNangCode = "48";
 
 export const HomePage: React.FC = () => {
+    const [areaData, setAreaData] = useState<ILocation[]>([]);
+    useEffect(() => {
+        getDistricts(DaNangCode)
+            .then(response => {
+                setAreaData(response?.data?.records || []);
+            })
+            .catch(error => {
+                alert(error);
+            });
+    }, []);
+
     return (
         <div>
             <Search />
             <div className="info-card">
-                <h1>Our Estate</h1>
-                <Row justify={"start"} align="middle">
-                    <Col
-                        xs={{ span: 10, offset: 1 }}
-                        lg={{ span: 10, offset: 1 }}
-                        className="col-1-card-1"
-                    >
-                        <AreaCard
-                            width="115%"
-                            imageCard={area}
-                            contentCard="Wyndham"
-                        />
-                    </Col>
-                    <Col
-                        xs={{ span: 10, offset: 3 }}
-                        lg={{ span: 10, offset: 3 }}
-                    >
-                        <AreaCard
-                            width="115%"
-                            imageCard={area}
-                            contentCard="Wyndham"
-                        />
-                    </Col>
-                </Row>
-                <Row justify={"space-between"} align="middle">
-                    <Col
-                        xs={{ span: 7, offset: 0 }}
-                        lg={{ span: 7, offset: 0 }}
-                        className="col-1-card-2"
-                    >
-                        <AreaCard
-                            width="105%"
-                            imageCard={area}
-                            contentCard="Wyndham"
-                        />
-                    </Col>
-                    <Col
-                        xs={{ span: 7, offset: 0 }}
-                        lg={{ span: 7, offset: 0 }}
-                        className="col-2-card-2"
-                    >
-                        <AreaCard
-                            width="105%"
-                            imageCard={area}
-                            contentCard="Wyndham"
-                        />
-                    </Col>
-                    <Col
-                        xs={{ span: 7, offset: 1 }}
-                        lg={{ span: 7, offset: 1 }}
-                        className="col-3-card-2"
-                    >
-                        <AreaCard
-                            width="105%"
-                            imageCard={area}
-                            contentCard="Wyndham"
-                        />
-                    </Col>
-                </Row>
+                <h1 className="info-card-header">Explore Our Estate</h1>
+                <div className="info-card-area-card">
+                    <AreaSlider arrayArea={areaData} />
+                </div>
             </div>
             <div className="list-estate">
                 <div className="title-productcard">
-                    <h1>List Product</h1>
+                    <h1 className="info-card-header">List Product</h1>
                 </div>
                 <div className="list-estate-card">
                     <ProductCard />
@@ -87,7 +46,7 @@ export const HomePage: React.FC = () => {
             </div>
 
             <div className="info-card">
-                <h1>News</h1>
+                <h1 className="info-card-header">News</h1>
                 <InformationCard />
                 <InformationCard flexDir="row-reverse" />
                 <Row justify={"center"} align="middle" className="row-view-btn">

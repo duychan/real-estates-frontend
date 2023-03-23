@@ -1,3 +1,12 @@
+import area1 from "../../assets/images/area1.jpg";
+import area2 from "../../assets/images/area2.jpg";
+import area3 from "../../assets/images/area3.jpg";
+import area4 from "../../assets/images/area4.jpg";
+import area5 from "../../assets/images/area5.jpg";
+import area6 from "../../assets/images/area6.jpg";
+import area7 from "../../assets/images/area7.jpg";
+import area8 from "../../assets/images/area8.jpg";
+
 export const typeArr: string[] = [
     "Apartment",
     "House",
@@ -43,4 +52,14 @@ export const NavbarItems: { label: string; key: string }[] = [
         label: "Contact Us",
         key: "/"
     }
+];
+export const AreaList = [
+    area1,
+    area2,
+    area3,
+    area4,
+    area5,
+    area6,
+    area7,
+    area8
 ];
