@@ -56,8 +56,8 @@
 }
 
 .map-find-location {
-    width: 25%;
-    margin: 10px auto;
+    width: 20%;
+    margin: 10px;
     color: var(--white-color);
     background-color: var(--bg5-color);
     height: 40px;
@@ -86,4 +86,12 @@
 }
 .map-address-icon {
     color: var(--icon-color1);
+}
+.map-find-location-cancel {
+    width: 20%;
+    margin: 10px;
+    color: var(--bg5-color);
+    border-color: var(--bg5-color);
+    height: 40px;
+    font-size: var(--font-sz15);
 }
