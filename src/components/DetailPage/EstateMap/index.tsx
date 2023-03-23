@@ -6,7 +6,6 @@ import {
     Marker,
     Popup,
     TileLayer,
-    Tooltip,
     useMapEvents
 } from "react-leaflet";
 import { IEstateMap } from "./EstateMapType";
@@ -113,7 +112,7 @@ export const EstateMap: React.FC<IEstateMap> = ({
                 position={positionCenter as LatLngExpression}
                 icon={markerCenterIcon}
             >
-                <Tooltip permanent={isPopupAlwaysShowed}>{popupMarker}</Tooltip>
+                {popupMarker && <Popup>{popupMarker}</Popup>}
             </Marker>
             {estateNearCenter?.map((position, idx) => (
                 <Marker position={position} key={idx} icon={markerRelatedIcon}>

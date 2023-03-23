@@ -18,3 +18,11 @@ export interface IEstateLocation {
     district: IAddressOption;
     ward: IAddressOption;
 }
+
+export interface ICoordinates {
+    lat: number;
+    lng: number;
+}
+export interface IMapNavigate {
+    handleGetEstateLocation: (coordinates: ICoordinates) => void;
+}

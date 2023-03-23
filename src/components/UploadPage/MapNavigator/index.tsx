@@ -1,45 +1,47 @@
 import { Button, Divider, Form, Input, Steps, Tooltip } from "antd";
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import "./MapNavigate.css";
 import { RightOutlined } from "@ant-design/icons";
 import markerIcon from "../../../assets/images/marker-icon.png";
 import { AddressSelect } from "./AddressSelect";
 import { EstateMap } from "../../DetailPage/EstateMap";
 import useGeoLocation from "../../../common/hooks/GeoLocation";
-import { IAddressOption, IEstateLocation } from "./MapNavigateType";
 import {
-    AddressNumberRule,
+    IAddressOption,
+    IEstateLocation,
+    IMapNavigate
+} from "./MapNavigateType";
+import {
     CityRule,
     DistrictRule,
     WardRule
 } from "../../../common/helper/Validator";
+import {
+    getCoordinatesByAddress,
+    getDistricts,
+    getProvinces,
+    getWards
+} from "../../../app/api/MapApi";
+import { ILocation } from "../../../app/api/MapApi/MapType";
 
 const { Item } = Form;
-
-const option: { value: string; label: string }[] = [
-    {
-        value: "HN",
-        label: "Ha Noi"
-    },
-    {
-        value: "DN",
-        label: "Da Nang"
-    },
-    {
-        value: "HCM",
-        label: "Ho Chi Minh"
-    }
-];
 
 const EmptyOption: IAddressOption = { value: "", label: "" };
 
 const ZOOM_LEVEL = 18;
 
-export const MapNavigator: React.FC = () => {
+export const MapNavigator: React.FC<IMapNavigate> = ({
+    handleGetEstateLocation
+}) => {
     const [current, setCurrent] = useState<number>(0);
     const [city, setCity] = useState<IAddressOption>(EmptyOption);
     const [district, setDistrict] = useState<IAddressOption>(EmptyOption);
     const [ward, setWard] = useState<IAddressOption>(EmptyOption);
+
+    const [provinceList, setProvinceList] = useState<IAddressOption[]>([]);
+    const [districtList, setDistrictList] = useState<IAddressOption[]>([]);
+    const [wardList, setWardList] = useState<IAddressOption[]>([]);
+
     const [isAddressSelectShown, setIsAddressSelectShown] = useState<boolean>(
         false
     );
@@ -58,21 +60,109 @@ export const MapNavigator: React.FC = () => {
     const [form] = Form.useForm();
     const mapRef = useRef<L.Map>();
 
+    useEffect(() => {
+        form.resetFields(["district", "ward"]);
+        setDistrict(EmptyOption);
+        setWard(EmptyOption);
+    }, [city.value, form]);
+
+    useEffect(() => {
+        form.resetFields(["ward"]);
+        setWard(EmptyOption);
+    }, [district.value, form]);
+
+    useEffect(() => {
+        getProvinces()
+            .then(response => {
+                const provinceOption: IAddressOption[] = [];
+                response?.data?.records?.map(({ code, name }: ILocation) =>
+                    provinceOption.push({ value: code, label: name })
+                );
+                setProvinceList(provinceOption ?? []);
+            })
+            .then(() => {
+                form.resetFields(["district", "ward"]);
+            })
+            .catch(error => {
+                setErrorLocation(`ERROR: ${error}`);
+            });
+    }, [form]);
+
+    useEffect(() => {
+        if (city.value !== "") {
+            getDistricts(city.value)
+                .then(response => {
+                    const districtOption: IAddressOption[] = [];
+                    response?.data?.records?.map(({ code, name }: ILocation) =>
+                        districtOption.push({ value: code, label: name })
+                    );
+                    setDistrictList(districtOption ?? []);
+                })
+                .catch(error => {
+                    setErrorLocation(`ERROR: ${error}`);
+                });
+        }
+    }, [city.value]);
+
+    useEffect(() => {
+        if (district.value !== "") {
+            getWards(district.value)
+                .then(response => {
+                    const wardOption: IAddressOption[] = [];
+                    response?.data?.records?.map(({ code, name }: ILocation) =>
+                        wardOption.push({ value: code, label: name })
+                    );
+                    setWardList(wardOption ?? []);
+                })
+                .catch(error => {
+                    setErrorLocation(`ERROR: ${error}`);
+                });
+        }
+    }, [district.value]);
+
     const handleFindLocation = (valueLocation: IEstateLocation) => {
-        if (
-            valueLocation.city?.value &&
-            valueLocation.district?.value &&
-            valueLocation.ward?.value &&
-            valueLocation.addressNumber
-        ) {
-            setErrorLocation("");
+        setErrorLocation("");
+        if (valueLocation.city?.value || valueLocation.addressNumber) {
+            const addressFinding = `${valueLocation.addressNumber ?? ""} ${
+                valueLocation.ward?.label ?? ""
+            } ${valueLocation.district?.label ?? ""} ${
+                valueLocation.city?.label ?? ""
+            }`;
+            getCoordinatesByAddress(addressFinding)
+                .then(response => {
+                    const lat = response.data?.records?.lat ?? 0;
+                    const lng = response.data?.records?.lng ?? 0;
+                    if (lat !== 0 && lng !== 0) {
+                        setEstateLocation([lat, lng]);
+                        handleGetEstateLocation({ lat: lat, lng: lng });
+                        setIsShowCurrentLocation(true);
+                        mapRef.current?.flyTo(
+                            [lat ?? 0, lng ?? 0],
+                            ZOOM_LEVEL,
+                            {
+                                animate: true
+                            }
+                        );
+                    } else {
+                        setErrorLocation("Cannot find your location!");
+                    }
+                })
+                .catch(error => {
+                    setErrorLocation(`ERROR: ${error}`);
+                });
         } else {
-            setErrorLocation("Please select your city/province,district!");
+            setErrorLocation(
+                "Please input your house number or city/province,district,ward to find location!"
+            );
         }
     };
 
     const handleSaveLocation = () => {
         setIsLocationChange(false);
+        handleGetEstateLocation({
+            lat: estateLocation[0],
+            lng: estateLocation[1]
+        });
     };
 
     const handleClearForm = useCallback(() => {
@@ -101,6 +191,11 @@ export const MapNavigator: React.FC = () => {
                     location.coordinates.lng ?? 0
                 ]);
 
+                handleGetEstateLocation({
+                    lat: location.coordinates?.lat,
+                    lng: location.coordinates?.lng
+                });
+
                 mapRef.current?.flyTo(
                     [
                         location.coordinates.lat ?? 0,
@@ -118,6 +213,7 @@ export const MapNavigator: React.FC = () => {
     }, [
         estateLocation,
         handleClearForm,
+        handleGetEstateLocation,
         isShowCurrentLocation,
         location.coordinates.lat,
         location.coordinates.lng,
@@ -181,7 +277,7 @@ export const MapNavigator: React.FC = () => {
                                                     )
                                                         setCurrent(current + 1);
                                                 }}
-                                                arrayOption={option}
+                                                arrayOption={provinceList}
                                                 value={city.value}
                                             />
                                         </Item>
@@ -219,7 +315,7 @@ export const MapNavigator: React.FC = () => {
                                                     )
                                                         setCurrent(current + 1);
                                                 }}
-                                                arrayOption={option}
+                                                arrayOption={districtList}
                                                 value={district.value}
                                             />
                                         </Item>
@@ -248,7 +344,7 @@ export const MapNavigator: React.FC = () => {
                                                     });
                                                     setCurrent(current + 1);
                                                 }}
-                                                arrayOption={option}
+                                                arrayOption={wardList}
                                                 value={ward.value}
                                             />
                                         </Item>
@@ -261,15 +357,23 @@ export const MapNavigator: React.FC = () => {
                         <></>
                     )}
                 </div>
-                <Item name="addressNumber" rules={AddressNumberRule}>
+                <Item name={"addressNumber"}>
                     <Input
                         placeholder="House number, Street"
                         className="map-city-addr"
                     />
                 </Item>
-                <Button className="map-find-location" htmlType="submit">
-                    Find location
-                </Button>
+                <div>
+                    <Button className="map-find-location" htmlType="submit">
+                        Find location
+                    </Button>
+                    <Button
+                        className="map-find-location-cancel"
+                        onClick={handleClearForm}
+                    >
+                        Cancel
+                    </Button>
+                </div>
             </Form>
 
             <div className="map-show-location">
