@@ -4,12 +4,14 @@ import { middleware } from "yargs";
 import authReducer from "./reducer/AuthSlice";
 import uploadEstateReducer from "./reducer/UploadSlice";
 import searchHomePageReducer from "./reducer/SearchHomePageSlice";
+import getAllEstateReducer from "./reducer/GetAllEstate";
 
 const store = configureStore({
     reducer: {
         auth: authReducer,
         uploadEstate: uploadEstateReducer,
-        searchHomePage: searchHomePageReducer
+        searchHomePage: searchHomePageReducer,
+        getAllEstate: getAllEstateReducer
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware({
