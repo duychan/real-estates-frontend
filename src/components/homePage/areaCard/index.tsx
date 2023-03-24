@@ -1,5 +1,5 @@
 import React from "react";
-import "./AreaCard.css";
+import "./areaCard.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, {
     Navigation,

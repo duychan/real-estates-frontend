@@ -8,8 +8,11 @@
 }
 
 .product-card-name {
-    font-size: var(--font-sz3);
+    font-size: var(--font-sz7);
     margin-top: -10px;
+    width: 100%;
+    padding-right: 0px;
+    min-height: 80px;
     font-weight: var(--font-w3);
 }
 
@@ -44,8 +47,12 @@
 .product-card-price {
     font-size: var(--font-sz4);
     font-weight: bold;
-    padding-top: 11px;
+    padding: 10px 0;
     color: var(--blackColor);
+}
+
+.product-card-img {
+    height: 197.55px;
 }
 
 .product-card-sub {

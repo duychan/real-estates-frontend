@@ -7,11 +7,21 @@ import "./HomePage.css";
 import { AreaSlider } from "../../components/homePage/AreaCard";
 import { getDistricts } from "../../app/api/MapApi";
 import { ILocation } from "../../app/api/MapApi/MapType";
+import { RootState, useAppDispatch } from "../../app/redux/store";
+import { GetAllEstate } from "../../app/redux/action/GetAllEstateAction";
+import { useSelector } from "react-redux";
+import { getEstate } from "../../app/redux/reducer/GetAllEstate";
+import { useNavigate } from "react-router-dom";
+import _pick from "lodash.pick";
 
 const DaNangCode = "48";
 
 export const HomePage: React.FC = () => {
+    const navigate = useNavigate();
     const [areaData, setAreaData] = useState<ILocation[]>([]);
+    const dispatch = useAppDispatch();
+    const { records } = useSelector(getEstate);
+
     useEffect(() => {
         getDistricts(DaNangCode)
             .then(response => {
@@ -20,7 +30,8 @@ export const HomePage: React.FC = () => {
             .catch(error => {
                 alert(error);
             });
-    }, []);
+        dispatch(GetAllEstate());
+    }, [dispatch]);
 
     return (
         <div>
@@ -35,13 +46,33 @@ export const HomePage: React.FC = () => {
                 <div className="title-productcard">
                     <h1 className="info-card-header">List Product</h1>
                 </div>
+
                 <div className="list-estate-card">
-                    <ProductCard />
-                    <ProductCard />
-                    <ProductCard />
+                    {records.slice(0, 3).map((product, key) => (
+                        <ProductCard
+                            _id={product._id}
+                            {..._pick(product, [
+                                "name",
+                                "address",
+                                "price",
+                                "bedRoom",
+                                "bathRoom",
+                                "area",
+                                "coverImg",
+                                "type"
+                            ])}
+                            key={key}
+                            handleGetSingleEstate={() => {
+                                navigate(`/search-page/${product._id}`);
+                            }}
+                        />
+                    ))}
                 </div>
+
                 <div className="view-more">
-                    <Button className="view-btn">View more </Button>
+                    <Button className="view-btn" href="/search-page">
+                        View more
+                    </Button>
                 </div>
             </div>
 
