@@ -10,9 +10,9 @@ import { ILocation } from "../../app/api/MapApi/MapType";
 import { RootState, useAppDispatch } from "../../app/redux/store";
 import { GetAllEstate } from "../../app/redux/action/GetAllEstateAction";
 import { useSelector } from "react-redux";
-import { getEstate } from "../../app/redux/reducer/GetAllEstate";
 import { useNavigate } from "react-router-dom";
 import _pick from "lodash.pick";
+import { getResultSearchPage } from "../../app/redux/reducer/SearchPageSlice";
 
 const DaNangCode = "48";
 
@@ -20,7 +20,7 @@ export const HomePage: React.FC = () => {
     const navigate = useNavigate();
     const [areaData, setAreaData] = useState<ILocation[]>([]);
     const dispatch = useAppDispatch();
-    const { records } = useSelector(getEstate);
+    const { records } = useSelector(getResultSearchPage);
 
     useEffect(() => {
         getDistricts(DaNangCode)

@@ -5,14 +5,21 @@
     flex-wrap: wrap;
     align-items: baseline;
 }
+
+.ant-card .ant-card-cover img {
+    height: 197.19px;
+}
+.estate-result-card .ant-card-body {
+    height: 182.77px;
+}
 .estate-result-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 30px;
+    max-height: 50px;
 }
 .estate-result-price {
-    font-size: var(--font-sz28);
+    font-size: var(--font-sz42);
     font-weight: var(--font-w2);
     color: var(--bg1-color);
 }
@@ -22,7 +29,7 @@
 }
 
 .estate-result-addr-title {
-    font-size: var(--font-sz23);
+    font-size: var(--font-sz40);
     font-weight: var(--font-w3);
     color: var(--item-selected);
 }

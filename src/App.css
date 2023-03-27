@@ -73,6 +73,10 @@
     --font-sz39: 2vw;
     --font-sz38: 14px;
     --font-color13: rgba(0, 0, 0, 0.88);
+    --font-sz40: 1rem;
+    --font-sz41: 1.1em;
+    --font-sz42: 1.2rem;
+    --font-sz44: 1.8rem;
 }
 
 .App {

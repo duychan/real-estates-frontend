@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { ISearchHomePage } from "../../../../components/homePage/Search/SearchType";
 import { searchHomePageApi } from "../../../api/SearchHomePageApi";
-import { ISearchHomePage } from "../../reducer/SearchHomePageSlice/SearchHomePageType";
 
 export const SearchHomePage = createAsyncThunk(
     "estates/search",

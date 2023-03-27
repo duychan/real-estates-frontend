@@ -8,11 +8,11 @@
 }
 
 .product-card-name {
-    font-size: var(--font-sz7);
+    font-size: var(--font-sz2);
     margin-top: -10px;
     width: 100%;
     padding-right: 0px;
-    min-height: 80px;
+    min-height: 100px;
     font-weight: var(--font-w3);
 }
 

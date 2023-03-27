@@ -8,6 +8,7 @@ import { ReactComponent as BathIcon } from "../../../assets/icon/bathroom.svg";
 import { ReactComponent as HouseSizeIcon } from "../../../assets/icon/houseSize.svg";
 import "./SearchResult.css";
 import { IconDetail } from "./IconDetail";
+import { IUploadEstate } from "../../../app/redux/reducer/UploadSlice/UploadSliceType";
 
 export const ResultEstateCardStyle = styled(Card).attrs<ISearchEstateResult>(
     ({ width }) => ({
@@ -21,45 +22,56 @@ export const ResultEstateCardStyle = styled(Card).attrs<ISearchEstateResult>(
 
 export const SearchEstateResult: React.FC<ISearchEstateResult> = ({
     width,
-    estateName,
-    estateAddress,
-    estatePrice,
-    estateType,
-    estateBedroom,
-    estateBathroom,
-    estateArea
+    estateResult: {
+        _id,
+        coverImg,
+        name,
+        address,
+        price,
+        type,
+        bedRoom,
+        bathRoom,
+        area
+    }
 }) => {
     return (
         <ResultEstateCardStyle
-            width={width ?? "350px"}
+            width={width ?? "100%"}
             hoverable
-            cover={<img alt="" src={house} />}
+            cover={
+                <img
+                    alt=""
+                    src={coverImg}
+                    className="estate-result-cover-img"
+                />
+            }
+            className="estate-result-card"
         >
             <div className="estate-result-address">
                 <div className="estate-result-header">
-                    <p className="estate-result-addr-title">{estateName}</p>
-                    <p className="estate-result-price">{`$${estatePrice}`}</p>
+                    <p className="estate-result-addr-title">{name}</p>
+                    <p className="estate-result-price">{`${price}`}</p>
                 </div>
-                <p className="estate-result-addr-detail">{estateAddress}</p>
+                <p className="estate-result-addr-detail">{address}</p>
             </div>
             <div className="estate-result-info">
-                <p className="estate-result-info-detail">{estateType}</p>
+                <p className="estate-result-info-detail">{type.name}</p>
                 <IconDetail
                     keyIcon="estate-bedroom"
                     title="Bedroom"
-                    iconContent={String(estateBedroom)}
+                    iconContent={String(bedRoom ?? 0)}
                     icon={<BedIcon className="estate-result-detail" />}
                 />
                 <IconDetail
                     keyIcon="estate-bathroom"
                     title="Bathroom"
-                    iconContent={String(estateBathroom)}
+                    iconContent={String(bathRoom ?? 0)}
                     icon={<BathIcon className="estate-result-detail" />}
                 />
                 <IconDetail
                     keyIcon="estate-house-size"
                     title="HouseSize"
-                    iconContent={`${estateArea}m^2`}
+                    iconContent={`${area}`}
                     icon={<HouseSizeIcon className="estate-result-detail" />}
                 />
             </div>
