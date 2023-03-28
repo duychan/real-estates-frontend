@@ -58,9 +58,15 @@ const UploadImage: React.FC<IGetImage> = ({ handleChangeValue }) => {
                 handleChangeValue(newFileList);
             }
         },
-        [fileList]
+        [fileList, handleChangeValue]
     );
-
+    const handleRemove = (file: UploadFile) => {
+        const newFileList = fileList.filter(
+            fileUid => fileUid.uid !== file.uid
+        );
+        setFileList(newFileList);
+        handleChangeValue(newFileList);
+    };
     const uploadButton = (
         <div>
             <PlusOutlined />
@@ -77,6 +83,7 @@ const UploadImage: React.FC<IGetImage> = ({ handleChangeValue }) => {
                 fileList={fileList}
                 onPreview={handlePreview}
                 onChange={handleChange}
+                onRemove={handleRemove}
                 beforeUpload={() => false}
                 accept=".png, .jpg"
             >
