@@ -1,4 +1,5 @@
 import { UploadFile } from "antd/es/upload/interface";
+import { ICoordinates } from "../MapNavigator/MapNavigateType";
 export interface IEstateUpload {
     owner: string;
     name: string;
@@ -12,4 +13,5 @@ export interface IEstateUpload {
     bedRoom: number;
     bathRoom: number;
     description: string;
+    coordinates: ICoordinates;
 }

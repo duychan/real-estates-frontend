@@ -22,7 +22,9 @@ export interface IEstateLocation {
 export interface ICoordinates {
     lat: number;
     lng: number;
+    _id?: string;
 }
 export interface IMapNavigate {
     handleGetEstateLocation: (coordinates: ICoordinates) => void;
+    errorCoordinate?: string;
 }

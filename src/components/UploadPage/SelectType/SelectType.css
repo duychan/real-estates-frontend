@@ -1,3 +1,8 @@
 .select-type-option {
     width: 11%;
 }
+
+.select-option-text {
+    margin: 0 auto;
+    text-transform: capitalize;
+}

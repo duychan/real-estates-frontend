@@ -36,7 +36,9 @@ const SelecType: React.FC<ISelect> = ({ handleChangeValue }) => {
                     (item: ISelectItemType) => {
                         return (
                             <Select.Option value={item.name} key={item._id}>
-                                {item.name}
+                                <p className="select-option-text">
+                                    {item.name}
+                                </p>
                             </Select.Option>
                         );
                     }

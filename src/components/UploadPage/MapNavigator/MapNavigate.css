@@ -3,7 +3,7 @@
     text-align: center;
 }
 .map-city-addr {
-    width: 80%;
+    width: 100%;
     margin: 10px auto;
     color: var(--font-color29);
     height: 40px;
@@ -21,7 +21,7 @@
     width: 100%;
 }
 .map-current-locate {
-    width: 80%;
+    width: 100%;
     margin: 10px auto;
     display: flex;
     justify-content: center;
@@ -31,7 +31,7 @@
     font-size: var(--font-sz15);
 }
 .map-addr-step {
-    width: 80%;
+    width: 100%;
     margin: 10px auto;
 }
 
@@ -41,8 +41,8 @@
 }
 
 .ant-divider-with-text.map-addr-divider {
-    width: 80%;
-    min-width: 80%;
+    width: 100%;
+    min-width: 100%;
     margin: 10px auto;
     display: flex;
     justify-content: center;
@@ -76,7 +76,7 @@
     background-color: var(--bg5-color);
 }
 .map-show-location-button {
-    width: 80%;
+    width: 100%;
     text-align: left;
     margin: 0 auto;
 }
