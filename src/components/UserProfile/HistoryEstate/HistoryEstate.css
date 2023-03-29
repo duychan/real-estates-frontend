@@ -22,8 +22,9 @@
 }
 
 .history-estate-product-name {
-    font-size: var(--font-sz3);
+    font-size: var(--font-sz2);
     font-weight: var(--font-w2);
+    min-height: 90px;
     margin-bottom: 10px;
     margin-top: -10px;
 }
