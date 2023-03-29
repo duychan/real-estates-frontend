@@ -32,7 +32,8 @@ export const SearchEstateResult: React.FC<ISearchEstateResult> = ({
         bedRoom,
         bathRoom,
         area
-    }
+    },
+    handleGetSingleEstate
 }) => {
     return (
         <ResultEstateCardStyle
@@ -46,6 +47,7 @@ export const SearchEstateResult: React.FC<ISearchEstateResult> = ({
                 />
             }
             className="estate-result-card"
+            onClick={handleGetSingleEstate}
         >
             <div className="estate-result-address">
                 <div className="estate-result-header">

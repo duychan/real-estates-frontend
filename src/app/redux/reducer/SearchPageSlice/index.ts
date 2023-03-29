@@ -21,7 +21,7 @@ const initialState: ISearchPageState = {
     },
     searchHomePageText: {
         address: "",
-        type: { key: "", value: "" },
+        type: { _id: "", name: "" },
         price: 0
     }
 };
@@ -62,7 +62,7 @@ export const SearchPageSlice = createSlice({
                 ...state,
                 searchHomePageText: {
                     address: action.payload.address || "",
-                    type: { key: action.payload.type || "", value: "" },
+                    type: { _id: action.payload.type || "", name: "" },
                     price: action.payload.price
                 }
             };
@@ -153,3 +153,4 @@ export const SearchPageSlice = createSlice({
 export default SearchPageSlice.reducer;
 export const { setSearchPage, setSearchHomePage } = SearchPageSlice.actions;
 export const getResultSearchPage = (state: RootState) => state.searchPage.data;
+export const getDataSearchPage = (state: RootState) => state.searchPage;

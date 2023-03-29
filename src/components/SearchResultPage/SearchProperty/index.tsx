@@ -24,11 +24,16 @@ import { useAppDispatch } from "../../../app/redux/store";
 import { useSelector } from "react-redux";
 import { SearchPage } from "../../../app/redux/action/SearchPageAction";
 import { ISearchPage } from "./SearchPropertyType";
-import { getResultSearchPage } from "../../../app/redux/reducer/SearchPageSlice";
+import {
+    getResultSearchPage,
+    getDataSearchPage,
+    setSearchHomePage
+} from "../../../app/redux/reducer/SearchPageSlice";
 import { IEstate } from "../../../app/redux/reducer/SearchPageSlice/SearchPageType";
 import { GetAllEstate } from "../../../app/redux/action/GetAllEstateAction";
 import RadioType from "../RadioType";
 import useDebounce from "../../../common/hooks/Debounce";
+import { useNavigate } from "react-router-dom";
 
 const StyleCollapsedIn = styled(MenuFoldOutlined)`
     font-size: var(--font-sz9);
@@ -39,6 +44,7 @@ const StyleCollapsedOut = styled(MenuUnfoldOutlined)`
 const PageSize = 4;
 const DebounceTime = 500;
 const SearchProperty: React.FC = () => {
+    const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const [currentPage, setCurrentPage] = useState(1);
     const [searchText, setSearchText] = useState<ISearchPage>({
@@ -56,9 +62,20 @@ const SearchProperty: React.FC = () => {
         DebounceTime
     );
 
-    const { records: recordsSearchPage, total: totalSearchPage } = useSelector(
-        getResultSearchPage
-    );
+    const { records: recordsSearchPage, total: totalSearchPage } =
+        useSelector(getResultSearchPage);
+    const { searchHomePageText } = useSelector(getDataSearchPage);
+    const isCheckSearchHomPageText = useCallback(() => {
+        return (
+            searchHomePageText?.address === "" &&
+                searchHomePageText?.type === undefined,
+            searchHomePageText?.price === 0
+        );
+    }, [
+        searchHomePageText?.address,
+        searchHomePageText?.price,
+        searchHomePageText?.type
+    ]);
 
     const isCheckSearchText = useCallback(() => {
         return (
@@ -83,10 +100,24 @@ const SearchProperty: React.FC = () => {
     ]);
 
     useEffect(() => {
-        if (isCheckSearchText()) {
+        if (!searchHomePageText) {
             dispatch(GetAllEstate());
-        } else {
+            return;
+        }
+        if (isCheckSearchText() && isCheckSearchHomPageText()) {
+            dispatch(GetAllEstate());
+        }
+    }, [
+        dispatch,
+        isCheckSearchHomPageText,
+        isCheckSearchText,
+        searchHomePageText
+    ]);
+
+    useEffect(() => {
+        if (!isCheckSearchText()) {
             dispatch(SearchPage(debouncedSearchText));
+            dispatch(setSearchHomePage({ address: "", type: "", price: 0 }));
         }
     }, [debouncedSearchText]);
 
@@ -315,6 +346,9 @@ const SearchProperty: React.FC = () => {
                                     const { _id } = item;
                                     return (
                                         <SearchEstateResult
+                                            handleGetSingleEstate={() => {
+                                                navigate(`/search-page/${_id}`);
+                                            }}
                                             width="45%"
                                             key={_id}
                                             estateResult={item}
