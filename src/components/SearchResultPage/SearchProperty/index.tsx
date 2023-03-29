@@ -1,4 +1,10 @@
-import React, { useMemo, useState } from "react";
+import React, {
+    useMemo,
+    useState,
+    useEffect,
+    useCallback,
+    useRef
+} from "react";
 import "./SearchProperty.css";
 import {
     Layout,
@@ -14,7 +20,6 @@ import type { RadioChangeEvent } from "antd";
 const { SubMenu } = Menu;
 const { Sider } = Layout;
 import {
-    SearchOutlined,
     EnvironmentOutlined,
     DollarCircleOutlined,
     MenuFoldOutlined,
@@ -31,9 +36,24 @@ import { sortOptions } from "../../../common/constants";
 import { Content } from "antd/es/layout/layout";
 import { SearchEstateResult } from "../SearchEstateResult";
 import { PaginationComponent } from "../../../common/sharedComponent/Pagination";
-import { ISearchEstateResult } from "../SearchEstateResult/SearchResultType";
 import { usePagination } from "../../../common/hooks/Pagination/usePagination";
 import { ReactComponent as NoData } from "../../../assets/icon/No-data-pana.svg";
+import {
+    ISelectItemType,
+    ISelectOption
+} from "../../UploadPage/SelectType/SelectItemType";
+import SelecType from "../../UploadPage/SelectType";
+import { useAppDispatch } from "../../../app/redux/store";
+import { useSelector } from "react-redux";
+import { SearchPage } from "../../../app/redux/action/SearchPageAction";
+import { ISearchPage } from "./SearchPropertyType";
+import { getResultSearchPage } from "../../../app/redux/reducer/SearchPageSlice";
+import { debounce } from "lodash";
+import _ from "lodash";
+import { IEstate } from "../../../app/redux/reducer/SearchPageSlice/SearchPageType";
+import { GetAllEstate } from "../../../app/redux/action/GetAllEstateAction";
+import RadioType from "../RadioType";
+import useDebounce from "../../../common/hooks/Debounce";
 
 const StyleCollapsedIn = styled(MenuFoldOutlined)`
     font-size: var(--font-sz9);
@@ -42,71 +62,106 @@ const StyleCollapsedOut = styled(MenuUnfoldOutlined)`
     font-size: var(--font-sz9);
 `;
 const PageSize = 4;
+const DebounceTime = 500;
 const SearchProperty: React.FC = () => {
-    const [value, setValue] = useState(0);
+    const dispatch = useAppDispatch();
     const [currentPage, setCurrentPage] = useState(1);
+    const [searchText, setSearchText] = useState<ISearchPage>({
+        address: "",
+        minPrice: 0,
+        maxPrice: 0,
+        area: 0,
+        bathRoom: 0,
+        bedRoom: 0,
+        type: { _id: "", name: "" }
+    });
 
-    const estateResultList: ISearchEstateResult[] = [
-        {
-            estateId: "1",
-            estateName: "Toa nha ABC",
-            estateAddress: "52 Hoang Dieu, Hai Chau, Da Nang",
-            estatePrice: "2500",
-            estateBedroom: 2,
-            estateBathroom: 2,
-            estateArea: 100,
-            estateType: "Apartment"
-        },
-        {
-            estateId: "2",
-            estateName: "Toa nha ABC",
-            estateAddress: "52 Hoang Dieu, Hai Chau, Da Nang",
-            estatePrice: "2500",
-            estateBedroom: 2,
-            estateBathroom: 2,
-            estateArea: 100,
-            estateType: "Apartment"
-        },
-        {
-            estateId: "3",
-            estateName: "Toa nha ABC",
-            estateAddress: "52 Hoang Dieu, Hai Chau, Da Nang",
-            estatePrice: "2500",
-            estateBedroom: 2,
-            estateBathroom: 2,
-            estateArea: 100,
-            estateType: "Apartment"
-        },
-        {
-            estateId: "4",
-            estateName: "Toa nha ABC",
-            estateAddress: "52 Hoang Dieu, Hai Chau, Da Nang",
-            estatePrice: "2500",
-            estateBedroom: 2,
-            estateBathroom: 2,
-            estateArea: 100,
-            estateType: "Apartment"
-        },
-        {
-            estateId: "5",
-            estateName: "Toa nha ABC",
-            estateAddress: "52 Hoang Dieu, Hai Chau, Da Nang",
-            estatePrice: "2500",
-            estateBedroom: 2,
-            estateBathroom: 2,
-            estateArea: 100,
-            estateType: "Apartment"
+    const debouncedSearchText: ISearchPage = useDebounce<ISearchPage>(
+        searchText,
+        DebounceTime
+    );
+
+    const { records: recordsSearchPage, total: totalSearchPage } =
+        useSelector(getResultSearchPage);
+
+    const isCheckSearchText = useCallback(() => {
+        return (
+            debouncedSearchText.address === "" &&
+            debouncedSearchText.area === 0 &&
+            debouncedSearchText.bathRoom === 0 &&
+            debouncedSearchText.bedRoom === 0 &&
+            debouncedSearchText.maxPrice === 0 &&
+            debouncedSearchText.minPrice === 0 &&
+            debouncedSearchText.type._id === "" &&
+            debouncedSearchText.type.name === ""
+        );
+    }, [
+        debouncedSearchText.address,
+        debouncedSearchText.area,
+        debouncedSearchText.bathRoom,
+        debouncedSearchText.bedRoom,
+        debouncedSearchText.maxPrice,
+        debouncedSearchText.minPrice,
+        debouncedSearchText.type._id,
+        debouncedSearchText.type.name
+    ]);
+
+    useEffect(() => {
+        if (isCheckSearchText()) {
+            dispatch(GetAllEstate());
+        } else {
+            dispatch(SearchPage(debouncedSearchText));
         }
-    ];
+    }, [debouncedSearchText]);
 
-    const currentData = usePagination<ISearchEstateResult>({
-        arrayData: estateResultList,
+    const handleChangeAddress = (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        setSearchText({
+            ...searchText,
+            address: event.target.value
+        });
+    };
+    const handleBedRoomChange = (value: number | null) => {
+        setSearchText(prevState => ({
+            ...prevState,
+            bedRoom: value || 0
+        }));
+    };
+
+    const handleBathRoomChange = (value: number | null) => {
+        setSearchText(prevState => ({
+            ...prevState,
+            bathRoom: value || 0
+        }));
+    };
+
+    const handleMinPriceChange = (value: number | null) => {
+        setSearchText(prevState => ({
+            ...prevState,
+            minPrice: value || 0
+        }));
+    };
+
+    const handleMaxPriceChange = (value: number | null) => {
+        setSearchText(prevState => ({
+            ...prevState,
+            maxPrice: value || 0
+        }));
+    };
+
+    const handleTypeChange = (selectedType: ISelectItemType) => {
+        setSearchText(prevState => ({
+            ...prevState,
+            type: { _id: selectedType._id, name: selectedType.name }
+        }));
+    };
+
+    const currentData = usePagination<IEstate>({
+        arrayData: recordsSearchPage,
         currentPage,
         pageSize: PageSize
     });
-    const onChange = (e: RadioChangeEvent) => {
-        setValue(e.target.value);
-    };
 
     const [collapsed, setCollapsed] = useState(false);
     const {
@@ -117,7 +172,7 @@ const SearchProperty: React.FC = () => {
         <div className="search-property">
             <Layout>
                 <Sider
-                    width={250}
+                    width={280}
                     theme="light"
                     trigger={null}
                     collapsible
@@ -145,8 +200,9 @@ const SearchProperty: React.FC = () => {
                                 <EnvironmentOutlined className="search-property-menu-icon" />
                             }
                         >
-                            <Input
-                                prefix={<SearchOutlined />}
+                            <Input.Search
+                                onChange={handleChangeAddress}
+                                value={searchText.address}
                                 className="search-property-input-location"
                             />
                         </SubMenu>
@@ -162,17 +218,37 @@ const SearchProperty: React.FC = () => {
                                 <DollarCircleOutlined className="search-property-menu-icon" />
                             }
                         >
-                            <div className="search-property-price">
+                            <div className="search-property-min-price">
                                 <p className="search-property-price-title">
                                     Minimum price
                                 </p>
-                                <Input className="search-property-input-price"></Input>
+                                <InputNumber
+                                    onChange={handleMinPriceChange}
+                                    formatter={value =>
+                                        ` ${value}`.replace(
+                                            /\B(?=(\d{3})+(?!\d))/g,
+                                            ","
+                                        )
+                                    }
+                                    className="search-property-input-price"
+                                    min={0}
+                                ></InputNumber>
                             </div>
-                            <div className="search-property-price">
+                            <div className="search-property-max-price">
                                 <p className="search-property-price-title">
                                     Maximum price
                                 </p>
-                                <Input className="search-property-input-price" />
+                                <InputNumber
+                                    onChange={handleMaxPriceChange}
+                                    formatter={value =>
+                                        ` ${value}`.replace(
+                                            /\B(?=(\d{3})+(?!\d))/g,
+                                            ","
+                                        )
+                                    }
+                                    className="search-property-input-price"
+                                    min={0}
+                                />
                             </div>
                         </SubMenu>
                         <hr className="search-property-hr" />
@@ -192,6 +268,8 @@ const SearchProperty: React.FC = () => {
                                     Bedroom:
                                 </p>
                                 <InputNumber
+                                    value={searchText.bedRoom}
+                                    onChange={handleBedRoomChange}
                                     className="search-property-input-facilities"
                                     min={0}
                                 />
@@ -201,6 +279,8 @@ const SearchProperty: React.FC = () => {
                                     Bathroom:
                                 </p>
                                 <InputNumber
+                                    value={searchText.bathRoom}
+                                    onChange={handleBathRoomChange}
                                     className="search-property-input-facilities"
                                     min={0}
                                 />
@@ -218,37 +298,9 @@ const SearchProperty: React.FC = () => {
                                 <SettingOutlined className="search-property-menu-icon" />
                             }
                         >
-                            <div className="search-property-type-checkbox">
-                                <Checkbox.Group
-                                    options={typeArr}
-                                ></Checkbox.Group>
+                            <div className="search-property-type-select">
+                                <RadioType setValueOption={handleTypeChange} />
                             </div>
-                        </SubMenu>
-                        <hr className="search-property-hr" />
-                        <SubMenu
-                            key="size"
-                            title={
-                                <span className="search-property-title">
-                                    Size
-                                </span>
-                            }
-                            icon={
-                                <ShrinkOutlined className="search-property-menu-icon" />
-                            }
-                        >
-                            <Radio.Group onChange={onChange} value={value}>
-                                {sizeArr.map((item, index) => {
-                                    return (
-                                        <Radio
-                                            className="search-property-type-radio"
-                                            key={`update-item-${index}`}
-                                            value={item}
-                                        >
-                                            {item}
-                                        </Radio>
-                                    );
-                                })}
-                            </Radio.Group>
                         </SubMenu>
                     </Menu>
                 </Sider>
@@ -282,14 +334,14 @@ const SearchProperty: React.FC = () => {
                     </div>
                     <Content className="search-result-content">
                         <div className="search-result-content-card">
-                            {estateResultList.length > 0 ? (
+                            {recordsSearchPage.length > 0 ? (
                                 currentData.map(item => {
-                                    const { estateId } = item;
+                                    const { _id } = item;
                                     return (
                                         <SearchEstateResult
                                             width="45%"
-                                            key={estateId}
-                                            {...item}
+                                            key={_id}
+                                            estateResult={item}
                                         />
                                     );
                                 })
@@ -303,10 +355,10 @@ const SearchProperty: React.FC = () => {
                             )}
                         </div>
                         <div className="search-result-content-pagination">
-                            {estateResultList.length > 0 && (
+                            {recordsSearchPage.length > 0 && (
                                 <PaginationComponent
                                     pageSize={PageSize}
-                                    totalItem={estateResultList.length}
+                                    totalItem={totalSearchPage}
                                     defaultCurrent={1}
                                     handleGetCurrentPage={(page: number) => {
                                         setCurrentPage(page);

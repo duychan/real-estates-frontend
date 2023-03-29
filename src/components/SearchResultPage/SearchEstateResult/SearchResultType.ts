@@ -1,15 +1,10 @@
+import { IEstate } from "../../../app/redux/reducer/SearchPageSlice/SearchPageType";
 import { ReactNode } from "react";
+import { IUploadEstate } from "../../../app/redux/reducer/UploadSlice/UploadSliceType";
 
 export interface ISearchEstateResult {
     width?: string;
-    estateId: string;
-    estateName: string;
-    estateAddress: string;
-    estatePrice: string;
-    estateType: string;
-    estateBedroom: number;
-    estateBathroom: number;
-    estateArea: number;
+    estateResult: IEstate;
 }
 export interface IIconDetail {
     keyIcon: string;
