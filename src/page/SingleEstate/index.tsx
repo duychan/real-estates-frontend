@@ -1,5 +1,12 @@
 import { Button, Row } from "antd";
-import React from "react";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
+import { GetUserById } from "../../app/redux/action/AuthAction";
+import { GetEstateById } from "../../app/redux/action/EstateAction";
+import { getEstateById } from "../../app/redux/reducer/EstateSlice";
+import { getUserById } from "../../app/redux/reducer/UserSlice";
+import { useAppDispatch } from "../../app/redux/store";
 import CarouselSingleProduct from "../../components/DetailPage/carouselSingleProduct";
 import { CommentComponent } from "../../components/DetailPage/CommentComponent";
 import DetailInfomation from "../../components/DetailPage/DetailInfomation";
@@ -19,11 +26,63 @@ export const SingleEstate: React.FC = () => {
         [16.05560081672723, 108.22085814338341],
         [16.055479588302024, 108.21860473103041]
     ];
+
+    const location = useLocation();
+    const locationPath = location?.pathname.split("/") ?? [];
+    const _idSingleEstate =
+        locationPath.length > 0 ? locationPath[locationPath.length - 1] : "";
+
+    const dispatch = useAppDispatch();
+    const {
+        _id: _idEstate,
+        owner,
+        name: titleEstate,
+        address,
+        area,
+        price,
+        currentStatus: { _id: _idStatus, name: nameStatus },
+        type: { _id: _idType, name: nameType },
+        coverImg,
+        thumbnail,
+        bedRoom,
+        bathRoom,
+        description
+    } = useSelector(getEstateById);
+    const { firstName, lastName } = useSelector(getUserById);
+    const navigate = useNavigate();
+
+    const nameOwner = firstName && lastName ? `${firstName} ${lastName}` : "";
+
+    useEffect(() => {
+        if (_idSingleEstate) {
+            dispatch(GetEstateById(_idSingleEstate)).then(res => {
+                const _idEstateFind = res.payload.data?.records?._id || "";
+                const _idOwner = res.payload.data?.records?.owner || "";
+                if (_idEstateFind === "") {
+                    navigate("*");
+                } else {
+                    dispatch(GetUserById(_idOwner));
+                }
+            });
+        } else {
+            navigate("*");
+        }
+    }, [dispatch, _idSingleEstate, navigate]);
+
     return (
         <div className="single-estate">
-            <CarouselSingleProduct />
-            <DetailInfomation />
-            <EstateDescription />
+            <CarouselSingleProduct arrayImg={thumbnail} />
+            <DetailInfomation
+                estateName={titleEstate}
+                address={address}
+                type={nameType}
+                price={price}
+                bedroom={bedRoom}
+                bathroom={bathRoom}
+                area={area}
+                nameUser={nameOwner}
+            />
+            <EstateDescription description={description} />
             <div className="estate-map">
                 <EstateMap
                     positionCenter={estateAddressLatLng}

@@ -133,8 +133,10 @@ export const SearchPageSlice = createSlice({
                 return { ...state, isLoading: true };
             })
             .addCase(GetAllEstate.fulfilled, (state, action) => {
-                const { data = { records: [], total: 0 }, message = "" } =
-                    action.payload;
+                const {
+                    data = { records: [], total: 0 },
+                    message = ""
+                } = action.payload;
 
                 return {
                     ...state,

@@ -3,6 +3,7 @@ import { IUserLoginInput } from "../../../api/AuthenticationApi/AuthType";
 import { LoginApi } from "../../../api/AuthenticationApi/LoginApi";
 import { IUserRegisterInput } from "../../../api/AuthenticationApi/AuthType";
 import { RegisterAPI } from "../../../api/AuthenticationApi/RegisterApi";
+import { getUserById } from "../../../api/AuthenticationApi/UserApi";
 
 export const UserLogin = createAsyncThunk(
     "users/login",
@@ -35,3 +36,15 @@ export const UserProfile = createAsyncThunk("users/profile", async () => {
         return error;
     }
 });
+
+export const GetUserById = createAsyncThunk(
+    "users/getById",
+    async (idUser: string) => {
+        try {
+            const response = await getUserById(idUser);
+            return response;
+        } catch (error) {
+            return error;
+        }
+    }
+);

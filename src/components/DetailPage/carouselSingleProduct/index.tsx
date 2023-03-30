@@ -2,15 +2,28 @@ import React, { useState } from "react";
 import "./carouselSingleProduct.css";
 import { Image } from "antd";
 import HeroSlider, { Slide, Nav } from "hero-slider";
+import { Swiper, SwiperSlide } from "swiper/react";
+import SwiperCore, {
+    Navigation,
+    Pagination,
+    EffectCoverflow,
+    Autoplay
+} from "swiper";
 
-const arrImg: string[] = [
-    "https://i.imgur.com/PWYw2wn.jpg",
-    "https://i.imgur.com/jxtxPMu.jpg",
-    "https://i.imgur.com/jEdUeMb.jpg",
-    "https://i.imgur.com/vZKOfl1.jpg"
-];
+import "swiper/swiper.min.css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/effect-coverflow";
 
-const CarouselSingleProduct: React.FC = () => {
+SwiperCore.use([Navigation, Pagination, EffectCoverflow, Autoplay]);
+
+interface ICarouselSingleProduct {
+    arrayImg: string[];
+}
+
+const CarouselSingleProduct: React.FC<ICarouselSingleProduct> = ({
+    arrayImg
+}) => {
     return (
         <div className="carousel-product">
             <HeroSlider
@@ -22,7 +35,7 @@ const CarouselSingleProduct: React.FC = () => {
                     slidingDelay: 100
                 }}
             >
-                {arrImg.map((item, key) => (
+                {arrayImg?.map((item, key) => (
                     <Slide
                         key={`update-item-${key}`}
                         background={{
@@ -35,9 +48,29 @@ const CarouselSingleProduct: React.FC = () => {
             </HeroSlider>
             <div className="list-img">
                 <Image.PreviewGroup>
-                    {arrImg.map((item, key) => (
-                        <Image key={`update-item-${key}`} src={item} />
-                    ))}
+                    <Swiper
+                        navigation
+                        pagination={{ clickable: true }}
+                        effect="coverflow"
+                        coverflowEffect={{
+                            rotate: 0,
+                            stretch: 0,
+                            depth: 10,
+                            modifier: 0.5,
+                            slideShadows: false
+                        }}
+                        slidesPerView={3}
+                        centeredSlides={true}
+                        loop={true}
+                        grabCursor={true}
+                        className="list-img-swiper"
+                    >
+                        {arrayImg?.map((item, key) => (
+                            <SwiperSlide key={`update-item-${key}`}>
+                                <Image key={`update-item-${key}`} src={item} />
+                            </SwiperSlide>
+                        ))}
+                    </Swiper>
                 </Image.PreviewGroup>
             </div>
         </div>

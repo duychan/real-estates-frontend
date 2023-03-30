@@ -3,10 +3,10 @@ export interface IUserInformation {
     firstName: string;
     lastName: string;
     email: string;
-    createAt: string;
+    createdAt: string;
     imgUser: string;
     nationalId: string;
-    updateAt: string;
+    updatedAt: string;
 }
 
 export interface IAuthState {

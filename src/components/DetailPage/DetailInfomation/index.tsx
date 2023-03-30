@@ -17,14 +17,34 @@ import {
     FullscreenExitOutlined
 } from "@ant-design/icons";
 
-const DetailInfomation: React.FC = () => {
+interface IDetailInformation {
+    estateName: string;
+    address: string;
+    type: string;
+    price: string;
+    bedroom: number;
+    bathroom: number;
+    area: string;
+    nameUser: string;
+}
+
+const DetailInfomation: React.FC<IDetailInformation> = ({
+    estateName,
+    address,
+    type,
+    price,
+    bedroom,
+    bathroom,
+    area,
+    nameUser
+}) => {
     const [favorite, setfavorite] = React.useState("favorite-icon");
 
     return (
         <div className="detail-product">
             <div className="detail-product-content">
                 <div className="product-name">
-                    <h2>Ba Huyen Thanh Quan Street</h2>
+                    <h2>{estateName}</h2>
                     <div className="favorite">
                         <Button
                             className="button-favorite"
@@ -36,11 +56,11 @@ const DetailInfomation: React.FC = () => {
                 </div>
                 <div className="product-info">
                     <div className="product-address">
-                        <h3>215 Vo Nguyen Giap, Da Nang</h3>
-                        <h4>Type: Apartment</h4>
+                        <h3>{address}</h3>
+                        <h4 className="product-address-type">Type: {type}</h4>
                     </div>
                     <div className="product-fee">
-                        <h1>$25000</h1>
+                        <h1>${price}</h1>
                     </div>
                 </div>
                 <div className="product-share">
@@ -55,7 +75,7 @@ const DetailInfomation: React.FC = () => {
                         <Col xs={{ span: 8, offset: 0 }}>
                             <p className="detail-product-p">
                                 <BedIcon className="icon-detail__svg" />
-                                Bedroom: 2
+                                Bedroom: {bedroom}
                             </p>
 
                             <p className="detail-product-p">
@@ -67,13 +87,15 @@ const DetailInfomation: React.FC = () => {
                             xs={{ span: 9, offset: 2 }}
                             lg={{ span: 6, offset: 3 }}
                         >
-                            <p className="detail-product-p">
+                            <p className="detail-product-p-area">
                                 <FullscreenExitOutlined className="icon-detail" />
-                                Area: 100m^2
+                                <p className="detail-product-p-area-text">
+                                    Area: {area} m<sup>2</sup>
+                                </p>
                             </p>
                             <p className="detail-product-p">
                                 <BathIcon className="icon-detail__svg" />
-                                Bathroom: 2
+                                Bathroom: {bathroom}
                             </p>
                         </Col>
                         <Col xs={{ span: 6, offset: 1 }}>
@@ -85,7 +107,7 @@ const DetailInfomation: React.FC = () => {
                                 size={50}
                                 icon={<UserOutlined />}
                             />{" "}
-                            username
+                            {nameUser}
                         </Col>
                     </Row>
                 </div>

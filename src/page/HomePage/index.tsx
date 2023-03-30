@@ -7,7 +7,7 @@ import "./HomePage.css";
 import { AreaSlider } from "../../components/homePage/AreaCard";
 import { getDistricts } from "../../app/api/MapApi";
 import { ILocation } from "../../app/api/MapApi/MapType";
-import { RootState, useAppDispatch } from "../../app/redux/store";
+import { useAppDispatch } from "../../app/redux/store";
 import { GetAllEstate } from "../../app/redux/action/GetAllEstateAction";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -63,14 +63,19 @@ export const HomePage: React.FC = () => {
                             ])}
                             key={key}
                             handleGetSingleEstate={() => {
-                                navigate(`/search-page/${product._id}`);
+                                navigate(`/single-estate/${product._id}`);
                             }}
                         />
                     ))}
                 </div>
 
                 <div className="view-more">
-                    <Button className="view-btn" href="/search-page">
+                    <Button
+                        className="view-btn"
+                        onClick={() => {
+                            navigate("/search-page");
+                        }}
+                    >
                         View more
                     </Button>
                 </div>
