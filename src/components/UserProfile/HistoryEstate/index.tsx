@@ -1,125 +1,69 @@
 import React, { useEffect, useState } from "react";
 import "./HistoryEstate.css";
-import { Card, Avatar } from "antd";
-import { EnvironmentOutlined } from "@ant-design/icons";
-import area from "../../../assets/images/area.jpg";
+import { ListMyEstate } from "./ListMyEstate";
 import { PaginationComponent } from "../../../common/sharedComponent/Pagination";
+import { ReactComponent as NoData } from "../../../assets/icon/No-data-pana.svg";
+import { useAppDispatch } from "../../../app/redux/store";
+import { GetMyEstate } from "../../../app/redux/action/GetMyEstateAction";
+import { IEstate } from "../../../app/redux/reducer/SearchPageSlice/SearchPageType";
+import { usePagination } from "../../../common/hooks/Pagination/usePagination";
+import { useSelector } from "react-redux";
+import { getMyEstateData } from "../../../app/redux/reducer/GetMyEstateSlice";
+import { useNavigate } from "react-router-dom";
 
+const PageSize = 4;
 const HistoryEstate: React.FC = () => {
+    const navigate = useNavigate();
     const [currentPage, setCurrentPage] = useState(1);
+    const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        dispatch(GetMyEstate());
+    }, [dispatch]);
+
+    const { records, total } = useSelector(getMyEstateData);
+    const currentData = usePagination<IEstate>({
+        arrayData: records,
+        currentPage,
+        pageSize: PageSize
+    });
 
     return (
         <div className="history-estate">
             <div className="history-estate-product-list">
-                <Card
-                    hoverable
-                    className="history-estate-single-card"
-                    cover={<img alt="example" src={area} />}
-                >
-                    <div className="history-estate-product-info">
-                        <h3 className="history-estate-product-name">
-                            Hoi An Ancient Town
-                        </h3>
-                        <p className="history-estate-product-address">
-                            <EnvironmentOutlined className="history-estate-icon-address" />
-                            192 Nguyen Luong Bang, Hoa Khanh Bac, Lien Chieu, Da
-                            Nang
+                {records.length > 0 ? (
+                    currentData.map(item => {
+                        const { _id } = item;
+                        return (
+                            <ListMyEstate
+                                key={_id}
+                                estateResult={item}
+                                handleGetSingleEstate={() => {
+                                    navigate(`/search-page/${_id}`);
+                                }}
+                            />
+                        );
+                    })
+                ) : (
+                    <div className="search-result-no-data">
+                        <NoData className="search-result-no-data-img" />
+                        <p className="search-result-empty-content">
+                            No real estate is found
                         </p>
                     </div>
-                    <div className="history-estate-product-fees">
-                        <div className="history-estate-product-type">
-                            <p>Apartment</p>
-                        </div>
-                        <div className="history-estate-product-price">100</div>
-                    </div>
-                    <div className="history-estate-product-sub">
-                        <div className="history-estate-product-bedroom">
-                            Bedrooms: 5
-                        </div>
-                        <div className="history-estate-product-bathroom">
-                            Bathrooms: 5
-                        </div>
-                        <div className="history-estate-product-area">
-                            Size: 500m^2
-                        </div>
-                    </div>
-                </Card>
-                <Card
-                    hoverable
-                    className="history-estate-single-card"
-                    cover={<img alt="example" src={area} />}
-                >
-                    <div className="history-estate-product-info">
-                        <h3 className="history-estate-product-name">
-                            Hoi An Ancient Town
-                        </h3>
-                        <p className="history-estate-product-address">
-                            <EnvironmentOutlined className="history-estate-icon-address" />
-                            192 Nguyen Luong Bang, Hoa Khanh Bac, Lien Chieu, Da
-                            Nang
-                        </p>
-                    </div>
-                    <div className="history-estate-product-fees">
-                        <div className="history-estate-product-type">
-                            <p>Apartment</p>
-                        </div>
-                        <div className="history-estate-product-price">100</div>
-                    </div>
-                    <div className="history-estate-product-sub">
-                        <div className="history-estate-product-bedroom">
-                            Bedrooms: 5
-                        </div>
-                        <div className="history-estate-product-bathroom">
-                            Bathrooms: 5
-                        </div>
-                        <div className="history-estate-product-area">
-                            Size: 500m^2
-                        </div>
-                    </div>
-                </Card>
-                <Card
-                    hoverable
-                    className="history-estate-single-card"
-                    cover={<img alt="example" src={area} />}
-                >
-                    <div className="history-estate-product-info">
-                        <h3 className="history-estate-product-name">
-                            Hoi An Ancient Town
-                        </h3>
-                        <p className="history-estate-product-address">
-                            <EnvironmentOutlined className="history-estate-icon-address" />
-                            192 Nguyen Luong Bang, Hoa Khanh Bac, Lien Chieu, Da
-                            Nang
-                        </p>
-                    </div>
-                    <div className="history-estate-product-fees">
-                        <div className="history-estate-product-type">
-                            <p>Apartment</p>
-                        </div>
-                        <div className="history-estate-product-price">100</div>
-                    </div>
-                    <div className="history-estate-product-sub">
-                        <div className="history-estate-product-bedroom">
-                            Bedrooms: 5
-                        </div>
-                        <div className="history-estate-product-bathroom">
-                            Bathrooms: 5
-                        </div>
-                        <div className="history-estate-product-area">
-                            Size: 500m^2
-                        </div>
-                    </div>
-                </Card>
+                )}
             </div>
-            <div className="history-estate-pagination">
-                <PaginationComponent
-                    pageSize={4}
-                    totalItem={50}
-                    defaultCurrent={1}
-                    handleGetCurrentPage={(page: number) =>
-                        setCurrentPage(page)
-                    }
-                />
+            <div className="search-result-content-pagination">
+                {records.length > 0 && (
+                    <PaginationComponent
+                        pageSize={PageSize}
+                        totalItem={total}
+                        defaultCurrent={1}
+                        handleGetCurrentPage={(page: number) => {
+                            setCurrentPage(page);
+                        }}
+                    />
+                )}
             </div>
         </div>
     );

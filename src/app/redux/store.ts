@@ -7,6 +7,7 @@ import notificationReducer from "./reducer/NotificationSlice";
 import searchPageReducer from "./reducer/SearchPageSlice";
 import getEstateReducer from "./reducer/EstateSlice";
 import userReducer from "./reducer/UserSlice";
+import getMyEstateReducer from "./reducer/GetMyEstateSlice";
 
 const store = configureStore({
     reducer: {
@@ -15,7 +16,8 @@ const store = configureStore({
         notification: notificationReducer,
         searchPage: searchPageReducer,
         getEstate: getEstateReducer,
-        user: userReducer
+        user: userReducer,
+        getMyEstate: getMyEstateReducer
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware({
