@@ -1,6 +1,5 @@
 import { IEstate } from "../../../app/redux/reducer/SearchPageSlice/SearchPageType";
 import { ReactNode } from "react";
-import { IUploadEstate } from "../../../app/redux/reducer/UploadSlice/UploadSliceType";
 
 export interface ISearchEstateResult {
     width?: string;

@@ -3,11 +3,29 @@
     margin: 0 auto;
 }
 .list-img {
-    padding-top: 10px;
+    padding: 30px 0px;
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 .list-img .ant-image-img {
     padding-right: 5px;
-    width: 200px;
+    width: 250px;
+    height: 170px;
+}
+
+.list-img-swiper {
+    height: 170px;
+    width: 90%;
+}
+.list-img-swiper .swiper-button-prev::after,
+.list-img-swiper .swiper-button-next::after {
+    color: var(--silver-color);
+    font-size: 30px;
+}
+.list-img-swiper .swiper-button-prev,
+.list-img-swiper .swiper-button-next {
+    background-color: var(--cardBG);
+    padding: 30px;
+    border-radius: 50%;
 }

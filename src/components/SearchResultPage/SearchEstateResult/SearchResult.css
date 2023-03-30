@@ -26,6 +26,7 @@
 
 .estate-result-addr-detail {
     font-size: var(--font-sz8);
+    margin-top: var(--font-sz44);
 }
 
 .estate-result-addr-title {

@@ -106,3 +106,18 @@ h4 {
 .user {
     margin-right: 10px;
 }
+
+.product-address-type {
+    text-transform: capitalize;
+}
+
+.detail-product-p-area {
+    font-size: var(--font-sz2);
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.detail-product-p-area-text {
+    margin: 0;
+}

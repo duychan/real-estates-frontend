@@ -8,7 +8,7 @@ export interface IEstate {
     address: string;
     area: string;
     price: string;
-    currentStatus: string;
+    currentStatus: { _id: string; name: string };
     type: { _id: string; name: string };
     coverImg: string;
     thumbnail: string[];

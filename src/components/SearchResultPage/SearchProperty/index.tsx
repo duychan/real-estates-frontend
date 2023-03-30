@@ -1,22 +1,6 @@
-import React, {
-    useMemo,
-    useState,
-    useEffect,
-    useCallback,
-    useRef
-} from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import "./SearchProperty.css";
-import {
-    Layout,
-    Menu,
-    Select,
-    Input,
-    Checkbox,
-    theme,
-    Radio,
-    InputNumber
-} from "antd";
-import type { RadioChangeEvent } from "antd";
+import { Layout, Menu, Select, Input, theme, InputNumber } from "antd";
 const { SubMenu } = Menu;
 const { Sider } = Layout;
 import {
@@ -26,30 +10,21 @@ import {
     MenuUnfoldOutlined,
     FilterOutlined,
     SettingOutlined,
-    ShrinkOutlined,
     HomeOutlined
 } from "@ant-design/icons";
 import styled from "styled-components";
-import { typeArr } from "../../../common/constants";
-import { sizeArr } from "../../../common/constants";
 import { sortOptions } from "../../../common/constants";
 import { Content } from "antd/es/layout/layout";
 import { SearchEstateResult } from "../SearchEstateResult";
 import { PaginationComponent } from "../../../common/sharedComponent/Pagination";
 import { usePagination } from "../../../common/hooks/Pagination/usePagination";
 import { ReactComponent as NoData } from "../../../assets/icon/No-data-pana.svg";
-import {
-    ISelectItemType,
-    ISelectOption
-} from "../../UploadPage/SelectType/SelectItemType";
-import SelecType from "../../UploadPage/SelectType";
+import { ISelectItemType } from "../../UploadPage/SelectType/SelectItemType";
 import { useAppDispatch } from "../../../app/redux/store";
 import { useSelector } from "react-redux";
 import { SearchPage } from "../../../app/redux/action/SearchPageAction";
 import { ISearchPage } from "./SearchPropertyType";
 import { getResultSearchPage } from "../../../app/redux/reducer/SearchPageSlice";
-import { debounce } from "lodash";
-import _ from "lodash";
 import { IEstate } from "../../../app/redux/reducer/SearchPageSlice/SearchPageType";
 import { GetAllEstate } from "../../../app/redux/action/GetAllEstateAction";
 import RadioType from "../RadioType";
@@ -81,8 +56,9 @@ const SearchProperty: React.FC = () => {
         DebounceTime
     );
 
-    const { records: recordsSearchPage, total: totalSearchPage } =
-        useSelector(getResultSearchPage);
+    const { records: recordsSearchPage, total: totalSearchPage } = useSelector(
+        getResultSearchPage
+    );
 
     const isCheckSearchText = useCallback(() => {
         return (

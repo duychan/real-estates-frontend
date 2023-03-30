@@ -97,7 +97,6 @@ function App() {
                     path="/forgot-password"
                     element={UserAuth(<ForgotPassword />)}
                 />
-
                 <Route path="*" element={<Page404 />} />
             </Routes>
         </>
