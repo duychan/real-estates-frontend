@@ -20,8 +20,7 @@ const Search: React.FC = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const onFinish = (query: ISearchHomePage) => {
-        dispatch(SearchHomePage(query));
-        navigate("/search-page");
+        dispatch(SearchHomePage(query)).then(() => navigate("/search-page"));
     };
     const [form] = Form.useForm();
 

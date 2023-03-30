@@ -4,6 +4,7 @@ import { ReactNode } from "react";
 export interface ISearchEstateResult {
     width?: string;
     estateResult: IEstate;
+    handleGetSingleEstate: () => void;
 }
 export interface IIconDetail {
     keyIcon: string;

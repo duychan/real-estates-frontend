@@ -1,5 +1,5 @@
 export interface ISearchHomePage {
     address: string;
-    type: { key: string; value: string };
+    type: { _id: string; name: string };
     price: number;
 }
