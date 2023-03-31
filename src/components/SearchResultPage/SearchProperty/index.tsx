@@ -347,7 +347,9 @@ const SearchProperty: React.FC = () => {
                                     return (
                                         <SearchEstateResult
                                             handleGetSingleEstate={() => {
-                                                navigate(`/search-page/${_id}`);
+                                                navigate(
+                                                    `/single-estate/${_id}`
+                                                );
                                             }}
                                             width="45%"
                                             key={_id}

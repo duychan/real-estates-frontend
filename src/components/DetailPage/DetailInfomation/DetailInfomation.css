@@ -15,6 +15,7 @@
 }
 
 .favorite {
+    width: 100px;
     font-size: var(--font-sz2);
     padding-top: 25px;
 }
