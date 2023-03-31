@@ -39,7 +39,7 @@ const HistoryEstate: React.FC = () => {
                                 key={_id}
                                 estateResult={item}
                                 handleGetSingleEstate={() => {
-                                    navigate(`/search-page/${_id}`);
+                                    navigate(`/single-estate/${_id}`);
                                 }}
                             />
                         );

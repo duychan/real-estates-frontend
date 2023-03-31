@@ -73,6 +73,7 @@ export const SingleEstate: React.FC = () => {
         <div className="single-estate">
             <CarouselSingleProduct arrayImg={thumbnail} />
             <DetailInfomation
+                _id={_idEstate}
                 estateName={titleEstate}
                 address={address}
                 type={nameType}

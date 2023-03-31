@@ -1,23 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./DetailInfomation.css";
 import { Button, Col, Row, Avatar } from "antd";
 import { ReactComponent as BedIcon } from "../../../assets/icon/bed.svg";
 import { ReactComponent as BathIcon } from "../../../assets/icon/bath.svg";
+import { useAppDispatch } from "../../../app/redux/store";
 import {
-    EnvironmentOutlined,
     HeartOutlined,
     FacebookOutlined,
     MailOutlined,
     InstagramOutlined,
     TwitterOutlined,
     UserOutlined,
-    MoneyCollectOutlined,
-    DollarCircleOutlined,
     SearchOutlined,
     FullscreenExitOutlined
 } from "@ant-design/icons";
+import { PostWishesEstate } from "../../../app/redux/action/WishesListAction";
+import { useSelector } from "react-redux";
+import { getWishesEstate } from "../../../app/redux/reducer/WishesEstateSlice";
+import { deleteWishes } from "../../../app/api/WishesListApi";
 
 interface IDetailInformation {
+    _id: string;
     estateName: string;
     address: string;
     type: string;
@@ -29,6 +32,7 @@ interface IDetailInformation {
 }
 
 const DetailInfomation: React.FC<IDetailInformation> = ({
+    _id,
     estateName,
     address,
     type,
@@ -38,7 +42,32 @@ const DetailInfomation: React.FC<IDetailInformation> = ({
     area,
     nameUser
 }) => {
-    const [favorite, setfavorite] = React.useState("favorite-icon");
+    const dispatch = useAppDispatch();
+    const [isLiked, setIsLiked] = useState(false);
+
+    const { _id: idWishesList } = useSelector(getWishesEstate);
+    const handleClick = () => {
+        setIsLiked(!isLiked);
+        if (!isLiked) {
+            dispatch(PostWishesEstate(_id));
+            localStorage.setItem(`estate-${_id}`, true.toString());
+        } else {
+            deleteWishes(idWishesList);
+            localStorage.removeItem(`estate-${_id}`);
+        }
+    };
+
+    useEffect(() => {
+        const storedEstate = localStorage.getItem(`estate-${_id}`);
+        if (storedEstate) {
+            setIsLiked(true);
+        } else {
+            setIsLiked(false);
+        }
+    }, [_id]);
+
+    const likeStatus = <HeartOutlined className="favorite1-icon" />;
+    const unLikeStatus = <HeartOutlined className="favorite-icon" />;
 
     return (
         <div className="detail-product">
@@ -48,8 +77,8 @@ const DetailInfomation: React.FC<IDetailInformation> = ({
                     <div className="favorite">
                         <Button
                             className="button-favorite"
-                            icon={<HeartOutlined className={favorite} />}
-                            onClick={() => setfavorite("favorite1-icon")}
+                            icon={isLiked ? likeStatus : unLikeStatus}
+                            onClick={handleClick}
                         ></Button>
                         Favorite
                     </div>

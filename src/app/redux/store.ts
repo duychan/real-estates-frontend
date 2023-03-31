@@ -8,6 +8,7 @@ import searchPageReducer from "./reducer/SearchPageSlice";
 import getEstateReducer from "./reducer/EstateSlice";
 import userReducer from "./reducer/UserSlice";
 import getMyEstateReducer from "./reducer/GetMyEstateSlice";
+import postWishesReducer from "./reducer/WishesEstateSlice";
 
 const store = configureStore({
     reducer: {
@@ -17,7 +18,8 @@ const store = configureStore({
         searchPage: searchPageReducer,
         getEstate: getEstateReducer,
         user: userReducer,
-        getMyEstate: getMyEstateReducer
+        getMyEstate: getMyEstateReducer,
+        postWishes: postWishesReducer
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware({
