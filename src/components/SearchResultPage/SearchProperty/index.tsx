@@ -10,7 +10,8 @@ import {
     MenuUnfoldOutlined,
     FilterOutlined,
     SettingOutlined,
-    HomeOutlined
+    HomeOutlined,
+    ShrinkOutlined
 } from "@ant-design/icons";
 import styled from "styled-components";
 import { sortOptions } from "../../../common/constants";
@@ -34,6 +35,7 @@ import { GetAllEstate } from "../../../app/redux/action/GetAllEstateAction";
 import RadioType from "../RadioType";
 import useDebounce from "../../../common/hooks/Debounce";
 import { useNavigate } from "react-router-dom";
+import SliderArea from "../SliderArea";
 
 const StyleCollapsedIn = styled(MenuFoldOutlined)`
     font-size: var(--font-sz9);
@@ -48,12 +50,13 @@ const SearchProperty: React.FC = () => {
     const dispatch = useAppDispatch();
     const [currentPage, setCurrentPage] = useState(1);
     const [searchText, setSearchText] = useState<ISearchPage>({
-        address: "",
-        minPrice: 0,
-        maxPrice: 0,
-        area: 0,
-        bathRoom: 0,
-        bedRoom: 0,
+        section: "",
+        priceMin: null,
+        priceMax: null,
+        areaMin: null,
+        areaMax: null,
+        bathRoom: null,
+        bedRoom: null,
         type: { _id: "", name: "" }
     });
 
@@ -67,34 +70,36 @@ const SearchProperty: React.FC = () => {
     const { searchHomePageText } = useSelector(getDataSearchPage);
     const isCheckSearchHomPageText = useCallback(() => {
         return (
-            searchHomePageText?.address === "" &&
+            searchHomePageText?.section === "" &&
                 searchHomePageText?.type === undefined,
-            searchHomePageText?.price === 0
+            searchHomePageText?.priceMin === 0
         );
     }, [
-        searchHomePageText?.address,
-        searchHomePageText?.price,
+        searchHomePageText?.section,
+        searchHomePageText?.priceMin,
         searchHomePageText?.type
     ]);
 
     const isCheckSearchText = useCallback(() => {
         return (
-            debouncedSearchText.address === "" &&
-            debouncedSearchText.area === 0 &&
-            debouncedSearchText.bathRoom === 0 &&
-            debouncedSearchText.bedRoom === 0 &&
-            debouncedSearchText.maxPrice === 0 &&
-            debouncedSearchText.minPrice === 0 &&
+            debouncedSearchText.section === "" &&
+            debouncedSearchText.areaMin === null &&
+            debouncedSearchText.areaMax === null &&
+            debouncedSearchText.bathRoom === null &&
+            debouncedSearchText.bedRoom === null &&
+            debouncedSearchText.priceMin === null &&
+            debouncedSearchText.priceMax === null &&
             debouncedSearchText.type._id === "" &&
             debouncedSearchText.type.name === ""
         );
     }, [
-        debouncedSearchText.address,
-        debouncedSearchText.area,
+        debouncedSearchText.section,
+        debouncedSearchText.areaMin,
+        debouncedSearchText.areaMax,
         debouncedSearchText.bathRoom,
         debouncedSearchText.bedRoom,
-        debouncedSearchText.maxPrice,
-        debouncedSearchText.minPrice,
+        debouncedSearchText.priceMin,
+        debouncedSearchText.priceMax,
         debouncedSearchText.type._id,
         debouncedSearchText.type.name
     ]);
@@ -117,7 +122,7 @@ const SearchProperty: React.FC = () => {
     useEffect(() => {
         if (!isCheckSearchText()) {
             dispatch(SearchPage(debouncedSearchText));
-            dispatch(setSearchHomePage({ address: "", type: "", price: 0 }));
+            dispatch(setSearchHomePage({ section: "", type: "", priceMin: 0 }));
         }
     }, [debouncedSearchText]);
 
@@ -126,34 +131,42 @@ const SearchProperty: React.FC = () => {
     ) => {
         setSearchText({
             ...searchText,
-            address: event.target.value
+            section: event.target.value
         });
     };
     const handleBedRoomChange = (value: number | null) => {
         setSearchText(prevState => ({
             ...prevState,
-            bedRoom: value || 0
+            bedRoom: value || null
         }));
     };
 
     const handleBathRoomChange = (value: number | null) => {
         setSearchText(prevState => ({
             ...prevState,
-            bathRoom: value || 0
+            bathRoom: value || null
         }));
     };
 
     const handleMinPriceChange = (value: number | null) => {
         setSearchText(prevState => ({
             ...prevState,
-            minPrice: value || 0
+            priceMin: value || null
         }));
     };
 
     const handleMaxPriceChange = (value: number | null) => {
         setSearchText(prevState => ({
             ...prevState,
-            maxPrice: value || 0
+            priceMax: value || null
+        }));
+    };
+
+    const handleAreaChange = (value: [number, number]) => {
+        setSearchText(prevState => ({
+            ...prevState,
+            areaMin: value[0],
+            areaMax: value[1]
         }));
     };
 
@@ -209,7 +222,7 @@ const SearchProperty: React.FC = () => {
                         >
                             <Input.Search
                                 onChange={handleChangeAddress}
-                                value={searchText.address}
+                                value={searchText.section}
                                 className="search-property-input-location"
                             />
                         </SubMenu>
@@ -230,6 +243,7 @@ const SearchProperty: React.FC = () => {
                                     Minimum price
                                 </p>
                                 <InputNumber
+                                    value={searchText.priceMin}
                                     onChange={handleMinPriceChange}
                                     formatter={value =>
                                         ` ${value}`.replace(
@@ -246,6 +260,7 @@ const SearchProperty: React.FC = () => {
                                     Maximum price
                                 </p>
                                 <InputNumber
+                                    value={searchText.priceMax}
                                     onChange={handleMaxPriceChange}
                                     formatter={value =>
                                         ` ${value}`.replace(
@@ -258,6 +273,23 @@ const SearchProperty: React.FC = () => {
                                 />
                             </div>
                         </SubMenu>
+                        <hr className="search-property-hr" />
+                        <SubMenu
+                            key="area"
+                            title={
+                                <span className="search-property-title">
+                                    Area
+                                </span>
+                            }
+                            icon={
+                                <ShrinkOutlined className="search-property-menu-icon" />
+                            }
+                        >
+                            <div className="search-property-input-location">
+                                <SliderArea setSliderValue={handleAreaChange} />
+                            </div>
+                        </SubMenu>
+
                         <hr className="search-property-hr" />
                         <SubMenu
                             key="facilities"
@@ -275,7 +307,6 @@ const SearchProperty: React.FC = () => {
                                     Bedroom:
                                 </p>
                                 <InputNumber
-                                    value={searchText.bedRoom}
                                     onChange={handleBedRoomChange}
                                     className="search-property-input-facilities"
                                     min={0}
@@ -286,7 +317,6 @@ const SearchProperty: React.FC = () => {
                                     Bathroom:
                                 </p>
                                 <InputNumber
-                                    value={searchText.bathRoom}
                                     onChange={handleBathRoomChange}
                                     className="search-property-input-facilities"
                                     min={0}

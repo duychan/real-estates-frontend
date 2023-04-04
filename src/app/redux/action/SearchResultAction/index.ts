@@ -4,16 +4,16 @@ import { searchHomePageApi } from "../../../api/SearchHomePageApi";
 
 export const SearchHomePage = createAsyncThunk(
     "estates/search",
-    async ({ address, type, price }: ISearchHomePage) => {
+    async ({ section, type, priceMin }: ISearchHomePage) => {
         try {
             const data = await searchHomePageApi.searchHomePage(
-                address,
+                section,
                 type,
-                price
+                priceMin
             );
             return {
                 ...data,
-                query: { address: address, type: type, price: price }
+                query: { section: section, type: type, priceMin: priceMin }
             };
         } catch (error) {
             return error;
