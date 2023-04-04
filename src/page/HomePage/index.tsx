@@ -48,7 +48,7 @@ export const HomePage: React.FC = () => {
                 </div>
 
                 <div className="list-estate-card">
-                    {records.slice(0, 3).map((product, key) => (
+                    {records.slice(20, 23).map((product, key) => (
                         <ProductCard
                             _id={product._id}
                             {..._pick(product, [

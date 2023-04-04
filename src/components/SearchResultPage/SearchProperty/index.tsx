@@ -43,7 +43,7 @@ const StyleCollapsedIn = styled(MenuFoldOutlined)`
 const StyleCollapsedOut = styled(MenuUnfoldOutlined)`
     font-size: var(--font-sz9);
 `;
-const PageSize = 4;
+const PageSize = 9;
 const DebounceTime = 500;
 const SearchProperty: React.FC = () => {
     const navigate = useNavigate();
@@ -57,7 +57,8 @@ const SearchProperty: React.FC = () => {
         areaMax: null,
         bathRoom: null,
         bedRoom: null,
-        type: { _id: "", name: "" }
+        type: { _id: "", name: "" },
+        sort: ""
     });
 
     const debouncedSearchText: ISearchPage = useDebounce<ISearchPage>(
@@ -65,8 +66,9 @@ const SearchProperty: React.FC = () => {
         DebounceTime
     );
 
-    const { records: recordsSearchPage, total: totalSearchPage } =
-        useSelector(getResultSearchPage);
+    const { records: recordsSearchPage, total: totalSearchPage } = useSelector(
+        getResultSearchPage
+    );
     const { searchHomePageText } = useSelector(getDataSearchPage);
     const isCheckSearchHomPageText = useCallback(() => {
         return (
@@ -90,7 +92,8 @@ const SearchProperty: React.FC = () => {
             debouncedSearchText.priceMin === null &&
             debouncedSearchText.priceMax === null &&
             debouncedSearchText.type._id === "" &&
-            debouncedSearchText.type.name === ""
+            debouncedSearchText.type.name === "" &&
+            debouncedSearchText.sort === ""
         );
     }, [
         debouncedSearchText.section,
@@ -101,7 +104,8 @@ const SearchProperty: React.FC = () => {
         debouncedSearchText.priceMin,
         debouncedSearchText.priceMax,
         debouncedSearchText.type._id,
-        debouncedSearchText.type.name
+        debouncedSearchText.type.name,
+        debouncedSearchText.sort
     ]);
 
     useEffect(() => {
@@ -366,6 +370,12 @@ const SearchProperty: React.FC = () => {
                                         .includes(input.toLowerCase())
                                 }
                                 options={sortOptions}
+                                onSelect={value => {
+                                    setSearchText(prevState => ({
+                                        ...prevState,
+                                        sort: value || ""
+                                    }));
+                                }}
                             />
                         </div>
                     </div>
@@ -381,7 +391,6 @@ const SearchProperty: React.FC = () => {
                                                     `/single-estate/${_id}`
                                                 );
                                             }}
-                                            width="45%"
                                             key={_id}
                                             estateResult={item}
                                         />

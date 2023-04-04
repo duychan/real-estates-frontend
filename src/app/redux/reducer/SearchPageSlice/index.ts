@@ -19,7 +19,8 @@ const initialState: ISearchPageState = {
         bedRoom: 0,
         bathRoom: 0,
         areaMin: 0,
-        areaMax: 0
+        areaMax: 0,
+        sort: ""
     },
     searchHomePageText: {
         section: "",
@@ -42,6 +43,7 @@ export const SearchPageSlice = createSlice({
                 areaMax: number;
                 bathRoom: number;
                 bedRoom: number;
+                sort: string;
             }>
         ) => {
             const { type, ...rest } = action.payload;
@@ -137,8 +139,10 @@ export const SearchPageSlice = createSlice({
                 return { ...state, isLoading: true };
             })
             .addCase(GetAllEstate.fulfilled, (state, action) => {
-                const { data = { records: [], total: 0 }, message = "" } =
-                    action.payload;
+                const {
+                    data = { records: [], total: 0 },
+                    message = ""
+                } = action.payload;
 
                 return {
                     ...state,

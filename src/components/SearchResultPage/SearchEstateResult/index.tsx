@@ -9,6 +9,7 @@ import { ReactComponent as HouseSizeIcon } from "../../../assets/icon/houseSize.
 import "./SearchResult.css";
 import { IconDetail } from "./IconDetail";
 import { IUploadEstate } from "../../../app/redux/reducer/UploadSlice/UploadSliceType";
+import { useConvertPriceEstate } from "../../../common/hooks/PriceEstate";
 
 export const ResultEstateCardStyle = styled(Card).attrs<ISearchEstateResult>(
     ({ width }) => ({
@@ -51,8 +52,10 @@ export const SearchEstateResult: React.FC<ISearchEstateResult> = ({
         >
             <div className="estate-result-address">
                 <div className="estate-result-header">
-                    <p className="estate-result-addr-title">{name}</p>
-                    <p className="estate-result-price">{`${price}`}</p>
+                    <span className="estate-result-addr-title">{name}</span>
+                    <p className="estate-result-price">{`${useConvertPriceEstate(
+                        price
+                    )}`}</p>
                 </div>
                 <p className="estate-result-addr-detail">{address}</p>
             </div>
@@ -73,8 +76,13 @@ export const SearchEstateResult: React.FC<ISearchEstateResult> = ({
                 <IconDetail
                     keyIcon="estate-house-size"
                     title="HouseSize"
-                    iconContent={`${area}`}
-                    icon={<HouseSizeIcon className="estate-result-detail" />}
+                    iconContent={
+                        <p className="icon-detail-area">
+                            {area} m<sup>2</sup>
+                            <HouseSizeIcon className="estate-result-detail" />
+                        </p>
+                    }
+                    icon={<></>}
                 />
             </div>
         </ResultEstateCardStyle>

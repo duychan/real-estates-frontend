@@ -10,10 +10,12 @@
 }
 
 .list-estate .list-estate-card {
-    display: flex;
-    justify-content: center;
-
-    align-items: center;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-gap: 2rem;
+    justify-content: space-between;
+    padding: 0px 15em;
 }
 
 .info-card-header {

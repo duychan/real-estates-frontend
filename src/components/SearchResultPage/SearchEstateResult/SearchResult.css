@@ -1,7 +1,10 @@
 .estate-result-info {
     width: 100%;
+    position: absolute;
+    bottom: 6%;
+    left: 0%;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     flex-wrap: wrap;
     align-items: baseline;
 }
@@ -11,28 +14,47 @@
 }
 .estate-result-card .ant-card-body {
     height: 182.77px;
+    padding: 10px 20px;
+    position: relative;
+}
+.ant-card.estate-result-card {
+    margin: 0;
 }
 .estate-result-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-height: 50px;
+    height: 60px;
 }
 .estate-result-price {
-    font-size: var(--font-sz42);
+    font-size: var(--font-sz16);
     font-weight: var(--font-w2);
     color: var(--bg1-color);
+    width: 60%;
+    text-align: right;
+    margin: 10px 0px;
+    padding-left: 3px;
 }
 
 .estate-result-addr-detail {
-    font-size: var(--font-sz8);
-    margin-top: var(--font-sz44);
+    font-size: var(--font-sz40);
+    margin: 10px 0px;
+    height: 50px;
 }
 
 .estate-result-addr-title {
-    font-size: var(--font-sz40);
+    font-size: var(--font-sz42);
     font-weight: var(--font-w3);
     color: var(--item-selected);
+    margin: 10px 0px;
+    overflow: hidden;
+    white-space: normal;
+    text-overflow: ellipsis;
+    line-height: 1.5em;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    width: 100%;
 }
 
 .estate-result-detail {
@@ -41,11 +63,16 @@
 }
 
 .estate-result-info-detail {
-    font-size: var(--font-sz8);
+    font-size: var(--font-sz40);
     color: var(--item-selected);
     margin: 0;
+    text-transform: capitalize;
 }
 
 .icon-content {
-    font-size: var(--font-sz8);
+    font-size: var(--font-sz40);
+}
+
+.icon-detail-area {
+    margin: 0;
 }

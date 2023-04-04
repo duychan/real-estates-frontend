@@ -28,6 +28,7 @@ export interface ISearchPage {
     bedRoom: number | null;
     areaMin: number | null;
     areaMax: number | null;
+    sort: string;
 }
 
 export interface ISearchPageState {

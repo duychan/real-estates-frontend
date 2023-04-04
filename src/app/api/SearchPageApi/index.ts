@@ -8,7 +8,8 @@ export const searchPage = async ({
     bathRoom,
     bedRoom,
     areaMin,
-    areaMax
+    areaMax,
+    sort
 }: ISearchPage) => {
     try {
         const { data } = await BaseApi.get("/estates?limit=1000", {
@@ -20,7 +21,8 @@ export const searchPage = async ({
                 bathRoom,
                 bedRoom,
                 areaMin,
-                areaMax
+                areaMax,
+                sort
             }
         });
         return data;
