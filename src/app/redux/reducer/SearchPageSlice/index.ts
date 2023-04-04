@@ -12,17 +12,19 @@ const initialState: ISearchPageState = {
     },
     isLoading: false,
     searchPageText: {
-        address: "",
+        section: "",
         type: { _id: "", name: "" },
-        minPrice: 0,
-        maxPrice: 0,
+        priceMin: 0,
+        priceMax: 0,
         bedRoom: 0,
-        bathRoom: 0
+        bathRoom: 0,
+        areaMin: 0,
+        areaMax: 0
     },
     searchHomePageText: {
-        address: "",
+        section: "",
         type: { _id: "", name: "" },
-        price: 0
+        priceMin: 0
     }
 };
 export const SearchPageSlice = createSlice({
@@ -32,11 +34,12 @@ export const SearchPageSlice = createSlice({
         setSearchPage: (
             state,
             action: PayloadAction<{
-                address: string;
+                section: string;
                 type: string;
-                minPrice: number;
-                maxPrice: number;
-                area: number;
+                priceMin: number;
+                priceMax: number;
+                areaMin: number;
+                areaMax: number;
                 bathRoom: number;
                 bedRoom: number;
             }>
@@ -53,17 +56,17 @@ export const SearchPageSlice = createSlice({
         setSearchHomePage: (
             state,
             action: PayloadAction<{
-                address: string;
+                section: string;
                 type: string;
-                price: number;
+                priceMin: number;
             }>
         ) => {
             return {
                 ...state,
                 searchHomePageText: {
-                    address: action.payload.address || "",
+                    section: action.payload.section || "",
                     type: { _id: action.payload.type || "", name: "" },
-                    price: action.payload.price
+                    priceMin: action.payload.priceMin
                 }
             };
         }
@@ -78,13 +81,14 @@ export const SearchPageSlice = createSlice({
                     message = "",
                     data = { records: [], total: 0 },
                     query = {
-                        address: "",
+                        section: "",
                         type: "",
-                        minPrice: 0,
-                        maxPrice: 0,
+                        priceMin: 0,
+                        priceMax: 0,
                         bathRoom: 0,
                         bedRoom: 0,
-                        area: 0
+                        areaMin: 0,
+                        areaMax: 0
                     }
                 } = action.payload;
                 const { ...rest } = query;
@@ -110,7 +114,7 @@ export const SearchPageSlice = createSlice({
                 const {
                     data = { records: [], total: 0 },
                     message = "",
-                    query = { address: "", type: "", price: 0 }
+                    query = { section: "", type: "", priceMin: 0 }
                 } = action.payload;
 
                 return {
@@ -119,9 +123,9 @@ export const SearchPageSlice = createSlice({
                     data,
                     isLoading: false,
                     searchHomePageText: {
-                        address: query.address,
+                        section: query.section,
                         type: query.type,
-                        price: query.price
+                        priceMin: query.priceMin
                     }
                 };
             })
@@ -133,10 +137,8 @@ export const SearchPageSlice = createSlice({
                 return { ...state, isLoading: true };
             })
             .addCase(GetAllEstate.fulfilled, (state, action) => {
-                const {
-                    data = { records: [], total: 0 },
-                    message = ""
-                } = action.payload;
+                const { data = { records: [], total: 0 }, message = "" } =
+                    action.payload;
 
                 return {
                     ...state,

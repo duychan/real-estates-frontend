@@ -20,12 +20,14 @@ export interface IEstate {
 }
 
 export interface ISearchPage {
-    address: string;
+    section: string;
     type: { _id: string; name: string };
-    minPrice: number;
-    maxPrice: number;
-    bathRoom: number;
-    bedRoom: number;
+    priceMin: number | null;
+    priceMax: number | null;
+    bathRoom: number | null;
+    bedRoom: number | null;
+    areaMin: number | null;
+    areaMax: number | null;
 }
 
 export interface ISearchPageState {

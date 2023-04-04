@@ -5,31 +5,37 @@ import { ISearchPage } from "../../reducer/SearchPageSlice/SearchPageType";
 export const SearchPage = createAsyncThunk(
     "estates/searchPage",
     async ({
-        address,
+        section,
         type,
-        minPrice,
-        maxPrice,
+        priceMin,
+        priceMax,
         bathRoom,
-        bedRoom
+        bedRoom,
+        areaMin,
+        areaMax
     }: ISearchPage) => {
         try {
             const data = await searchPageApi.searchPage({
-                address,
+                section,
                 type,
-                minPrice,
-                maxPrice,
+                priceMin,
+                priceMax,
                 bathRoom,
-                bedRoom
+                bedRoom,
+                areaMin,
+                areaMax
             });
             return {
                 ...data,
                 query: {
-                    address: address,
+                    section: section,
                     type: type,
-                    minPrice: minPrice,
-                    maxPrice: maxPrice,
+                    priceMin: priceMin,
+                    priceMax: priceMax,
                     bathRoom: bathRoom,
-                    bedRoom: bedRoom
+                    bedRoom: bedRoom,
+                    areaMin: areaMin,
+                    areaMax: areaMax
                 }
             };
         } catch (error) {

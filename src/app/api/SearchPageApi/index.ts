@@ -1,22 +1,26 @@
 import BaseApi from "../../BaseAPI";
 import { ISearchPage } from "../../redux/reducer/SearchPageSlice/SearchPageType";
 export const searchPage = async ({
-    address,
+    section,
     type,
-    minPrice,
-    maxPrice,
+    priceMin,
+    priceMax,
     bathRoom,
-    bedRoom
+    bedRoom,
+    areaMin,
+    areaMax
 }: ISearchPage) => {
     try {
-        const { data } = await BaseApi.get("/estates", {
+        const { data } = await BaseApi.get("/estates?limit=1000", {
             params: {
-                address,
+                section,
                 type: type?._id,
-                minPrice,
-                maxPrice,
+                priceMin,
+                priceMax,
                 bathRoom,
-                bedRoom
+                bedRoom,
+                areaMin,
+                areaMax
             }
         });
         return data;

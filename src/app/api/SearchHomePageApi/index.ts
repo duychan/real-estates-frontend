@@ -1,16 +1,16 @@
 import BaseApi from "../../BaseAPI";
 
 export const searchHomePage = async (
-    address: string,
+    section: string,
     type: { _id: string; name: string },
-    price: number
+    priceMin: number
 ) => {
     try {
-        const { data } = await BaseApi.get("/estates", {
+        const { data } = await BaseApi.get("/estates?limit=1000", {
             params: {
-                address,
+                section,
                 type: type?._id,
-                price
+                priceMin
             }
         });
         return data;

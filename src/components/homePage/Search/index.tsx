@@ -49,7 +49,7 @@ const Search: React.FC = () => {
                             >
                                 <Form.Item
                                     label="Search by location:"
-                                    name="address"
+                                    name="section"
                                 >
                                     <Input
                                         size="large"
@@ -78,7 +78,7 @@ const Search: React.FC = () => {
                             >
                                 <Form.Item
                                     label="Search by minimum price:"
-                                    name="price"
+                                    name="priceMin"
                                 >
                                     <InputNumber
                                         size="large"
