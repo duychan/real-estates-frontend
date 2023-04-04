@@ -10,6 +10,7 @@ import getMyEstateReducer from "./reducer/GetMyEstateSlice";
 import postWishesReducer from "./reducer/WishesEstateSlice";
 import AllCommentReducer from "./reducer/CommentSlice/AllCommentSlice";
 import commentReducer from "./reducer/CommentSlice/CommentSlice";
+import getAllWishesListReducer from "./reducer/GetAllWishEstatesSlice";
 
 const store = configureStore({
     reducer: {
@@ -22,7 +23,8 @@ const store = configureStore({
         getMyEstate: getMyEstateReducer,
         postWishes: postWishesReducer,
         AllComment: AllCommentReducer,
-        comment: commentReducer
+        comment: commentReducer,
+        getAllWishesList: getAllWishesListReducer
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware({

@@ -24,7 +24,10 @@
 .history-estate-product-name {
     font-size: var(--font-sz2);
     font-weight: var(--font-w2);
-    min-height: 90px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 100%;
     margin-bottom: 10px;
     margin-top: -10px;
 }
@@ -70,9 +73,8 @@
     font-size: var(--font-sz1);
     display: flex;
     justify-content: space-between;
+    align-items: flex-end;
 }
-
-.history-estate-pagination {
-    text-align: end;
-    margin-bottom: 20px;
+.history-estate-product-area {
+    margin-top: -5px;
 }
