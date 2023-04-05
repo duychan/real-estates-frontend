@@ -15,7 +15,12 @@ const initialState: IUserState = {
             email: "",
             createdAt: "",
             updatedAt: "",
-            imgUser: ""
+
+            profileImage: "",
+            address: "",
+            phoneNumber: "",
+            passwordChangedAt: "",
+            gender: ""
         }
     }
 };

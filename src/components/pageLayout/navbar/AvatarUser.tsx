@@ -14,9 +14,11 @@ export const AvatarUser: React.FC = () => {
     const MenuItemGroup = Menu.ItemGroup;
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
-    const { firstName = "", lastName = "", imgUser = "" } = useSelector(
-        getUser
-    );
+    const {
+        firstName = "",
+        lastName = "",
+        profileImage = ""
+    } = useSelector(getUser);
     const handleLogout = () => {
         dispatch(logout());
         navigate("/");
@@ -26,7 +28,7 @@ export const AvatarUser: React.FC = () => {
         <SubMenu
             title={
                 <AvatarComponent
-                    imgUser={imgUser}
+                    imgUser={profileImage}
                     firstName={firstName}
                     lastName={lastName}
                 />

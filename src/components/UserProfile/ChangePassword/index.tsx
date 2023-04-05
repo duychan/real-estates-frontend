@@ -5,16 +5,45 @@ import {
     PasswordRule
 } from "../../../common/helper/Validator";
 import "./ChangePass.css";
+import { IChangePassword } from "./ChangePasswordType";
+import { useAppDispatch } from "../../../app/redux/store";
+import { ChangePasswordAction } from "../../../app/redux/action/ChangePasswordAction";
+import {
+    setErrorNotification,
+    setSuccessNotification
+} from "../../../app/redux/reducer/NotificationSlice";
+import { useNavigate } from "react-router-dom";
 
 export const ChangePassword: React.FC = () => {
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+    const onFinish = (query: IChangePassword) => {
+        dispatch(ChangePasswordAction(query)).then(response => {
+            if (response.payload.message === "success") {
+                dispatch(
+                    setSuccessNotification(
+                        "Your password has been changed successfully!"
+                    )
+                );
+                navigate("/");
+            } else {
+                dispatch(
+                    setErrorNotification(
+                        "Change password failed, Please try again!"
+                    )
+                );
+            }
+        });
+    };
+
     return (
         <div className="change-password">
             <h1 className="change-password__title">Password settings</h1>
-            <Form layout="vertical">
+            <Form layout="vertical" onFinish={onFinish}>
                 <Col xs={{ span: 9, offset: 1 }}>
                     <Form.Item
                         label="Enter current password:"
-                        name="currentPassword"
+                        name="passwordCurrent"
                         rules={PasswordRule}
                         hasFeedback
                     >
@@ -30,7 +59,7 @@ export const ChangePassword: React.FC = () => {
                     <Col xs={{ span: 9, offset: 1 }}>
                         <Form.Item
                             label="Enter new password:"
-                            name="newPassword"
+                            name="password"
                             rules={PasswordRule}
                             hasFeedback
                         >
@@ -44,8 +73,9 @@ export const ChangePassword: React.FC = () => {
                     </Col>
                     <Col xs={{ span: 9, offset: 1 }}>
                         <Form.Item
-                            label="Repeat new password:"
-                            name="confirmPassword"
+                            label="Confirm new password:"
+                            name="passwordConfirm"
+                            dependencies={["password"]}
                             rules={ConfirmPasswordRule}
                             hasFeedback
                         >
@@ -65,7 +95,7 @@ export const ChangePassword: React.FC = () => {
                         className="change-password__button"
                         htmlType="submit"
                     >
-                        SET NEW PASSWORD
+                        CHANGE PASSWORD
                     </Button>
                 </Col>
             </Form>

@@ -15,15 +15,17 @@ export const CommentEditor: React.FC<IEditor> = ({
     submitting,
     value = ""
 }) => {
-    const { firstName = "", lastName = "", imgUser = "" } = useSelector(
-        getUser
-    );
+    const {
+        firstName = "",
+        lastName = "",
+        profileImage = ""
+    } = useSelector(getUser);
     const [form] = Form.useForm();
 
     return (
         <div className="comment-editor">
             <AvatarComponent
-                imgUser={imgUser}
+                imgUser={profileImage}
                 firstName={firstName}
                 lastName={lastName}
             />
