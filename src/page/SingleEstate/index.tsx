@@ -3,12 +3,15 @@ import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { GetUserById } from "../../app/redux/action/AuthAction";
+import { GetAllCommentByEstate } from "../../app/redux/action/CommentAction";
 import { GetEstateById } from "../../app/redux/action/EstateAction";
+import { getAllCommentByEstate } from "../../app/redux/reducer/CommentSlice/AllCommentSlice";
 import { getEstateById } from "../../app/redux/reducer/EstateSlice";
 import { getUserById } from "../../app/redux/reducer/UserSlice";
 import { useAppDispatch } from "../../app/redux/store";
 import CarouselSingleProduct from "../../components/DetailPage/carouselSingleProduct";
 import { CommentComponent } from "../../components/DetailPage/CommentComponent";
+import { IComment } from "../../components/DetailPage/CommentComponent/CommentType";
 import DetailInfomation from "../../components/DetailPage/DetailInfomation";
 import { EstateDescription } from "../../components/DetailPage/EstateDescription";
 import { EstateMap } from "../../components/DetailPage/EstateMap";
@@ -35,12 +38,10 @@ export const SingleEstate: React.FC = () => {
     const dispatch = useAppDispatch();
     const {
         _id: _idEstate,
-        owner,
         name: titleEstate,
         address,
         area,
         price,
-        currentStatus: { _id: _idStatus, name: nameStatus },
         type: { _id: _idType, name: nameType },
         coverImg,
         thumbnail,
@@ -50,6 +51,20 @@ export const SingleEstate: React.FC = () => {
     } = useSelector(getEstateById);
     const { firstName, lastName } = useSelector(getUserById);
     const navigate = useNavigate();
+
+    const ListCommentByEstate = useSelector(getAllCommentByEstate);
+    const commentList: IComment[] = ListCommentByEstate.map(
+        ({ _id, author, content, estate, createdAt, updatedAt, isEdit }) => {
+            return {
+                _id,
+                content,
+                commentTime: updatedAt,
+                author,
+                avatar: "",
+                isEdit: createdAt !== updatedAt
+            };
+        }
+    );
 
     const nameOwner = firstName && lastName ? `${firstName} ${lastName}` : "";
 
@@ -62,6 +77,7 @@ export const SingleEstate: React.FC = () => {
                     navigate("*");
                 } else {
                     dispatch(GetUserById(_idOwner));
+                    dispatch(GetAllCommentByEstate(_idEstateFind));
                 }
             });
         } else {
@@ -100,7 +116,7 @@ export const SingleEstate: React.FC = () => {
 
             <div className="single-estate-comment">
                 <h1 className="related-estate-title">Comment</h1>
-                <CommentComponent />
+                <CommentComponent commentList={commentList} />
             </div>
 
             <div className="related-estate">

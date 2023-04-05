@@ -1,52 +1,69 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Avatar, Form, Button, List, Input } from "antd";
-import Comment from "antd";
+import React, { useEffect, useState } from "react";
 import { CommentEditor } from "./CommentEditor";
-import { IComment } from "./CommentType";
+import { IComment, ICommentProps } from "./CommentType";
 import { CommentList } from "./CommentList";
 import "./Comment.css";
+import { useAppDispatch } from "../../../app/redux/store";
+import { addComment } from "../../../app/redux/reducer/CommentSlice/AllCommentSlice";
+import { CreateComment } from "../../../app/redux/action/CommentAction";
+import { useSelector } from "react-redux";
+import { getEstateById } from "../../../app/redux/reducer/EstateSlice";
+import { setErrorNotification } from "../../../app/redux/reducer/NotificationSlice";
 
-const { TextArea } = Input;
-
-export const CommentComponent: React.FC = () => {
-    const commentList: IComment[] = [
-        {
-            author: "Han Solo",
-            avatar:
-                "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
-            content:
-                "We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently."
-        }
-    ];
-    const [comments, setComments] = useState<IComment[]>(commentList);
+export const CommentComponent: React.FC<ICommentProps> = ({
+    commentList = []
+}) => {
+    useEffect(() => {
+        setComments(commentList.reverse());
+    }, [commentList]);
+    const [comments, setComments] = useState<IComment[]>([]);
     const [submitting, setSubmitting] = useState<boolean>(false);
     const [valueComment, setValueComment] = useState<string>("");
+    const dispatch = useAppDispatch();
+    const { _id: _idEstate } = useSelector(getEstateById);
+    const isAuth = localStorage.getItem("loginToken") !== null;
 
     const handleSubmitComment = (): void => {
-        if (!valueComment) {
-            return;
+        if (isAuth) {
+            if (!valueComment) {
+                return;
+            }
+
+            setSubmitting(true);
+
+            setTimeout(() => {
+                setSubmitting(false);
+
+                dispatch(
+                    CreateComment({
+                        idEstate: _idEstate,
+                        commentInput: { content: valueComment }
+                    })
+                ).then(res => {
+                    const comment = res.payload.data?.record ?? null;
+                    if (comment !== null) {
+                        dispatch(addComment(comment));
+                    } else {
+                        dispatch(
+                            setErrorNotification(
+                                "Sorry, Your comment cannot be sent.Please try again!"
+                            )
+                        );
+                    }
+                    setValueComment("");
+                });
+            }, 1000);
+        } else {
+            dispatch(setErrorNotification("Please authenticate to continue!"));
         }
-
-        setSubmitting(true);
-
-        setTimeout(() => {
-            setSubmitting(false);
-            setValueComment("");
-            setComments([
-                {
-                    author: "Han Solo",
-                    avatar:
-                        "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
-                    content: valueComment
-                },
-                ...comments
-            ]);
-        }, 1000);
     };
     const handleChangeComment = (
         event: React.ChangeEvent<HTMLTextAreaElement>
     ) => {
         setValueComment(event.target.value);
+    };
+    const handleCancelComment = () => {
+        setValueComment("");
     };
     return (
         <div className="comment-component-style">
@@ -55,6 +72,7 @@ export const CommentComponent: React.FC = () => {
                 onSubmit={handleSubmitComment}
                 submitting={submitting}
                 value={valueComment}
+                onReset={handleCancelComment}
             />
             {comments.length > 0 && <CommentList comments={comments} />}
         </div>

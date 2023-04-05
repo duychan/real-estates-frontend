@@ -1,9 +1,9 @@
 import { List } from "antd";
 import React from "react";
 import { CommentItem } from "./Comment";
-import { ICommentList } from "./CommentType";
+import { IComment, ICommentList } from "./CommentType";
 
-export const CommentList: React.FC<ICommentList> = ({ comments }) => {
+export const CommentList: React.FC<ICommentList> = ({ comments = [] }) => {
     return (
         <List
             dataSource={comments}
@@ -11,14 +11,10 @@ export const CommentList: React.FC<ICommentList> = ({ comments }) => {
                 comments.length > 1 ? "replies" : "reply"
             }`}
             itemLayout="horizontal"
-            renderItem={({ author, avatar, content }) => {
+            renderItem={(comment: IComment) => {
                 return (
                     <li>
-                        <CommentItem
-                            author={author}
-                            avatar={avatar}
-                            content={content}
-                        />
+                        <CommentItem {...comment} />
                     </li>
                 );
             }}
