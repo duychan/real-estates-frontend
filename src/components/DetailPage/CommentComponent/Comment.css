@@ -9,7 +9,7 @@
     text-align: left;
     padding: 0 15px;
     width: 100%;
-    margin: 15px 0;
+    margin: 10px 0;
 }
 
 .comment-user {
@@ -109,4 +109,29 @@
 .comment-component-style {
     width: 80%;
     margin: 0 auto;
+}
+.comment-user-edited {
+    margin: 0 auto;
+    padding-left: 20px;
+    color: var(--silver-color);
+    font-style: italic;
+}
+.comment-editor .ant-avatar {
+    margin-right: 10px;
+}
+.comment-editor-text .comment-editor-submit {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.comment-editor-submit .comment-editor-button-cancel {
+    margin-left: 10px;
+}
+
+.comment-editor-button-cancel > span,
+.comment-editor-button-cancel,
+.comment-editor-button-cancel > span:hover,
+.comment-editor-submit .comment-editor-button-cancel:hover {
+    color: var(--bg1-color);
+    border-color: var(--bg1-color);
 }

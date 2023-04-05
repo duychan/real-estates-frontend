@@ -9,3 +9,13 @@ export const uploadEstate = async (formData: FormData) => {
             return error;
         });
 };
+
+export const getAllEstateStatus = async () => {
+    return await BaseApi.get("/estates/")
+        .then(res => {
+            return res.data;
+        })
+        .catch(error => {
+            return error;
+        });
+};

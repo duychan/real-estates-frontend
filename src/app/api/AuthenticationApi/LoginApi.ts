@@ -5,7 +5,11 @@ export const getLoginApi = async (userLogin: IUserLoginInput) => {
     return await BaseApi.post("/users/login", userLogin)
         .then(response => {
             if (response.data.message === "success") {
-                localStorage.setItem("loginToken", response.data.data.token);
+                localStorage.setItem("loginToken", response.data?.data?.token);
+                BaseApi.interceptors.request.use(config => {
+                    config.headers.Authorization = `Bearer ${response.data?.data?.token}`;
+                    return config;
+                });
             }
             return response.data;
         })

@@ -1,21 +1,31 @@
-import { Avatar, Button, Form, Input } from "antd";
+import { Button, Form, Input } from "antd";
 import React from "react";
 import { IEditor } from "./CommentType";
 import "./Comment.css";
+import { useSelector } from "react-redux";
+import { getUser } from "../../../app/redux/reducer/AuthSlice";
+import { AvatarComponent } from "../../pageLayout/Navbar/AvatarComponent";
 
 const { TextArea } = Input;
 
 export const CommentEditor: React.FC<IEditor> = ({
     onChange,
     onSubmit,
+    onReset,
     submitting,
-    value
+    value = ""
 }) => {
+    const { firstName = "", lastName = "", imgUser = "" } = useSelector(
+        getUser
+    );
+    const [form] = Form.useForm();
+
     return (
         <div className="comment-editor">
-            <Avatar
-                src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-                alt="Han Solo"
+            <AvatarComponent
+                imgUser={imgUser}
+                firstName={firstName}
+                lastName={lastName}
             />
             <div className="comment-editor-text">
                 <Form.Item>
@@ -26,16 +36,27 @@ export const CommentEditor: React.FC<IEditor> = ({
                         className="comment-textarea"
                     />
                 </Form.Item>
-                <Form.Item>
-                    <Button
-                        htmlType="submit"
-                        loading={submitting}
-                        onClick={onSubmit}
-                        className="comment-editor-button"
-                    >
-                        Comment
-                    </Button>
-                </Form.Item>
+                <div className="comment-editor-submit">
+                    <Form.Item>
+                        <Button
+                            htmlType="submit"
+                            loading={submitting}
+                            onClick={onSubmit}
+                            className="comment-editor-button"
+                        >
+                            Comment
+                        </Button>
+                    </Form.Item>
+                    <Form.Item>
+                        <Button
+                            htmlType="submit"
+                            onClick={onReset}
+                            className="comment-editor-button-cancel"
+                        >
+                            Cancel
+                        </Button>
+                    </Form.Item>
+                </div>
             </div>
         </div>
     );

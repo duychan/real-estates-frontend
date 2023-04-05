@@ -47,31 +47,44 @@ const CarouselSingleProduct: React.FC<ICarouselSingleProduct> = ({
                 <Nav />
             </HeroSlider>
             <div className="list-img">
-                <Image.PreviewGroup>
-                    <Swiper
-                        navigation
-                        pagination={{ clickable: true }}
-                        effect="coverflow"
-                        coverflowEffect={{
-                            rotate: 0,
-                            stretch: 0,
-                            depth: 10,
-                            modifier: 0.5,
-                            slideShadows: false
-                        }}
-                        slidesPerView={3}
-                        centeredSlides={true}
-                        loop={true}
-                        grabCursor={true}
-                        className="list-img-swiper"
-                    >
+                {arrayImg.length > 2 ? (
+                    <Image.PreviewGroup>
+                        <Swiper
+                            navigation
+                            pagination={{ clickable: true }}
+                            effect="coverflow"
+                            coverflowEffect={{
+                                rotate: 0,
+                                stretch: 0,
+                                depth: 10,
+                                modifier: 0.5,
+                                slideShadows: false
+                            }}
+                            slidesPerView={3}
+                            centeredSlides={true}
+                            loop={true}
+                            grabCursor={true}
+                            className="list-img-swiper"
+                        >
+                            {arrayImg?.map((item, key) => (
+                                <SwiperSlide key={`update-item-${key}`}>
+                                    <Image
+                                        key={`update-item-${key}`}
+                                        src={item}
+                                    />
+                                </SwiperSlide>
+                            ))}
+                        </Swiper>
+                    </Image.PreviewGroup>
+                ) : arrayImg.length > 0 ? (
+                    <Image.PreviewGroup>
                         {arrayImg?.map((item, key) => (
-                            <SwiperSlide key={`update-item-${key}`}>
-                                <Image key={`update-item-${key}`} src={item} />
-                            </SwiperSlide>
+                            <Image key={`update-item-${key}`} src={item} />
                         ))}
-                    </Swiper>
-                </Image.PreviewGroup>
+                    </Image.PreviewGroup>
+                ) : (
+                    <></>
+                )}
             </div>
         </div>
     );
