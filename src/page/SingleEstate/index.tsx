@@ -37,17 +37,18 @@ export const SingleEstate: React.FC = () => {
 
     const dispatch = useAppDispatch();
     const {
-        _id: _idEstate,
-        name: titleEstate,
-        address,
-        area,
-        price,
-        type: { _id: _idType, name: nameType },
-        coverImg,
-        thumbnail,
-        bedRoom,
-        bathRoom,
-        description
+        _id: _idEstate = "",
+        owner = "",
+        name: titleEstate = "",
+        address = "",
+        area = "",
+        price = "",
+        type: { _id: _idType = "", name: nameType = "" },
+        coverImg = "",
+        thumbnail = [],
+        bedRoom = 0,
+        bathRoom = 0,
+        description = ""
     } = useSelector(getEstateById);
     const { firstName, lastName } = useSelector(getUserById);
     const navigate = useNavigate();

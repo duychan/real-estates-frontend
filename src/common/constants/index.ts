@@ -21,18 +21,20 @@ export const sizeArr: string[] = [
     "90 m^2 or more"
 ];
 
-export const sortOptions: { value: string; label: string }[] = [
-    { value: "1", label: "Recommended" },
+export const sortOptions: {
+    value: string;
+    label: string;
+}[] = [
     {
-        value: "2",
-        label: "Newest"
+        value: "createdAt",
+        label: "Most recent"
     },
     {
-        value: "3",
+        value: "price",
         label: "Lowest price"
     },
     {
-        value: "4",
+        value: "price-desc",
         label: "Highest price"
     }
 ];

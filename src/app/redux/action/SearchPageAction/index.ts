@@ -12,7 +12,8 @@ export const SearchPage = createAsyncThunk(
         bathRoom,
         bedRoom,
         areaMin,
-        areaMax
+        areaMax,
+        sort
     }: ISearchPage) => {
         try {
             const data = await searchPageApi.searchPage({
@@ -23,7 +24,8 @@ export const SearchPage = createAsyncThunk(
                 bathRoom,
                 bedRoom,
                 areaMin,
-                areaMax
+                areaMax,
+                sort
             });
             return {
                 ...data,

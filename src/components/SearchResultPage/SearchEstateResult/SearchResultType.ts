@@ -9,6 +9,6 @@ export interface ISearchEstateResult {
 export interface IIconDetail {
     keyIcon: string;
     title: string;
-    iconContent: string;
+    iconContent: string | ReactNode;
     icon: ReactNode;
 }
