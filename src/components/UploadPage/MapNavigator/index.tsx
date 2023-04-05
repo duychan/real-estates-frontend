@@ -18,18 +18,26 @@ import {
     WardRule
 } from "../../../common/helper/Validator";
 import {
+    getAddressByCoordinates,
     getCoordinatesByAddress,
     getDistricts,
     getProvinces,
     getWards
 } from "../../../app/api/MapApi";
 import { ILocation } from "../../../app/api/MapApi/MapType";
+import useDebounce from "../../../common/hooks/Debounce";
 
 const { Item } = Form;
 
 const EmptyOption: IAddressOption = { value: "", label: "" };
 
 const ZOOM_LEVEL = 18;
+
+const DebounceEstateTime = 1000;
+const Step1 = 1;
+const Step2 = 2;
+const Step3 = 3;
+const Step4 = 4;
 
 export const MapNavigator: React.FC<IMapNavigate> = ({
     handleGetEstateLocation,
@@ -54,6 +62,10 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
         0,
         0
     ]);
+    const debouncedEstateLocation = useDebounce<[number, number]>(
+        estateLocation,
+        DebounceEstateTime
+    );
 
     const [isLocationChange, setIsLocationChange] = useState<boolean>(false);
     const [errorLocation, setErrorLocation] = useState<string>("");
@@ -70,15 +82,17 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
     }, [errorCoordinate]);
 
     useEffect(() => {
-        form.resetFields(["district", "ward"]);
-        setDistrict(EmptyOption);
-        setWard(EmptyOption);
-    }, [city.value, form]);
-
-    useEffect(() => {
-        form.resetFields(["ward"]);
-        setWard(EmptyOption);
-    }, [district.value, form]);
+        if (current === Step1) {
+            form.resetFields(["district", "ward"]);
+            setDistrict(EmptyOption);
+            setWard(EmptyOption);
+        } else if (current === Step2) {
+            form.resetFields(["ward"]);
+            setWard(EmptyOption);
+        } else if (current === Step3) {
+            form.resetFields(["addressNumber"]);
+        }
+    }, [current]);
 
     useEffect(() => {
         getProvinces()
@@ -106,6 +120,14 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
                         districtOption.push({ value: code, label: name })
                     );
                     setDistrictList(districtOption ?? []);
+                    if (!district.value && district.label) {
+                        setDistrict(
+                            districtOption?.find(
+                                districtItem =>
+                                    districtItem.label === district.label
+                            ) ?? EmptyOption
+                        );
+                    }
                 })
                 .catch(error => {
                     setErrorLocation(`ERROR: ${error}`);
@@ -133,10 +155,8 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
         setErrorLocation("");
         if (valueLocation.city?.value || valueLocation.addressNumber) {
             const addressFinding = `${valueLocation.addressNumber ?? ""} ${
-                valueLocation.ward?.label ?? ""
-            } ${valueLocation.district?.label ?? ""} ${
-                valueLocation.city?.label ?? ""
-            }`;
+                valueLocation.ward ?? ""
+            } ${valueLocation.district ?? ""} ${valueLocation.city ?? ""}`;
             getCoordinatesByAddress(addressFinding)
                 .then(response => {
                     const lat = response.data?.records?.lat ?? 0;
@@ -186,7 +206,6 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
     }, [form]);
 
     const showMyLocation = useCallback(() => {
-        handleClearForm();
         if (location.loaded) {
             if (
                 isShowCurrentLocation === false ||
@@ -205,6 +224,11 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
                     lat: location.coordinates?.lat,
                     lng: location.coordinates?.lng
                 });
+
+                handleClickEstateOnMap([
+                    location.coordinates?.lat,
+                    location.coordinates?.lng
+                ]);
 
                 mapRef.current?.flyTo(
                     [
@@ -229,6 +253,37 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
         location.coordinates.lng,
         location.loaded
     ]);
+
+    const handleClickEstateOnMap = (latLng: [number, number]) => {
+        setEstateLocation(latLng);
+        setCurrent(Step4);
+        getAddressByCoordinates({
+            lat: debouncedEstateLocation[0],
+            lng: debouncedEstateLocation[1]
+        }).then(response => {
+            setIsAddressSelectShown(true);
+            const {
+                records: {
+                    data: { street = "", district = "", city = "", county = "" }
+                }
+            } = response;
+            form.setFieldsValue({
+                city: county
+            });
+            form.setFieldsValue({
+                district: city
+            });
+            form.setFieldsValue({
+                ward: district
+            });
+            form.setFieldsValue({ addressNumber: street });
+            setCity(
+                provinceList.find(province => province.label === county) ??
+                    EmptyOption
+            );
+            setDistrict({ value: "", label: city });
+        });
+    };
 
     return (
         <div className="map-navigator">
@@ -262,7 +317,7 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
                                 {
                                     title: "City/Province",
                                     className:
-                                        city.value === ""
+                                        form.getFieldValue("city") === undefined
                                             ? "addr-step-line"
                                             : "",
                                     description: (
@@ -278,17 +333,20 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
                                                         addressValue as IAddressOption
                                                     );
                                                     form.setFieldsValue({
-                                                        city: addressValue
+                                                        city: (addressValue as IAddressOption)
+                                                            .label
                                                     });
 
                                                     if (
                                                         (addressValue as IAddressOption)
                                                             .value !== ""
                                                     )
-                                                        setCurrent(current + 1);
+                                                        setCurrent(Step1);
                                                 }}
                                                 arrayOption={provinceList}
-                                                value={city.value}
+                                                value={form.getFieldValue(
+                                                    "city"
+                                                )}
                                             />
                                         </Item>
                                     )
@@ -296,12 +354,14 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
                                 {
                                     title: "District",
                                     className:
-                                        city.value === ""
+                                        form.getFieldValue("city") === undefined
                                             ? "addr-selected"
-                                            : district.value === ""
+                                            : form.getFieldValue("district") ===
+                                              undefined
                                             ? "addr-selected-line"
                                             : "",
-                                    description: city.value !== "" && (
+                                    description: form.getFieldValue("city") !==
+                                        undefined && (
                                         <Item
                                             name="district"
                                             rules={DistrictRule}
@@ -317,16 +377,19 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
                                                         addressValue as IAddressOption
                                                     );
                                                     form.setFieldsValue({
-                                                        district: addressValue
+                                                        district: (addressValue as IAddressOption)
+                                                            .label
                                                     });
                                                     if (
                                                         (addressValue as IAddressOption)
                                                             .value !== ""
                                                     )
-                                                        setCurrent(current + 1);
+                                                        setCurrent(Step2);
                                                 }}
                                                 arrayOption={districtList}
-                                                value={district.value}
+                                                value={form.getFieldValue(
+                                                    "district"
+                                                )}
                                             />
                                         </Item>
                                     )
@@ -334,10 +397,16 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
                                 {
                                     title: "Ward",
                                     className:
-                                        district.value === ""
+                                        form.getFieldValue("district") ===
+                                        undefined
                                             ? "addr-selected"
+                                            : form.getFieldValue("ward") ===
+                                              undefined
+                                            ? "addr-selected-line"
                                             : "",
-                                    description: district.value !== "" && (
+                                    description: form.getFieldValue(
+                                        "district"
+                                    ) !== undefined && (
                                         <Item name="ward" rules={WardRule}>
                                             <AddressSelect
                                                 placeholder="Ward"
@@ -350,12 +419,15 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
                                                         addressValue as IAddressOption
                                                     );
                                                     form.setFieldsValue({
-                                                        ward: addressValue
+                                                        ward: (addressValue as IAddressOption)
+                                                            .label
                                                     });
-                                                    setCurrent(current + 1);
+                                                    setCurrent(Step3);
                                                 }}
                                                 arrayOption={wardList}
-                                                value={ward.value}
+                                                value={form.getFieldValue(
+                                                    "ward"
+                                                )}
                                             />
                                         </Item>
                                     )
@@ -363,10 +435,11 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
                                 {
                                     title: "House number, Street",
                                     className:
-                                        district.value === ""
+                                        form.getFieldValue("ward") === undefined
                                             ? "addr-selected"
                                             : "",
-                                    description: ward.value !== "" && (
+                                    description: form.getFieldValue("ward") !==
+                                        undefined && (
                                         <Item
                                             name="addressNumber"
                                             rules={AddressNumberRule}
@@ -374,6 +447,9 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
                                             <Input
                                                 placeholder="House number, Street"
                                                 className="map-city-addr"
+                                                value={form.getFieldValue(
+                                                    "addressNumber"
+                                                )}
                                             />
                                         </Item>
                                     )
@@ -417,9 +493,7 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
                             }
                             isPopupAlwaysShowed={true}
                             isGetLocationByClick={isLocationChange}
-                            handleGetCurrentLocation={(
-                                latLng: [number, number]
-                            ) => setEstateLocation(latLng)}
+                            handleGetCurrentLocation={handleClickEstateOnMap}
                         />
                         <div className="map-show-location-button">
                             {isLocationChange ? (

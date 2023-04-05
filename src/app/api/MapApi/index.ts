@@ -1,43 +1,34 @@
+import { ICoordinates } from "../../../components/UploadPage/MapNavigator/MapNavigateType";
 import BaseApi from "../../BaseAPI";
 
 export const getProvinces = async () => {
-    return await BaseApi.get("/maps/provinces")
-        .then(response => {
-            return response.data;
-        })
-        .catch(error => {
-            return error.response.data;
-        });
+    return await BaseApi.get("/maps/provinces").then(response => response.data);
 };
 
 export const getDistricts = async (provinceCode: string) => {
-    return await BaseApi.get(`/maps/districts?provinceCode=${provinceCode}`)
-        .then(response => {
-            return response.data;
-        })
-        .catch(error => {
-            return error.response.data;
-        });
+    return await BaseApi.get(
+        `/maps/districts?provinceCode=${provinceCode}`
+    ).then(response => response.data);
 };
 
 export const getWards = async (districtCode: string) => {
-    return await BaseApi.get(`/maps/wards?districtCode=${districtCode}`)
-        .then(response => {
-            return response.data;
-        })
-        .catch(error => {
-            return error.response.data;
-        });
+    return await BaseApi.get(`/maps/wards?districtCode=${districtCode}`).then(
+        response => response.data
+    );
 };
 
 export const getCoordinatesByAddress = async (address: string) => {
-    return await BaseApi.get(`/maps/corrdinates/${address}`)
-        .then(response => {
+    return await BaseApi.get(`/maps/coordinates?address=${address}`).then(
+        response => response.data
+    );
+};
+
+export const getAddressByCoordinates = async ({ lat, lng }: ICoordinates) => {
+    return await BaseApi.get(`/maps/location/?lat=${lat}&lng=${lng}`).then(
+        response => {
             return response.data;
-        })
-        .catch(error => {
-            return error.response.data;
-        });
+        }
+    );
 };
 
 export const MapAPI = {

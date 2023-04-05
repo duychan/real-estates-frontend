@@ -5,17 +5,16 @@
 }
 
 .list-estate {
-    width: 100%;
-    text-align: center;
+    width: 80%;
+    margin: 0 auto;
 }
 
 .list-estate .list-estate-card {
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(30%, 1fr));
     grid-gap: 2rem;
     justify-content: space-between;
-    padding: 0px 15em;
 }
 
 .info-card-header {
