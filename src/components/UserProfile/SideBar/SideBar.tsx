@@ -2,9 +2,8 @@ import React, { ReactNode } from "react";
 import {
     IdcardOutlined,
     AuditOutlined,
-    PhoneOutlined,
     LockOutlined,
-    LogoutOutlined
+    UnorderedListOutlined
 } from "@ant-design/icons";
 
 export interface SideBarItems {
@@ -24,9 +23,9 @@ export const routesSideBar: SideBarItems[] = [
         label: "My Estate"
     },
     {
-        key: "/myprofile/contact-detail",
-        icon: <PhoneOutlined />,
-        label: "Contact Details"
+        key: "/myprofile/wisheslist-estate",
+        icon: <UnorderedListOutlined />,
+        label: "Favorite Estates"
     },
     {
         key: "/myprofile/change-password",

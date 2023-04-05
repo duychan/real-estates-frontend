@@ -1,10 +1,9 @@
 import { Card } from "antd";
 import React, { useEffect, useState } from "react";
 import { EnvironmentOutlined } from "@ant-design/icons";
-import "./HistoryEstate.css";
-import { IMyEstateResult } from "./ListEstateType";
+import { IMyEstateResult } from "../HistoryEstate/ListEstateType";
 
-export const ListMyEstate: React.FC<IMyEstateResult> = ({
+export const WishesListResult: React.FC<IMyEstateResult> = ({
     estateResult: {
         _id = "",
         coverImg = "",

@@ -12,5 +12,12 @@ export const deleteWishes = async (idWishesList: string) => {
     );
 };
 
+export const getAllWishesList = async () => {
+    return await BaseApi.get(`/users/me/wishesList?limit=1000`).then(
+        res => res.data
+    );
+};
+
 export const deleteWishesApi = { deleteWishes };
 export const postWishesApi = { postWishes };
+export const getAllWishesListApi = { getAllWishesList };

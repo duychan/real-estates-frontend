@@ -5,7 +5,7 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import UserInformation from "../UserInfomation";
 import { routesSideBar } from "./SideBar";
 import HistoryEstate from "../HistoryEstate";
-import ContactDetail from "../ContactDetail";
+import WishesListEstates from "../WishesListEstates";
 import { ChangePassword } from "../ChangePassword";
 
 const SideBar: React.FC = () => {
@@ -46,8 +46,8 @@ const SideBar: React.FC = () => {
                             element={<HistoryEstate />}
                         />
                         <Route
-                            path="/contact-detail"
-                            element={<ContactDetail />}
+                            path="/wisheslist-estate"
+                            element={<WishesListEstates />}
                         />
                         <Route
                             path="/change-password"
