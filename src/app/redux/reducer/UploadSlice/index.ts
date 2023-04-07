@@ -60,8 +60,8 @@ export const UploadSlice = createSlice({
             state.formData.append("bathRoom", String(action.payload.bathRoom));
             state.formData.append("description", action.payload.description);
             state.formData.append(
-                "coordinates",
-                JSON.stringify(action.payload.coordinates)
+                "location[coordinates]",
+                `${action.payload.coordinates.lng},${action.payload.coordinates.lat}`
             );
         }
     },
