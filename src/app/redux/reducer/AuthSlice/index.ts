@@ -106,5 +106,6 @@ export default AuthSlice.reducer;
 export const { logout } = AuthSlice.actions;
 export const getUserToken = (state: RootState) => state.auth.data.token;
 export const getUser = (state: RootState) => state.auth.data.user;
+export const getUserInfo = (state: RootState) => state.auth.data;
 export const getMessageResponse = (state: RootState) =>
     state.auth.messageResponse;

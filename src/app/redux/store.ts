@@ -11,6 +11,7 @@ import postWishesReducer from "./reducer/WishesEstateSlice";
 import AllCommentReducer from "./reducer/CommentSlice/AllCommentSlice";
 import commentReducer from "./reducer/CommentSlice/CommentSlice";
 import getAllWishesListReducer from "./reducer/GetAllWishEstatesSlice";
+import updateUserInforReducer from "./reducer/UpdateUserInforSlice";
 
 const store = configureStore({
     reducer: {
@@ -24,7 +25,8 @@ const store = configureStore({
         postWishes: postWishesReducer,
         AllComment: AllCommentReducer,
         comment: commentReducer,
-        getAllWishesList: getAllWishesListReducer
+        getAllWishesList: getAllWishesListReducer,
+        updateUserInfor: updateUserInforReducer
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware({
