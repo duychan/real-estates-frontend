@@ -66,25 +66,16 @@ export const IDCard: Rule[] = [
         message: "Please enter your ID "
     }
 ];
-export const DateOfBirthRule: Rule[] = [
-    {
-        required: true,
-        message: "Please provide your date of birth "
-    }
-];
-export const AddressRule: Rule[] = [
-    {
-        required: true,
-        message: "Please enter your Address "
-    },
-    { whitespace: true }
-];
+
 export const PhoneNumberRule: Rule[] = [
     {
-        required: true,
-        message: "Please enter your Phone Number "
-    },
-    { whitespace: true }
+        validator: (_, value) =>
+            /(84|0[3|5|7|8|9])+([0-9]{8})\b/g.test(value)
+                ? Promise.resolve()
+                : Promise.reject(
+                      "Phone number must contain at least 10 numbers"
+                  )
+    }
 ];
 
 export const CityRule: Rule[] = [

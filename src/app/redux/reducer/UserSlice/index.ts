@@ -15,7 +15,6 @@ const initialState: IUserState = {
             email: "",
             createdAt: "",
             updatedAt: "",
-
             profileImage: "",
             address: "",
             phoneNumber: "",

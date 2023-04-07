@@ -2,15 +2,15 @@ export interface IUserInformation {
     _id: string;
     firstName: string;
     lastName: string;
+    nationalId: string;
     email: string;
     createdAt: string;
-    nationalId: string;
     updatedAt: string;
-    gender: string;
+    profileImage: string;
     address: string;
     phoneNumber: string;
-    profileImage: string;
     passwordChangedAt: string;
+    gender: string;
 }
 
 export interface IAuthState {
