@@ -24,6 +24,17 @@ export const GetMyEstateSlice = createSlice({
                     total: action.payload?.data?.total
                 }
             };
+        },
+        setDeleteMyEstate: (state, action) => {
+            return {
+                ...state,
+                data: {
+                    records: state.data.records.filter(
+                        item => item._id !== action.payload
+                    ),
+                    total: state.data.records.length
+                }
+            };
         }
     },
     extraReducers: builder => {
@@ -48,5 +59,5 @@ export const GetMyEstateSlice = createSlice({
     }
 });
 export default GetMyEstateSlice.reducer;
-export const { setMyEstate } = GetMyEstateSlice.actions;
+export const { setMyEstate, setDeleteMyEstate } = GetMyEstateSlice.actions;
 export const getMyEstateData = (state: RootState) => state.getMyEstate.data;

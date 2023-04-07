@@ -148,6 +148,12 @@ const InputInformation = () => {
                                     size="large"
                                     min={0}
                                     placeholder="Area of estate"
+                                    formatter={value =>
+                                        ` ${value}`.replace(
+                                            /\B(?=(\d{3})+(?!\d))/g,
+                                            ","
+                                        )
+                                    }
                                 />
                             </Form.Item>
                         </Col>
@@ -191,6 +197,12 @@ const InputInformation = () => {
                                 size="large"
                                 placeholder="Price of estate"
                                 addonAfter="VND"
+                                formatter={value =>
+                                    ` ${value}`.replace(
+                                        /\B(?=(\d{3})+(?!\d))/g,
+                                        ","
+                                    )
+                                }
                             />
                         </Form.Item>
                     </Col>

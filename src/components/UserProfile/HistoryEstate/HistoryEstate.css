@@ -78,3 +78,12 @@
 .history-estate-product-area {
     margin-top: -5px;
 }
+.history-estate-action {
+    position: absolute;
+    top: 2%;
+    left: 85%;
+}
+.history-estate-action-button {
+    border-radius: 80%;
+    border: none;
+}

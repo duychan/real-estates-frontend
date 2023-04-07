@@ -32,7 +32,7 @@ const HistoryEstate: React.FC = () => {
         <div className="history-estate">
             <div className="history-estate-product-list">
                 {records.length > 0 ? (
-                    currentData.map(item => {
+                    currentData?.map(item => {
                         const { _id } = item;
                         return (
                             <ListMyEstate
