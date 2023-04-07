@@ -1,18 +1,17 @@
 .change-password {
     width: 90%;
     padding: 10px 20px;
-    margin-left: 20px;
-    margin-top: 30px;
     border: 0.1em solid var(--bg3-color);
     background-color: var(--bg6-color);
     box-shadow: var(--box-shadColor3) 0px 2px 5px 0px,
         var(--box-shadColor4) 0px 1px 1px 0px;
+    margin: 30px 20px;
 }
 
 .change-password__title {
     font-size: var(--font-sz4);
     font-weight: var(--font-w1);
-    padding-left: 50px;
+    padding-left: 35px;
 }
 
 .change-password__input {

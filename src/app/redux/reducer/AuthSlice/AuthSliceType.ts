@@ -4,9 +4,13 @@ export interface IUserInformation {
     lastName: string;
     email: string;
     createdAt: string;
-    imgUser: string;
     nationalId: string;
     updatedAt: string;
+    gender: string;
+    address: string;
+    phoneNumber: string;
+    profileImage: string;
+    passwordChangedAt: string;
 }
 
 export interface IAuthState {
