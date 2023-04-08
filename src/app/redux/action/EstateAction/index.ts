@@ -1,13 +1,24 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { getEstateApi } from "../../../api/EstateApi";
 import { INearestEstateInput } from "../../../api/MapApi/MapType";
 import { MapAPI } from "../../../api/MapApi";
+import { EstateApi } from "../../../api/EstateApi";
 
 export const GetEstateById = createAsyncThunk(
     "estates/getById",
     async (idEstate: string) => {
         try {
-            const response = await getEstateApi.getEstateById(idEstate);
+            const response = await EstateApi.getEstateById(idEstate);
+            return response;
+        } catch (error) {
+            return error;
+        }
+    }
+);
+export const GetEstateStatus = createAsyncThunk(
+    "estates/getStatus",
+    async () => {
+        try {
+            const response = await EstateApi.getEstateStatus();
             return response;
         } catch (error) {
             return error;

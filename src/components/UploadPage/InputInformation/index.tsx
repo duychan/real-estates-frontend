@@ -30,6 +30,8 @@ import { MapNavigator } from "../MapNavigator";
 import { ICoordinates } from "../MapNavigator/MapNavigateType";
 import { setErrorNotification } from "../../../app/redux/reducer/NotificationSlice";
 import { UploadNewEstate } from "../../../app/redux/action/UploadEstateAction";
+import { GetEstateStatus } from "../../../app/redux/action/EstateAction";
+import { getEstateStatus } from "../../../app/redux/reducer/EstateSlice";
 
 const InputInformation = () => {
     const navigate = useNavigate();
@@ -45,6 +47,11 @@ const InputInformation = () => {
     });
     const [detailAddressEstate, setDetailAddressEstate] = useState("");
     const [errorLocation, setErrorLocation] = useState<string>("");
+    const estateStatus = useSelector(getEstateStatus);
+
+    useEffect(() => {
+        dispatch(GetEstateStatus());
+    }, [dispatch]);
 
     const onFinish = (estate: IEstateUpload) => {
         if (estate.thumbnail === undefined) {
@@ -65,7 +72,9 @@ const InputInformation = () => {
                 address: detailAddressEstate,
                 area: estate.area,
                 price: estate.price,
-                currentStatus: "641805bed27ac809a60a9cd3",
+                currentStatus:
+                    estateStatus.find(status => status.name === "Available")
+                        ?._id || "",
                 type: estate.type.key,
                 coverImg: coverImg,
                 fileList: fileList,

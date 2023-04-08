@@ -1,5 +1,4 @@
 import { IEstate } from "../SearchPageSlice/SearchPageType";
-
 export interface IEstateState {
     message: string;
     data: {
@@ -12,4 +11,5 @@ export interface IEstateState {
             records: IEstate[];
         };
     };
+    allEstateStatus: { _id: string; name: string }[];
 }

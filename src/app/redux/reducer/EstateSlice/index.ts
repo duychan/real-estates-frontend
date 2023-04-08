@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
+    GetListOfNearestEstate,
     GetEstateById,
-    GetListOfNearestEstate
+    GetEstateStatus
 } from "../../action/EstateAction";
 import { RootState } from "../../store";
 import { IEstateState } from "./EstateSliceType";
@@ -18,7 +19,8 @@ const initialState: IEstateState = {
         data: {
             records: []
         }
-    }
+    },
+    allEstateStatus: []
 };
 
 export const GetEstateSlice = createSlice({
@@ -77,9 +79,27 @@ export const GetEstateSlice = createSlice({
                     }
                 };
             });
+        builder
+            .addCase(GetEstateStatus.fulfilled, (state, action) => {
+                return {
+                    ...state,
+                    allEstateStatus:
+                        action.payload.data?.records ||
+                        initialState.allEstateStatus
+                };
+            })
+            .addCase(GetEstateStatus.rejected, state => {
+                return {
+                    ...state,
+                    message: "CANNOT CONNECT SERVER!",
+                    isLoading: false
+                };
+            });
     }
 });
 export default GetEstateSlice.reducer;
 export const getEstateById = (state: RootState) => state.getEstate.data.records;
 export const ListOfNearestEstate = (state: RootState) =>
     state.getEstate.nearestEstate.data.records;
+export const getEstateStatus = (state: RootState) =>
+    state.getEstate.allEstateStatus;
