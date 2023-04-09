@@ -1,0 +1,31 @@
+.chat-header-text {
+    margin-left: 5px;
+    display: inline-block;
+    max-width: 50%;
+    padding-left: 14px;
+}
+.chat-header-title {
+    font-size: var(--font-sz19);
+    font-family: var(--font-fml);
+}
+#chat-header-files-picker {
+    visibility: hidden;
+    height: 0px;
+    width: 0px;
+}
+.chat-header-icon-wrapper {
+    display: flex;
+    align-items: flex-start;
+    float: right;
+    margin-top: 18px;
+}
+.chat-header-icon {
+    margin-right: 12px;
+    cursor: pointer;
+    color: var(--silver3-color);
+    font-size: var(--font-sz40);
+    transition: all 0.66s ease;
+}
+.chat-header-icon:hover {
+    color: var(--blue2--color);
+}
