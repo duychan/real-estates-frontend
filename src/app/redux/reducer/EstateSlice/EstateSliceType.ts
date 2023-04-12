@@ -6,10 +6,8 @@ export interface IEstateState {
     };
     isLoading: boolean;
     nearestEstate: {
-        messageNearestEstate: string;
-        data: {
-            records: IEstate[];
-        };
+        records: IEstate[];
+        total: number;
     };
     allEstateStatus: { _id: string; name: string }[];
 }
