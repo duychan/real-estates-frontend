@@ -25,6 +25,9 @@ export interface ICoordinates {
     _id?: string;
 }
 export interface IMapNavigate {
-    handleGetEstateLocation: (coordinates: ICoordinates) => void;
+    handleGetEstateLocation: (
+        coordinates: ICoordinates,
+        addressEstate: string
+    ) => void;
     errorCoordinate?: string;
 }

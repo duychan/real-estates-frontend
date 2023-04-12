@@ -1,3 +1,4 @@
+import { IEstate } from "../../app/redux/reducer/SearchPageSlice/SearchPageType";
 import area1 from "../../assets/images/area1.jpg";
 import area2 from "../../assets/images/area2.jpg";
 import area3 from "../../assets/images/area3.jpg";
@@ -65,3 +66,37 @@ export const AreaList = [
     area7,
     area8
 ];
+
+export const EmptyEstate: IEstate = {
+    _id: "",
+    owner: {
+        _id: "",
+        firstName: "",
+        lastName: "",
+        email: "",
+        nationalId: "",
+        createdAt: "",
+        updatedAt: "",
+        gender: "",
+        address: "",
+        phoneNumber: "",
+        profileImage: "",
+        passwordChangedAt: ""
+    },
+    name: "",
+    address: "",
+    area: "",
+    price: "",
+    currentStatus: { _id: "", name: "" },
+    type: { _id: "", name: "" },
+    coverImg: "",
+    thumbnail: [],
+    bedRoom: 0,
+    bathRoom: 0,
+    description: "",
+    updatedAt: "",
+    createdAt: "",
+    location: {
+        coordinates: [0, 0]
+    }
+};

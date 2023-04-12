@@ -1,13 +1,17 @@
 import { Button, Row } from "antd";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import { GetUserById } from "../../app/redux/action/AuthAction";
 import { GetAllCommentByEstate } from "../../app/redux/action/CommentAction";
-import { GetEstateById } from "../../app/redux/action/EstateAction";
 import { getAllCommentByEstate } from "../../app/redux/reducer/CommentSlice/AllCommentSlice";
-import { getEstateById } from "../../app/redux/reducer/EstateSlice";
-import { getUserById } from "../../app/redux/reducer/UserSlice";
+import {
+    GetEstateById,
+    GetListOfNearestEstate
+} from "../../app/redux/action/EstateAction";
+import {
+    ListOfNearestEstate,
+    getEstateById
+} from "../../app/redux/reducer/EstateSlice";
 import { useAppDispatch } from "../../app/redux/store";
 import CarouselSingleProduct from "../../components/DetailPage/carouselSingleProduct";
 import { CommentComponent } from "../../components/DetailPage/CommentComponent";
@@ -17,28 +21,20 @@ import { EstateDescription } from "../../components/DetailPage/EstateDescription
 import { EstateMap } from "../../components/DetailPage/EstateMap";
 import { RelatedEstate } from "../../components/DetailPage/RelatedEstate";
 import "./SingleEstate.css";
+import { EstateMapPopup } from "../../components/DetailPage/EstateMap/EstateMapPopup";
+import { IEstate } from "../../app/redux/reducer/SearchPageSlice/SearchPageType";
+import { EmptyEstate } from "../../common/constants";
+import { getEstateUpload } from "../../app/redux/reducer/UploadSlice";
+import { ReactComponent as NoData } from "../../assets/icon/No-data-pana.svg";
+import _pick from "lodash.pick";
+
+const ZOOM_LEVEL = 18;
 
 export const SingleEstate: React.FC = () => {
-    const estateAddressLatLng: [number, number] = [16.0546935, 108.2207096];
-    const estateNearCenter: [number, number][] = [
-        [16.054503453397675, 108.22082692238062],
-        [16.05440734647295, 108.22072808797749],
-        [16.055061458754004, 108.22120724717237],
-        [16.054698781983102, 108.22100287279979],
-        [16.05506010920506, 108.22075202999645],
-        [16.05560081672723, 108.22085814338341],
-        [16.055479588302024, 108.21860473103041]
-    ];
-
-    const location = useLocation();
-    const locationPath = location?.pathname.split("/") ?? [];
-    const _idSingleEstate =
-        locationPath.length > 0 ? locationPath[locationPath.length - 1] : "";
-
-    const dispatch = useAppDispatch();
+    const [estate, setEstate] = useState<IEstate>(EmptyEstate);
     const {
         _id: _idEstate = "",
-        owner = "",
+        owner: { _id: _idOwner = "", firstName = "", lastName = "" },
         name: titleEstate = "",
         address = "",
         area = "",
@@ -48,10 +44,24 @@ export const SingleEstate: React.FC = () => {
         thumbnail = [],
         bedRoom = 0,
         bathRoom = 0,
-        description = ""
-    } = useSelector(getEstateById);
-    const { firstName, lastName } = useSelector(getUserById);
+        description = "",
+        location: { coordinates = [0, 0] }
+    } = estate;
+    const location = useLocation();
+    const locationPath = location?.pathname?.split("/") ?? [];
+    const _idSingleEstate =
+        locationPath.length > 0 ? locationPath[locationPath.length - 1] : "";
+
+    const dispatch = useAppDispatch();
+    const estateById = useSelector(getEstateById);
+    const estateUpload = useSelector(getEstateUpload);
+
     const navigate = useNavigate();
+    const mapRef = useRef<L.Map>();
+    const listOfNearestEstate = useSelector(ListOfNearestEstate);
+    const nearestEstateData = listOfNearestEstate?.filter(
+        estate => estate._id !== _idEstate
+    );
 
     const ListCommentByEstate = useSelector(getAllCommentByEstate);
     const commentList: IComment[] = ListCommentByEstate.map(
@@ -66,25 +76,60 @@ export const SingleEstate: React.FC = () => {
             };
         }
     );
-
-    const nameOwner = firstName && lastName ? `${firstName} ${lastName}` : "";
+    const nameOwner = `${firstName || ""} ${lastName || ""}`;
 
     useEffect(() => {
-        if (_idSingleEstate) {
-            dispatch(GetEstateById(_idSingleEstate)).then(res => {
-                const _idEstateFind = res.payload.data?.records?._id || "";
-                const _idOwner = res.payload.data?.records?.owner || "";
-                if (_idEstateFind === "") {
-                    navigate("*");
-                } else {
-                    dispatch(GetUserById(_idOwner));
-                    dispatch(GetAllCommentByEstate(_idEstateFind));
-                }
-            });
+        if (estateUpload !== EmptyEstate) {
+            setEstate(estateUpload);
         } else {
-            navigate("*");
+            setEstate(estateById);
+        }
+    }, [estateUpload]);
+
+    useEffect(() => {
+        window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: "smooth"
+        });
+    }, [estate]);
+
+    useEffect(() => {
+        if (estateUpload._id === "") {
+            if (_idSingleEstate) {
+                dispatch(GetEstateById(_idSingleEstate)).then(res => {
+                    const _idEstateFind = res.payload.data?.records?._id || "";
+                    if (_idEstateFind === "") {
+                        navigate("*");
+                    } else {
+                        setEstate(res.payload.data?.records || EmptyEstate);
+                        dispatch(GetAllCommentByEstate(_idEstateFind));
+                    }
+                });
+            } else {
+                navigate("*");
+            }
         }
     }, [dispatch, _idSingleEstate, navigate]);
+
+    useEffect(() => {
+        if (coordinates[0] !== 0 && coordinates[1] !== 0) {
+            mapRef.current?.flyTo(
+                [coordinates[1], coordinates[0]],
+                ZOOM_LEVEL,
+                {
+                    animate: true
+                }
+            );
+            dispatch(
+                GetListOfNearestEstate({
+                    longitude: String(coordinates[0]),
+                    latitude: String(coordinates[1]),
+                    radius: "1"
+                })
+            );
+        }
+    }, [coordinates]);
 
     return (
         <div className="single-estate">
@@ -103,14 +148,16 @@ export const SingleEstate: React.FC = () => {
             <EstateDescription description={description} />
             <div className="estate-map">
                 <EstateMap
-                    positionCenter={estateAddressLatLng}
-                    estateNearCenter={estateNearCenter}
+                    positionCenter={[coordinates[1], coordinates[0]]}
+                    mapRef={mapRef}
+                    estateNearCenter={nearestEstateData}
                     radius={100}
                     popupMarker={
-                        <div>
-                            Latitude: ${estateAddressLatLng[0]} <br />{" "}
-                            Longitude: ${estateAddressLatLng[1]}
-                        </div>
+                        <EstateMapPopup
+                            imgEstate={coverImg}
+                            titleEstate={titleEstate}
+                            addressEstate={address}
+                        />
                     }
                 />
             </div>
@@ -123,13 +170,42 @@ export const SingleEstate: React.FC = () => {
             <div className="related-estate">
                 <h1 className="related-estate-title">Related Estate</h1>
                 <div className="related-estate-list">
-                    <RelatedEstate width="27%" />
-                    <RelatedEstate width="27%" />
-                    <RelatedEstate width="27%" />
+                    {nearestEstateData.length > 0 ? (
+                        nearestEstateData?.slice(0, 3).map(estate => {
+                            return (
+                                <RelatedEstate
+                                    key={estate._id}
+                                    width="27%"
+                                    {..._pick(estate, [
+                                        "_id",
+                                        "name",
+                                        "address",
+                                        "bedRoom",
+                                        "bathRoom",
+                                        "area",
+                                        "coverImg"
+                                    ])}
+                                />
+                            );
+                        })
+                    ) : (
+                        <div className="search-result-no-data">
+                            <NoData className="search-result-no-data-img" />
+                            <p className="search-result-empty-content">
+                                No real estate is found
+                            </p>
+                        </div>
+                    )}
                 </div>
-                <Row justify={"center"} align="middle" className="row-view-btn">
-                    <Button className="view-btn">View more</Button>
-                </Row>
+                {nearestEstateData.length > 3 && (
+                    <Row
+                        justify={"center"}
+                        align="middle"
+                        className="row-view-btn"
+                    >
+                        <Button className="view-btn">View more</Button>
+                    </Row>
+                )}
             </div>
         </div>
     );

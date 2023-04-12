@@ -3,29 +3,13 @@ import { RcFile } from "rc-upload/lib/interface";
 import { UploadNewEstate } from "../../action/UploadEstateAction";
 import { RootState } from "../../store";
 import { IUploadEstateState } from "./UploadSliceType";
+import { EmptyEstate } from "../../../../common/constants";
 
 const initialState: IUploadEstateState = {
     isLoading: false,
     message: "",
     data: {
-        records: {
-            _id: "",
-            owner: "",
-            name: "",
-            address: "",
-            area: 0,
-            price: 0,
-            currentStatus: "",
-            type: "",
-            coverImg: "",
-            thumbnail: [],
-            bedRoom: 0,
-            bathRoom: 0,
-            description: "",
-            corrdinates: { lat: 0, lng: 0, _id: "" },
-            createdAt: "",
-            updatedAt: ""
-        }
+        records: EmptyEstate
     },
     total: 0,
     formData: new FormData()
@@ -63,6 +47,21 @@ export const UploadSlice = createSlice({
                 "location[coordinates]",
                 `${action.payload.coordinates.lng},${action.payload.coordinates.lat}`
             );
+        },
+        deleteUploadFormData: state => {
+            state.formData.delete("thumbnail");
+            state.formData.delete("owner");
+            state.formData.delete("name");
+            state.formData.delete("address");
+            state.formData.delete("area");
+            state.formData.delete("price");
+            state.formData.delete("type");
+            state.formData.delete("currentStatus");
+            state.formData.delete("coverImg");
+            state.formData.delete("bedRoom");
+            state.formData.delete("bathRoom");
+            state.formData.delete("description");
+            state.formData.delete("location[coordinates]");
         }
     },
     extraReducers: builder => {
@@ -86,7 +85,7 @@ export const UploadSlice = createSlice({
     }
 });
 export default UploadSlice.reducer;
-export const { setUploadFormData } = UploadSlice.actions;
+export const { setUploadFormData, deleteUploadFormData } = UploadSlice.actions;
 export const getEstateUpload = (state: RootState) =>
     state.uploadEstate.data.records;
 export const getFormData = (state: RootState) => state.uploadEstate.formData;

@@ -50,8 +50,10 @@ export const AuthSlice = createSlice({
                 return { ...state, isLoading: true };
             })
             .addCase(UserLogin.fulfilled, (state, action) => {
-                const { data = { user: {}, token: null }, message = "" } =
-                    action.payload;
+                const {
+                    data = { user: {}, token: null },
+                    message = ""
+                } = action.payload;
 
                 return {
                     ...state,
@@ -87,8 +89,10 @@ export const AuthSlice = createSlice({
                 return { ...state, isLoading: true };
             })
             .addCase(SignupUser.fulfilled, (state, action) => {
-                const { data = { user: {}, token: null }, message = "" } =
-                    action.payload;
+                const {
+                    data = { user: {}, token: null },
+                    message = ""
+                } = action.payload;
 
                 return {
                     ...state,

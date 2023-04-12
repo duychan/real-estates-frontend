@@ -18,6 +18,7 @@ import { PostWishesEstate } from "../../../app/redux/action/WishesListAction";
 import { useSelector } from "react-redux";
 import { getWishesEstate } from "../../../app/redux/reducer/WishesEstateSlice";
 import { deleteWishes } from "../../../app/api/WishesListApi";
+import { useConvertPriceEstate } from "../../../common/hooks/PriceEstate";
 
 interface IDetailInformation {
     _id: string;
@@ -89,7 +90,9 @@ const DetailInfomation: React.FC<IDetailInformation> = ({
                         <h4 className="product-address-type">Type: {type}</h4>
                     </div>
                     <div className="product-fee">
-                        <h1>${price}</h1>
+                        <h1 className="product-fee-price">
+                            ${useConvertPriceEstate(price)}
+                        </h1>
                     </div>
                 </div>
                 <div className="product-share">
@@ -131,12 +134,14 @@ const DetailInfomation: React.FC<IDetailInformation> = ({
                             <Button type="primary" className="button-contact">
                                 Contact Owner
                             </Button>
-                            <Avatar
-                                className="user"
-                                size={50}
-                                icon={<UserOutlined />}
-                            />{" "}
-                            {nameUser}
+                            <div className="detail-owner">
+                                <Avatar
+                                    className="user"
+                                    size={50}
+                                    icon={<UserOutlined />}
+                                />
+                                <p className="detail-owner-name">{nameUser}</p>
+                            </div>
                         </Col>
                     </Row>
                 </div>

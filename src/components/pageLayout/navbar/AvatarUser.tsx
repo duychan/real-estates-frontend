@@ -14,11 +14,9 @@ export const AvatarUser: React.FC = () => {
     const MenuItemGroup = Menu.ItemGroup;
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
-    const {
-        firstName = "",
-        lastName = "",
-        profileImage = ""
-    } = useSelector(getUser);
+    const { firstName = "", lastName = "", profileImage = "" } = useSelector(
+        getUser
+    );
     const handleLogout = () => {
         dispatch(logout());
         navigate("/");
