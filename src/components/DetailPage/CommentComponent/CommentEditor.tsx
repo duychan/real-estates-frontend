@@ -15,11 +15,9 @@ export const CommentEditor: React.FC<IEditor> = ({
     submitting,
     value = ""
 }) => {
-    const {
-        firstName = "",
-        lastName = "",
-        profileImage = ""
-    } = useSelector(getUser);
+    const { firstName = "", lastName = "", profileImage = "" } = useSelector(
+        getUser
+    );
     const [form] = Form.useForm();
 
     return (

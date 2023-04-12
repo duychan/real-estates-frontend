@@ -62,6 +62,7 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
         0,
         0
     ]);
+
     const debouncedEstateLocation = useDebounce<[number, number]>(
         estateLocation,
         DebounceEstateTime
@@ -74,6 +75,12 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
 
     const [form] = Form.useForm();
     const mapRef = useRef<L.Map>();
+
+    const addressEstate = `${form.getFieldValue("addressNumber") || ""}, ${
+        form.getFieldValue("ward") || ""
+    }, ${form.getFieldValue("district") || ""}, ${
+        form.getFieldValue("city") || ""
+    }`;
 
     useEffect(() => {
         if (errorCoordinate) {
@@ -164,7 +171,10 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
                     if (lat !== 0 && lng !== 0) {
                         setEstateLocation([lat, lng]);
 
-                        handleGetEstateLocation({ lat: lat, lng: lng });
+                        handleGetEstateLocation(
+                            { lat: lat, lng: lng },
+                            addressFinding
+                        );
                         setIsShowCurrentLocation(true);
                         mapRef.current?.flyTo(
                             [lat ?? 0, lng ?? 0],
@@ -189,10 +199,13 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
 
     const handleSaveLocation = () => {
         setIsLocationChange(false);
-        handleGetEstateLocation({
-            lat: estateLocation[0],
-            lng: estateLocation[1]
-        });
+        handleGetEstateLocation(
+            {
+                lat: estateLocation[0],
+                lng: estateLocation[1]
+            },
+            addressEstate
+        );
     };
 
     const handleClearForm = useCallback(() => {
@@ -220,16 +233,6 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
                     location.coordinates.lng ?? 0
                 ]);
 
-                handleGetEstateLocation({
-                    lat: location.coordinates?.lat,
-                    lng: location.coordinates?.lng
-                });
-
-                handleClickEstateOnMap([
-                    location.coordinates?.lat,
-                    location.coordinates?.lng
-                ]);
-
                 mapRef.current?.flyTo(
                     [
                         location.coordinates.lat ?? 0,
@@ -237,6 +240,19 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
                     ],
                     ZOOM_LEVEL,
                     { animate: true }
+                );
+
+                handleGetAddressFromClickOnMap([
+                    location.coordinates?.lat,
+                    location.coordinates?.lng
+                ]);
+
+                handleGetEstateLocation(
+                    {
+                        lat: location.coordinates?.lat,
+                        lng: location.coordinates?.lng
+                    },
+                    addressEstate
                 );
             }
         } else {
@@ -246,7 +262,6 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
         }
     }, [
         estateLocation,
-        handleClearForm,
         handleGetEstateLocation,
         isShowCurrentLocation,
         location.coordinates.lat,
@@ -254,12 +269,11 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
         location.loaded
     ]);
 
-    const handleClickEstateOnMap = (latLng: [number, number]) => {
-        setEstateLocation(latLng);
-        setCurrent(Step4);
+    const handleGetAddressFromClickOnMap = (latLng: [number, number]) => {
+        setCurrent(4);
         getAddressByCoordinates({
-            lat: debouncedEstateLocation[0],
-            lng: debouncedEstateLocation[1]
+            lat: latLng[0],
+            lng: latLng[1]
         }).then(response => {
             setIsAddressSelectShown(true);
             const {
@@ -493,7 +507,14 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
                             }
                             isPopupAlwaysShowed={true}
                             isGetLocationByClick={isLocationChange}
-                            handleGetCurrentLocation={handleClickEstateOnMap}
+                            handleGetCurrentLocation={(
+                                latLng: [number, number]
+                            ) => {
+                                setEstateLocation(latLng);
+                                handleGetAddressFromClickOnMap(
+                                    debouncedEstateLocation
+                                );
+                            }}
                         />
                         <div className="map-show-location-button">
                             {isLocationChange ? (

@@ -12,12 +12,12 @@
 .product-name {
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .favorite {
     width: 100px;
     font-size: var(--font-sz2);
-    padding-top: 25px;
 }
 
 .button-favorite {
@@ -34,12 +34,15 @@
     font-size: var(--font-sz2);
 }
 
-h1 {
+.product-fee-price {
     font-weight: 500;
+    font-size: var(--font-sz45);
+    margin: 5px 0px;
 }
 
 h2 {
     font-size: var(--font-sz4);
+    margin: 15px 0px;
 }
 
 h3 {
@@ -55,6 +58,7 @@ h4 {
 .product-info {
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .icon-share {
@@ -63,12 +67,9 @@ h4 {
     color: var(--bg1-color);
 }
 
-.share {
-    margin-top: 3px;
-}
-
 .product-share {
     display: flex;
+    align-items: center;
     margin-top: -4px;
 }
 
@@ -110,6 +111,7 @@ h4 {
 
 .product-address-type {
     text-transform: capitalize;
+    font-size: var(--font-sz2);
 }
 
 .detail-product-p-area {
@@ -121,4 +123,16 @@ h4 {
 
 .detail-product-p-area-text {
     margin: 0;
+}
+
+.detail-owner {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.detail-owner-name {
+    margin: 0;
+    text-transform: capitalize;
+    font-size: var(--font-sz2);
 }

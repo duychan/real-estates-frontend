@@ -5,7 +5,7 @@
 .estate-info {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-end;
     flex-wrap: wrap;
 }
 
@@ -13,6 +13,14 @@
     font-size: var(--font-sz2);
     font-weight: var(--font-w2);
     margin: 0 auto;
+    overflow: hidden;
+    white-space: normal;
+    text-overflow: ellipsis;
+    line-height: 1.5em;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    width: 100%;
 }
 
 .estate-info .estate-info-text {

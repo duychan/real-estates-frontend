@@ -1,5 +1,6 @@
 import { ICoordinates } from "../../../components/UploadPage/MapNavigator/MapNavigateType";
 import BaseApi from "../../BaseAPI";
+import { INearestEstateInput } from "./MapType";
 
 export const getProvinces = async () => {
     return await BaseApi.get("/maps/provinces").then(response => response.data);
@@ -30,10 +31,19 @@ export const getAddressByCoordinates = async ({ lat, lng }: ICoordinates) => {
         }
     );
 };
+export const getListOfNearestEstate = async (
+    estateInput: INearestEstateInput
+) => {
+    return await BaseApi.post("/estates/nearestEstate", estateInput).then(
+        response => response.data
+    );
+};
 
 export const MapAPI = {
     getProvinces,
     getDistricts,
     getWards,
-    getCoordinatesByAddress
+    getCoordinatesByAddress,
+    getListOfNearestEstate,
+    getAddressByCoordinates
 };

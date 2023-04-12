@@ -3,3 +3,54 @@
     height: 500px;
     margin: 0 auto;
 }
+
+.leaflet-popup-content-wrapper {
+    width: 270px;
+    height: 100px;
+}
+
+.leaflet-popup-content-wrapper .leaflet-popup-content {
+    margin: 0;
+    height: 100%;
+    width: 270px;
+}
+
+.estate-map-popup {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.estate-map-popup-img {
+    width: 100px;
+    height: 100%;
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+}
+
+.estate-map-popup-text {
+    padding: 5px 10px;
+    width: 100%;
+    height: 100%;
+}
+.estate-map-popup-text .estate-map-popup-title {
+    margin: 7px 0px;
+    font-size: var(--font-sz1);
+    width: 100%;
+    color: var(--item-selected);
+    font-weight: var(--font-w3);
+    overflow: hidden;
+    white-space: normal;
+    text-overflow: ellipsis;
+    line-height: 1.5em;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+.estate-map-popup-text .estate-map-popup-address {
+    margin: 5px 0px;
+    font-size: var(--font-sz11);
+    width: 100%;
+}

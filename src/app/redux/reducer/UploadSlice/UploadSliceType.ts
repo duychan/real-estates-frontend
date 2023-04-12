@@ -1,25 +1,7 @@
 import { RcFile } from "antd/es/upload";
 import { UploadFile } from "antd/es/upload/interface";
 import { ICoordinates } from "../../../../components/UploadPage/MapNavigator/MapNavigateType";
-
-export interface IUploadEstate {
-    _id: string;
-    owner: string;
-    name: string;
-    address: string;
-    area: number;
-    price: number;
-    currentStatus: string;
-    type: string;
-    coverImg: string;
-    thumbnail: string[];
-    bedRoom: number;
-    bathRoom: number;
-    description: string;
-    updatedAt: string;
-    createdAt: string;
-    corrdinates: ICoordinates;
-}
+import { IEstate } from "../SearchPageSlice/SearchPageType";
 
 export interface IUploadAction {
     _id: string;
@@ -43,7 +25,7 @@ export interface IUploadAction {
 export interface IUploadEstateState {
     message: string;
     data: {
-        records: IUploadEstate;
+        records: IEstate;
     };
     total: number;
     isLoading: boolean;

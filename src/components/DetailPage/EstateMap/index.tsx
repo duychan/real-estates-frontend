@@ -18,6 +18,7 @@ import {
     pi,
     semicircle
 } from "../../../common/constants";
+import { EstateMapPopup } from "./EstateMapPopup";
 
 const markerCenterIcon = new L.Icon({
     iconUrl: require("../../../assets/images/marker-icon.png"),
@@ -41,8 +42,13 @@ export const EstateMap: React.FC<IEstateMap> = ({
     isGetLocationByClick = false,
     handleGetCurrentLocation = () => {}
 }) => {
+    const listOfEstateNearCenter: [number, number][] =
+        estateNearCenter?.map(estate => [
+            estate.location.coordinates[1],
+            estate.location.coordinates[0]
+        ]) || [];
     const getLatLngBounds = () => {
-        const latLngs = estateNearCenter?.map(position => {
+        const latLngs = listOfEstateNearCenter?.map(position => {
             return L.latLng(position[0], position[1]);
         });
         const bounds = L.latLngBounds(latLngs ?? []) ?? {
@@ -114,14 +120,29 @@ export const EstateMap: React.FC<IEstateMap> = ({
             >
                 {popupMarker && <Popup>{popupMarker}</Popup>}
             </Marker>
-            {estateNearCenter?.map((position, idx) => (
-                <Marker position={position} key={idx} icon={markerRelatedIcon}>
-                    <Popup>
-                        Latitude: {position[0]} <br /> Longitude:
-                        {position[1]}
-                    </Popup>
-                </Marker>
-            ))}
+            {estateNearCenter?.map(
+                ({
+                    _id = "",
+                    location: { coordinates = [0, 0] },
+                    name = "",
+                    address = "",
+                    coverImg = ""
+                }) => (
+                    <Marker
+                        position={[coordinates[1], coordinates[0]]}
+                        key={_id}
+                        icon={markerRelatedIcon}
+                    >
+                        <Popup>
+                            <EstateMapPopup
+                                imgEstate={coverImg}
+                                addressEstate={address}
+                                titleEstate={name}
+                            />
+                        </Popup>
+                    </Marker>
+                )
+            )}
 
             {estateNearCenter.length > 0 && (
                 <Circle

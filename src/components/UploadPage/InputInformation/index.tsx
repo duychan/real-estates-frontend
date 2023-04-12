@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Form, Input, InputNumber, Col, Row, Button, UploadFile } from "antd";
 import { useNavigate } from "react-router-dom";
 import "./InputInformation.css";
@@ -19,6 +19,7 @@ import { getUser } from "../../../app/redux/reducer/AuthSlice";
 import { ISelectOption } from "../SelectType/SelectItemType";
 import { RcFile } from "antd/es/upload";
 import {
+    deleteUploadFormData,
     getFormData,
     isLoading,
     setUploadFormData
@@ -42,6 +43,7 @@ const InputInformation = () => {
         lat: 0,
         lng: 0
     });
+    const [detailAddressEstate, setDetailAddressEstate] = useState("");
     const [errorLocation, setErrorLocation] = useState<string>("");
 
     const onFinish = (estate: IEstateUpload) => {
@@ -60,7 +62,7 @@ const InputInformation = () => {
             const estateAction: IUploadAction = {
                 owner: _id,
                 name: estate.name,
-                address: "",
+                address: detailAddressEstate,
                 area: estate.area,
                 price: estate.price,
                 currentStatus: "641805bed27ac809a60a9cd3",
@@ -84,6 +86,7 @@ const InputInformation = () => {
                     const message = res.payload?.message ?? "";
 
                     if (_idEstateUpload !== "") {
+                        dispatch(deleteUploadFormData());
                         navigate(`/single-estate/${_idEstateUpload}`);
                     } else if (message !== "") {
                         dispatch(setErrorNotification(message));
@@ -201,8 +204,12 @@ const InputInformation = () => {
                 </Form>
                 <p className="address-title">Address:</p>
                 <MapNavigator
-                    handleGetEstateLocation={(address: ICoordinates) => {
+                    handleGetEstateLocation={(
+                        address: ICoordinates,
+                        addressEstate: string
+                    ) => {
                         setAddressEstate(address);
+                        setDetailAddressEstate(addressEstate);
                     }}
                     errorCoordinate={errorLocation}
                 />

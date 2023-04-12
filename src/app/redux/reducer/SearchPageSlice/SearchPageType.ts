@@ -1,9 +1,10 @@
+import { ICoordinates } from "../../../../components/UploadPage/MapNavigator/MapNavigateType";
 import { ISearchHomePage } from "../../../../components/homePage/Search/SearchType";
-import { IUploadEstate } from "../UploadSlice/UploadSliceType";
+import { IUserInformation } from "../AuthSlice/AuthSliceType";
 
 export interface IEstate {
     _id: string;
-    owner: string;
+    owner: IUserInformation;
     name: string;
     address: string;
     area: string;
@@ -15,8 +16,11 @@ export interface IEstate {
     bedRoom: number;
     bathRoom: number;
     description: string;
-    updateAt: string;
-    createAt: string;
+    updatedAt: string;
+    createdAt: string;
+    location: {
+        coordinates: [number, number]; //[lng,lat]
+    };
 }
 
 export interface ISearchPage {

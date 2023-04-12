@@ -8,7 +8,6 @@ import { ReactComponent as BathIcon } from "../../../assets/icon/bathroom.svg";
 import { ReactComponent as HouseSizeIcon } from "../../../assets/icon/houseSize.svg";
 import "./SearchResult.css";
 import { IconDetail } from "./IconDetail";
-import { IUploadEstate } from "../../../app/redux/reducer/UploadSlice/UploadSliceType";
 import { useConvertPriceEstate } from "../../../common/hooks/PriceEstate";
 
 export const ResultEstateCardStyle = styled(Card).attrs<ISearchEstateResult>(
