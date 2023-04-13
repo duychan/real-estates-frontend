@@ -1,13 +1,11 @@
 import BaseApi from "../../BaseAPI";
 
 export const getEstateById = async (idEstate: string) => {
-    return await BaseApi.get(`/estates/${idEstate}`)
-        .then(res => {
-            return res.data;
-        })
-        .catch(error => {
-            return error;
-        });
+    return await BaseApi.get(`/estates/${idEstate}`).then(res => res.data);
 };
 
-export const getEstateApi = { getEstateById };
+export const getEstateStatus = async () => {
+    return await BaseApi.get(`/estate-status`).then(res => res.data);
+};
+
+export const EstateApi = { getEstateById, getEstateStatus };
