@@ -21,6 +21,7 @@ import {
     removeSuccessNotification,
     removeWarnNotification
 } from "./app/redux/reducer/NotificationSlice";
+import { ContactChatPage } from "./page/ContactChatPage";
 const UserAuth = (navigateComponent: ReactNode) => {
     const userToken = useSelector(getUserToken);
     const isAuth = userToken !== null;
@@ -84,6 +85,10 @@ function App() {
                         />
                         <Route path="/myprofile/*" element={<SideBar />} />
                         <Route path="/upload-estate" element={<UploadPage />} />
+                        <Route
+                            path="/contact-page"
+                            element={<ContactChatPage />}
+                        />
                     </Route>
                     <Route
                         path="/single-estate/:id"

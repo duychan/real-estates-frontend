@@ -1,0 +1,73 @@
+.main-chat {
+    border: solid 1px var(--silver3-color);
+    border-radius: 20px;
+    background-image: url("https://images.unsplash.com/photo-1528460033278-a6ba57020470?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTR8fGJhY2tncm91bmQlMjBpbWFnZXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60");
+    /* the image should get the address because the image has a higher resolution when download. */
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.main-chat-conversation {
+    padding: 0 50px;
+}
+.main-chat-message {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+.main-chat-message-top {
+    display: flex;
+    align-items: center;
+}
+
+.main-chat-message-avatar {
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.main-chat-message-text {
+    padding: 10px;
+    border-radius: 20px;
+    background-color: var(--blue2--color);
+    color: var(--white-color);
+    max-width: 300px;
+}
+
+.main-chat-message-time {
+    font-size: var(--font-sz1);
+    margin-top: -10px;
+}
+
+.main-chat-message.own {
+    align-items: flex-end;
+}
+
+.main-chat-message.own .main-chat-message-text {
+    background-color: var(--white-color);
+    color: var(--font-color13);
+}
+.main-chat-send-button {
+    cursor: pointer;
+    background-color: var(--silver3-color);
+    border: 1px solid var(--silver3-color);
+    width: 58px;
+    height: 40px;
+    border-radius: 8px;
+    color: var(--white-color);
+    box-shadow: var(--gradientColor) 0px 5px 15px;
+    transition: all 0.44s ease;
+}
+.main-chat-message-input {
+    border-radius: 12px;
+    border-color: var(--silver3-color);
+}
+.main-chat-message-input :hover {
+    border-color: var(--silver3-color);
+}
+
+.main-chat-form-message {
+    padding: 20px 50px 5px;
+}
+.main-chat-send-icon {
+    font-size: var(--font-sz3);
+}
