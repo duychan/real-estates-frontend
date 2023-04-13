@@ -2,6 +2,7 @@ import { Card } from "antd";
 import React, { useEffect, useState } from "react";
 import { EnvironmentOutlined } from "@ant-design/icons";
 import { IMyEstateResult } from "../HistoryEstate/ListEstateType";
+import { useConvertPriceEstate } from "../../../common/hooks/PriceEstate";
 
 export const WishesListResult: React.FC<IMyEstateResult> = ({
     estateResult: {
@@ -35,7 +36,9 @@ export const WishesListResult: React.FC<IMyEstateResult> = ({
                 <div className="history-estate-product-type">
                     <p>{NameType}</p>
                 </div>
-                <div className="history-estate-product-price">{price}</div>
+                <div className="history-estate-product-price">
+                    {useConvertPriceEstate(price)}
+                </div>
             </div>
             <div className="history-estate-product-sub">
                 <div className="history-estate-product-bedroom">

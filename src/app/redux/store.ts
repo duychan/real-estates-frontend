@@ -12,6 +12,7 @@ import AllCommentReducer from "./reducer/CommentSlice/AllCommentSlice";
 import commentReducer from "./reducer/CommentSlice/CommentSlice";
 import getAllWishesListReducer from "./reducer/GetAllWishEstatesSlice";
 import updateUserInforReducer from "./reducer/UpdateUserInforSlice";
+import deleteMyEstateReducer from "./reducer/DeleteMyEstateSlice";
 
 const store = configureStore({
     reducer: {
@@ -26,7 +27,8 @@ const store = configureStore({
         AllComment: AllCommentReducer,
         comment: commentReducer,
         getAllWishesList: getAllWishesListReducer,
-        updateUserInfor: updateUserInforReducer
+        updateUserInfor: updateUserInforReducer,
+        deleteMyEstate: deleteMyEstateReducer
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware({

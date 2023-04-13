@@ -9,5 +9,8 @@ export const getMyEstate = async () => {
             return error;
         });
 };
+export const deleteMyEstate = async (idMyEstate: string) => {
+    return await BaseApi.delete(`estates/${idMyEstate}`).then(res => res.data);
+};
 
-export const getMyEstateApi = { getMyEstate };
+export const getMyEstateApi = { getMyEstate, deleteMyEstate };
