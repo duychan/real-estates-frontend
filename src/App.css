@@ -79,6 +79,8 @@
     --font-sz44: 1.8rem;
     --font-sz45: 1.9rem;
     --font-fml: "VisbyRoundCF-DemiBold";
+    --bg10-color: rgb(219, 234, 254);
+    --bg11-color: rgb(230, 235, 242);
 }
 
 .App {

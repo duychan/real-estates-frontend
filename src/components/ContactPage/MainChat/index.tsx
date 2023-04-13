@@ -1,7 +1,8 @@
 import React from "react";
 import "./MainChat.css";
-import { SendOutlined } from "@ant-design/icons";
+import { PaperClipOutlined, SendOutlined } from "@ant-design/icons";
 import { Button, Col, Form, Input, Row, Avatar } from "antd";
+import TextArea from "antd/es/input/TextArea";
 
 export const MainChat: React.FC = () => {
     return (
@@ -10,8 +11,9 @@ export const MainChat: React.FC = () => {
                 <div className="main-chat-message">
                     <div className="main-chat-message-top">
                         <Avatar
+                            size={40}
                             className="main-chat-message-avatar"
-                            src="https://images.pexels.com/photos/3686769/pexels-photo-3686769.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
+                            src="https://joesch.moe/api/v1/random?key=1"
                             alt=""
                         />
                         <p className="main-chat-message-text">
@@ -20,15 +22,25 @@ export const MainChat: React.FC = () => {
                     </div>
                     <div className="main-chat-message-time">1 hour ago</div>
                 </div>
-                {/* static UI */}
             </div>
 
             <div className="main-chat-form">
                 <Form className="main-chat-form-message">
                     <Row>
-                        <Col span={23}>
+                        <Col>
+                            <label htmlFor="main-chat-files-picker">
+                                <PaperClipOutlined className="chat-header-icon" />
+                            </label>
+                            <Input
+                                multiple
+                                id="main-chat-files-picker"
+                                type="file"
+                            />
+                        </Col>
+                        <Col span={21}>
                             <Form.Item>
-                                <Input
+                                <TextArea
+                                    autoSize={{ minRows: 1, maxRows: 6 }}
                                     placeholder="Type something..."
                                     className="main-chat-message-input"
                                     size="large"

@@ -1,4 +1,8 @@
 .contact-chat-page {
-    margin-top: 20px;
-    padding: 20px;
+    border: solid 1px var(--bodyColor);
+}
+.contact-chat-container {
+    background-image: url("../../assets/images/geometry.png");
+    background-size: cover;
+    background-repeat: no-repeat;
 }
