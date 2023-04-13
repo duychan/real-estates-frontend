@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Form, Input, InputNumber, Col, Row, Button, UploadFile } from "antd";
 import { useNavigate } from "react-router-dom";
 import "./InputInformation.css";

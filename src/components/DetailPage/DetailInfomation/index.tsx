@@ -3,6 +3,7 @@ import "./DetailInfomation.css";
 import { Button, Col, Row, Avatar } from "antd";
 import { ReactComponent as BedIcon } from "../../../assets/icon/bed.svg";
 import { ReactComponent as BathIcon } from "../../../assets/icon/bath.svg";
+import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../../app/redux/store";
 import {
     HeartOutlined,
@@ -43,6 +44,7 @@ const DetailInfomation: React.FC<IDetailInformation> = ({
     area,
     nameUser
 }) => {
+    const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const [isLiked, setIsLiked] = useState(false);
 
@@ -131,7 +133,13 @@ const DetailInfomation: React.FC<IDetailInformation> = ({
                             </p>
                         </Col>
                         <Col xs={{ span: 6, offset: 1 }}>
-                            <Button type="primary" className="button-contact">
+                            <Button
+                                type="primary"
+                                className="button-contact"
+                                onClick={() => {
+                                    navigate("/contact-page");
+                                }}
+                            >
                                 Contact Owner
                             </Button>
                             <div className="detail-owner">

@@ -66,11 +66,10 @@ const SearchProperty: React.FC = () => {
         DebounceTime
     );
 
-    const { records: recordsSearchPage, total: totalSearchPage } = useSelector(
-        getResultSearchPage
-    );
+    const { records: recordsSearchPage, total: totalSearchPage } =
+        useSelector(getResultSearchPage);
     const { searchHomePageText } = useSelector(getDataSearchPage);
-    const isCheckSearchHomPageText = useCallback(() => {
+    const isCheckSearchHomePageText = useCallback(() => {
         return (
             searchHomePageText?.section === "" &&
                 searchHomePageText?.type === undefined,
@@ -113,12 +112,12 @@ const SearchProperty: React.FC = () => {
             dispatch(GetAllEstate());
             return;
         }
-        if (isCheckSearchText() && isCheckSearchHomPageText()) {
+        if (isCheckSearchText() && isCheckSearchHomePageText()) {
             dispatch(GetAllEstate());
         }
     }, [
         dispatch,
-        isCheckSearchHomPageText,
+        isCheckSearchHomePageText,
         isCheckSearchText,
         searchHomePageText
     ]);

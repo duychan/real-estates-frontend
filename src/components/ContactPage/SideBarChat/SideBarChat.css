@@ -1,0 +1,44 @@
+.sidebar-chat {
+    border-right: solid 1px var(--bodyColor);
+    overflow-y: auto;
+    height: 100%;
+}
+.sidebar-chat-search {
+    text-align: center;
+}
+.siderbar-chat-h1 {
+    margin-left: 40px;
+    color: var(--bg1-color);
+    font-family: var(--font-fml);
+    font-weight: var(--font-w2);
+    font-size: var(--font-sz13);
+    margin-block-start: 0.5em;
+}
+.sidebar-chatcard {
+    margin-top: 10px;
+    padding-top: 20px;
+    padding-left: 20px;
+    border-bottom: 1px solid var(--bg10-color);
+    cursor: pointer;
+}
+.sidebar-chatcard:hover {
+    background-color: var(--silver2-color);
+}
+.sidebar-chatcard-username {
+    margin-block-start: 0em;
+    margin-left: 10px;
+    font-weight: var(--font-w2);
+    font-size: var(--font-sz1);
+    color: var(--silver-color);
+}
+.sidebar-chatcard-lastmessage {
+    margin-block-start: 0em;
+    margin-left: 10px;
+    text-overflow: ellipsis;
+}
+.sidebar-chat-input-search .ant-input-search-button {
+    background-color: var(--silver2-color);
+}
+.sidebar-chat-input-search .css-dev-only-do-not-override-1km3mtt {
+    border-radius: 15px;
+}
