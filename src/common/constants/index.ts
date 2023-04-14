@@ -27,7 +27,7 @@ export const sortOptions: {
     label: string;
 }[] = [
     {
-        value: "createdAt",
+        value: "createdAt-desc",
         label: "Most recent"
     },
     {
