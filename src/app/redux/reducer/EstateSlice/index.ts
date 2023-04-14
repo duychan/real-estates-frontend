@@ -15,10 +15,8 @@ const initialState: IEstateState = {
     },
     isLoading: false,
     nearestEstate: {
-        messageNearestEstate: "",
-        data: {
-            records: []
-        }
+        records: [],
+        total: 0
     },
     allEstateStatus: []
 };
@@ -26,7 +24,11 @@ const initialState: IEstateState = {
 export const GetEstateSlice = createSlice({
     name: "getEstate",
     initialState,
-    reducers: {},
+    reducers: {
+        deleteNearestEstate: state => {
+            return { ...state, nearestEstate: initialState.nearestEstate };
+        }
+    },
 
     extraReducers: builder => {
         builder
@@ -58,25 +60,23 @@ export const GetEstateSlice = createSlice({
             })
             .addCase(GetListOfNearestEstate.fulfilled, (state, action) => {
                 const {
-                    data = { records: initialState.nearestEstate.data.records },
-                    message = ""
+                    data = {
+                        records: initialState.data.records,
+                        total: 0
+                    }
                 } = action.payload;
                 return {
                     ...state,
-                    nearestEstate: {
-                        messageNearestEstate: message,
-                        data
-                    }
+                    isLoading: false,
+                    nearestEstate: data
                 };
             })
             .addCase(GetListOfNearestEstate.rejected, state => {
                 return {
                     ...state,
                     isLoading: false,
-                    nearestEstate: {
-                        messageNearestEstate: "CANNOT CONNECT SERVER!",
-                        data: { records: [] }
-                    }
+                    nearestEstate: initialState.nearestEstate,
+                    message: "CANNOT CONNECT SERVER!"
                 };
             });
         builder
@@ -98,8 +98,9 @@ export const GetEstateSlice = createSlice({
     }
 });
 export default GetEstateSlice.reducer;
+export const { deleteNearestEstate } = GetEstateSlice.actions;
 export const getEstateById = (state: RootState) => state.getEstate.data.records;
 export const ListOfNearestEstate = (state: RootState) =>
-    state.getEstate.nearestEstate.data.records;
+    state.getEstate.nearestEstate;
 export const getEstateStatus = (state: RootState) =>
     state.getEstate.allEstateStatus;

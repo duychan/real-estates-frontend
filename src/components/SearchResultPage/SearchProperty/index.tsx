@@ -36,6 +36,10 @@ import RadioType from "../RadioType";
 import useDebounce from "../../../common/hooks/Debounce";
 import { useNavigate } from "react-router-dom";
 import SliderArea from "../SliderArea";
+import {
+    ListOfNearestEstate,
+    deleteNearestEstate
+} from "../../../app/redux/reducer/EstateSlice";
 
 const StyleCollapsedIn = styled(MenuFoldOutlined)`
     font-size: var(--font-sz9);
@@ -66,15 +70,27 @@ const SearchProperty: React.FC = () => {
         DebounceTime
     );
 
-    const { records: recordsSearchPage, total: totalSearchPage } =
-        useSelector(getResultSearchPage);
+    const { records: recordsSearchPage, total: totalSearchPage } = useSelector(
+        getResultSearchPage
+    );
+    const {
+        records: listNearestEstate,
+        total: totalListOfNearestEstate
+    } = useSelector(ListOfNearestEstate);
+
     const { searchHomePageText } = useSelector(getDataSearchPage);
-    const isCheckSearchHomePageText = useCallback(() => {
-        return (
+
+    const isCheckSearchHomPageText = useCallback(() => {
+        const checkSearchHomePageText =
             searchHomePageText?.section === "" &&
-                searchHomePageText?.type === undefined,
-            searchHomePageText?.priceMin === 0
-        );
+            searchHomePageText?.type?._id === "" &&
+            searchHomePageText?.type?.name === "" &&
+            searchHomePageText?.priceMin === 0;
+
+        if (!checkSearchHomePageText && listNearestEstate.length > 0) {
+            dispatch(deleteNearestEstate());
+        }
+        return checkSearchHomePageText;
     }, [
         searchHomePageText?.section,
         searchHomePageText?.priceMin,
@@ -82,7 +98,7 @@ const SearchProperty: React.FC = () => {
     ]);
 
     const isCheckSearchText = useCallback(() => {
-        return (
+        const checkSearchText =
             debouncedSearchText.section === "" &&
             debouncedSearchText.areaMin === null &&
             debouncedSearchText.areaMax === null &&
@@ -92,8 +108,12 @@ const SearchProperty: React.FC = () => {
             debouncedSearchText.priceMax === null &&
             debouncedSearchText.type._id === "" &&
             debouncedSearchText.type.name === "" &&
-            debouncedSearchText.sort === ""
-        );
+            debouncedSearchText.sort === "";
+
+        if (!checkSearchText && listNearestEstate.length > 0) {
+            dispatch(deleteNearestEstate());
+        }
+        return checkSearchText;
     }, [
         debouncedSearchText.section,
         debouncedSearchText.areaMin,
@@ -112,12 +132,12 @@ const SearchProperty: React.FC = () => {
             dispatch(GetAllEstate());
             return;
         }
-        if (isCheckSearchText() && isCheckSearchHomePageText()) {
+        if (isCheckSearchText() && isCheckSearchHomPageText()) {
             dispatch(GetAllEstate());
         }
     }, [
         dispatch,
-        isCheckSearchHomePageText,
+        isCheckSearchHomPageText,
         isCheckSearchText,
         searchHomePageText
     ]);
@@ -181,7 +201,10 @@ const SearchProperty: React.FC = () => {
     };
 
     const currentData = usePagination<IEstate>({
-        arrayData: recordsSearchPage,
+        arrayData:
+            listNearestEstate.length > 0
+                ? listNearestEstate
+                : recordsSearchPage,
         currentPage,
         pageSize: PageSize
     });
@@ -408,7 +431,11 @@ const SearchProperty: React.FC = () => {
                             {recordsSearchPage.length > 0 && (
                                 <PaginationComponent
                                     pageSize={PageSize}
-                                    totalItem={totalSearchPage}
+                                    totalItem={
+                                        totalListOfNearestEstate > 0
+                                            ? totalListOfNearestEstate
+                                            : totalSearchPage
+                                    }
                                     defaultCurrent={1}
                                     handleGetCurrentPage={(page: number) => {
                                         setCurrentPage(page);

@@ -77,12 +77,9 @@ function App() {
                 <Route element={<MainLayout />}>
                     <Route path="/" element={<Navigate replace to="/home" />} />
                     <Route path="/home" element={<HomePage />} />
+                    <Route path="/search-page" element={<SearchProperty />} />
 
                     <Route element={<ProtectedRoute />}>
-                        <Route
-                            path="/search-page"
-                            element={<SearchProperty />}
-                        />
                         <Route path="/myprofile/*" element={<SideBar />} />
                         <Route path="/upload-estate" element={<UploadPage />} />
                         <Route

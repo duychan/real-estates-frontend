@@ -58,7 +58,7 @@ export const SingleEstate: React.FC = () => {
 
     const navigate = useNavigate();
     const mapRef = useRef<L.Map>();
-    const listOfNearestEstate = useSelector(ListOfNearestEstate);
+    const { records: listOfNearestEstate } = useSelector(ListOfNearestEstate);
     const nearestEstateData = listOfNearestEstate?.filter(
         estate => estate._id !== _idEstate
     );
@@ -203,7 +203,12 @@ export const SingleEstate: React.FC = () => {
                         align="middle"
                         className="row-view-btn"
                     >
-                        <Button className="view-btn">View more</Button>
+                        <Button
+                            className="view-btn"
+                            onClick={() => navigate("/search-page")}
+                        >
+                            View more
+                        </Button>
                     </Row>
                 )}
             </div>
