@@ -21,3 +21,24 @@ export const DeleteMyEstate = createAsyncThunk(
         }
     }
 );
+
+export const UpdateMyEstate = createAsyncThunk(
+    "estates/updateMyEstate",
+    async ({
+        idEstate,
+        formData
+    }: {
+        idEstate: string;
+        formData: FormData;
+    }) => {
+        try {
+            const response = await getMyEstateApi.updateMyEstate({
+                idEstate,
+                formData
+            });
+            return response;
+        } catch (error) {
+            return error;
+        }
+    }
+);

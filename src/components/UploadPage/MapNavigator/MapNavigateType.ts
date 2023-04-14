@@ -9,7 +9,7 @@ export interface IAddressSelect {
         addressValue: IAddressOption | IAddressOption[]
     ) => void;
     placeholder: string;
-    value: string;
+    valueAddress: string;
 }
 
 export interface IEstateLocation {
@@ -29,5 +29,5 @@ export interface IMapNavigate {
         coordinates: ICoordinates,
         addressEstate: string
     ) => void;
-    errorCoordinate?: string;
+    estateCoordinates: [number, number];
 }

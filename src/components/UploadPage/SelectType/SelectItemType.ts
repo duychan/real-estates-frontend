@@ -20,4 +20,5 @@ export interface ISelectType {
 
 export interface ISelect {
     handleChangeValue: (value: ISelectOption | ISelectOption[]) => void;
+    valueSelectType: string;
 }

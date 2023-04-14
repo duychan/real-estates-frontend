@@ -1,9 +1,10 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RcFile } from "rc-upload/lib/interface";
 import { UploadNewEstate } from "../../action/UploadEstateAction";
 import { RootState } from "../../store";
-import { IUploadEstateState } from "./UploadSliceType";
+import { IUploadAction, IUploadEstateState } from "./UploadSliceType";
 import { EmptyEstate } from "../../../../common/constants";
+import { UpdateMyEstate } from "../../action/GetMyEstateAction";
 
 const initialState: IUploadEstateState = {
     isLoading: false,
@@ -21,7 +22,7 @@ export const UploadSlice = createSlice({
     reducers: {
         setUploadFormData: (state, action) => {
             if (action.payload.fileList) {
-                action.payload.fileList.map((file: RcFile) => {
+                action.payload.fileList?.map((file: RcFile) => {
                     state.formData.append("thumbnail", file);
                 });
             }
@@ -47,6 +48,12 @@ export const UploadSlice = createSlice({
                 "location[coordinates]",
                 `${action.payload.coordinates.lng},${action.payload.coordinates.lat}`
             );
+            if (action.payload.imagesRemoved !== null) {
+                state.formData.append(
+                    "imagesRemoved",
+                    action.payload.imagesRemoved
+                );
+            }
         },
         deleteUploadFormData: state => {
             state.formData.delete("thumbnail");
@@ -62,6 +69,7 @@ export const UploadSlice = createSlice({
             state.formData.delete("bathRoom");
             state.formData.delete("description");
             state.formData.delete("location[coordinates]");
+            state.formData.delete("imagesRemoved");
         }
     },
     extraReducers: builder => {
@@ -76,6 +84,29 @@ export const UploadSlice = createSlice({
                 return { ...state, message: message, data, isLoading: false };
             })
             .addCase(UploadNewEstate.rejected, state => {
+                return {
+                    ...state,
+                    message: "CANNOT CONNECT SERVER!",
+                    isLoading: false
+                };
+            });
+        builder
+            .addCase(UpdateMyEstate.pending, state => {
+                return { ...state, isLoading: true };
+            })
+            .addCase(UpdateMyEstate.fulfilled, (state, action) => {
+                const {
+                    data = { records: initialState.data.records },
+                    message = ""
+                } = action.payload;
+                return {
+                    ...state,
+                    data,
+                    message,
+                    isLoading: false
+                };
+            })
+            .addCase(UpdateMyEstate.rejected, state => {
                 return {
                     ...state,
                     message: "CANNOT CONNECT SERVER!",

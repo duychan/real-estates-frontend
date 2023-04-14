@@ -18,6 +18,7 @@ import {
 } from "../../../app/redux/reducer/NotificationSlice";
 import { setDeleteMyEstate } from "../../../app/redux/reducer/GetMyEstateSlice";
 import { DeleteMyEstate } from "../../../app/redux/action/GetMyEstateAction";
+import { useNavigate } from "react-router-dom";
 
 interface CustomMouseEvent<T = Element> extends MouseEvent<T> {
     stopPropagation(): void;
@@ -38,6 +39,7 @@ export const ListMyEstate: React.FC<IMyEstateResult> = ({
     handleGetSingleEstate
 }) => {
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
     const handleClick = (
         e:
             | CustomMouseEvent<HTMLButtonElement>
@@ -50,14 +52,17 @@ export const ListMyEstate: React.FC<IMyEstateResult> = ({
         if (e.key === "delete") {
             dispatch(DeleteMyEstate(_id)).then(res => {
                 if (res.payload.message === "Deleted") {
+                    dispatch(setDeleteMyEstate(_id));
                     dispatch(
                         setSuccessNotification("Delete estate successfully! ")
                     );
-                    dispatch(setDeleteMyEstate(_id));
                 } else {
                     dispatch(setErrorNotification(res.payload.message));
                 }
             });
+            dispatch(setDeleteMyEstate(_id));
+        } else if (e.key === "edit") {
+            navigate(`/update-estate/${_id}`);
         }
     };
     const items: MenuProps["items"] = [

@@ -1,5 +1,5 @@
 import { Select } from "antd";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./MapNavigate.css";
 import { IAddressOption, IAddressSelect } from "./MapNavigateType";
 
@@ -7,13 +7,20 @@ export const AddressSelect: React.FC<IAddressSelect> = ({
     placeholder,
     arrayOption,
     handleChangeValue,
-    value
+    valueAddress
 }) => {
+    const [valueSelect, setValueSelect] = useState<string>("");
+
+    useEffect(() => {
+        setValueSelect(valueAddress);
+    }, [valueAddress]);
+
     const onChange = (
         value: string,
         option: IAddressOption | IAddressOption[]
     ) => {
         handleChangeValue(option);
+        setValueSelect((option as IAddressOption).value);
     };
 
     return (
@@ -29,7 +36,7 @@ export const AddressSelect: React.FC<IAddressSelect> = ({
             }
             options={arrayOption}
             className="addr-select"
-            value={value}
+            value={valueSelect}
         />
     );
 };

@@ -86,6 +86,10 @@ function App() {
                             path="/contact-page"
                             element={<ContactChatPage />}
                         />
+                        <Route
+                            path="/update-estate/:id"
+                            element={<UploadPage />}
+                        />
                     </Route>
                     <Route
                         path="/single-estate/:id"

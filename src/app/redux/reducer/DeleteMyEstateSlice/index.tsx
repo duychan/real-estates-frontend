@@ -20,8 +20,10 @@ export const DeleteMyEstateSlice = createSlice({
                 return { ...state, isLoading: true };
             })
             .addCase(DeleteMyEstate.fulfilled, (state, action) => {
-                const { data = { records: false }, message = "" } =
-                    action.payload;
+                const {
+                    data = { records: false },
+                    message = ""
+                } = action.payload;
 
                 return {
                     ...state,

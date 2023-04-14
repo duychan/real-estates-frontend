@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import "./UploadImage.css";
 import { PlusOutlined } from "@ant-design/icons";
 import { Modal, Upload } from "antd";
@@ -8,22 +8,34 @@ import { useAppDispatch } from "../../../app/redux/store";
 import { setErrorNotification } from "../../../app/redux/reducer/NotificationSlice";
 interface IGetImage {
     handleChangeValue: (value: UploadFile[]) => void;
+    fileListThumbnail: UploadFile[];
 }
 const getBase64 = (file: RcFile | Blob): Promise<string> =>
     new Promise((resolve, reject) => {
         const reader = new FileReader();
-        reader.readAsDataURL(file);
+        reader?.readAsDataURL(file as RcFile | Blob);
         reader.onload = () => resolve(reader.result as string);
-        reader.onerror = error => reject(error);
+        reader.onerror = error => {
+            reject(error);
+        };
     });
 
-const UploadImage: React.FC<IGetImage> = ({ handleChangeValue }) => {
+const UploadImage: React.FC<IGetImage> = ({
+    handleChangeValue,
+    fileListThumbnail
+}) => {
     const [previewOpen, setPreviewOpen] = useState(false);
     const [previewImage, setPreviewImage] = useState("");
     const [previewTitle, setPreviewTitle] = useState("");
     const [fileList, setFileList] = useState<UploadFile[]>([]);
     const handleCancel = () => setPreviewOpen(false);
     const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        if (fileListThumbnail !== undefined) {
+            setFileList(fileListThumbnail);
+        }
+    }, [fileListThumbnail]);
 
     const handlePreview = async (file: UploadFile) => {
         if (!file.url && !file.preview) {
@@ -46,13 +58,15 @@ const UploadImage: React.FC<IGetImage> = ({ handleChangeValue }) => {
             file: any;
         }) => {
             const b64file = await getBase64(newFile);
-            const fileListBase64 = await Promise.all(
-                fileList.map((uploadFile: UploadFile) => {
-                    return getBase64(uploadFile.originFileObj as RcFile);
-                })
-            );
+            const fileListBase64 =
+                fileList &&
+                (await Promise.all(
+                    fileList.map((uploadFile: UploadFile) => {
+                        return getBase64(uploadFile.originFileObj as RcFile);
+                    })
+                ));
 
-            const isDup = await fileListBase64.some(file => file === b64file);
+            const isDup = await fileListBase64?.some(file => file === b64file);
 
             if (isDup) {
                 dispatch(
@@ -65,7 +79,7 @@ const UploadImage: React.FC<IGetImage> = ({ handleChangeValue }) => {
                 handleChangeValue(newFileList);
             }
         },
-        [fileList, handleChangeValue]
+        [dispatch, fileList, handleChangeValue]
     );
     const handleRemove = (file: UploadFile) => {
         const newFileList = fileList.filter(
@@ -74,6 +88,7 @@ const UploadImage: React.FC<IGetImage> = ({ handleChangeValue }) => {
         setFileList(newFileList);
         handleChangeValue(newFileList);
     };
+
     const uploadButton = (
         <div>
             <PlusOutlined />
@@ -84,7 +99,7 @@ const UploadImage: React.FC<IGetImage> = ({ handleChangeValue }) => {
     return (
         <div className="upload-image">
             <Upload
-                multiple
+                multiple={true}
                 className="upload-image-list"
                 listType="picture-card"
                 fileList={fileList}
@@ -94,7 +109,7 @@ const UploadImage: React.FC<IGetImage> = ({ handleChangeValue }) => {
                 beforeUpload={() => false}
                 accept=".png, .jpg"
             >
-                {fileList.length >= 20 ? null : uploadButton}
+                {fileList?.length >= 20 ? null : uploadButton}
             </Upload>
             <Modal
                 open={previewOpen}

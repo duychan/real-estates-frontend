@@ -92,10 +92,14 @@ export const EstateMap: React.FC<IEstateMap> = ({
     const MapEvents = (): JSX.Element => {
         useMapEvents({
             click(e) {
-                handleGetCurrentLocation([
-                    e.latlng.lat ?? 0,
-                    e.latlng.lng ?? 0
-                ]);
+                setTimeout(
+                    () =>
+                        handleGetCurrentLocation([
+                            e.latlng.lat ?? 0,
+                            e.latlng.lng ?? 0
+                        ]),
+                    1000
+                );
             }
         });
         return <></>;

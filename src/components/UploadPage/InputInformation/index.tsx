@@ -1,6 +1,15 @@
-import React, { useState, useEffect } from "react";
-import { Form, Input, InputNumber, Col, Row, Button, UploadFile } from "antd";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useRef, useState } from "react";
+import {
+    Form,
+    Input,
+    InputNumber,
+    Col,
+    Row,
+    Button,
+    UploadFile,
+    FormInstance
+} from "antd";
+import { useLocation, useNavigate } from "react-router-dom";
 import "./InputInformation.css";
 import SelecType from "../SelectType";
 const { TextArea } = Input;
@@ -30,13 +39,23 @@ import { MapNavigator } from "../MapNavigator";
 import { ICoordinates } from "../MapNavigator/MapNavigateType";
 import { setErrorNotification } from "../../../app/redux/reducer/NotificationSlice";
 import { UploadNewEstate } from "../../../app/redux/action/UploadEstateAction";
-import { GetEstateStatus } from "../../../app/redux/action/EstateAction";
-import { getEstateStatus } from "../../../app/redux/reducer/EstateSlice";
+import {
+    GetEstateById,
+    GetEstateStatus
+} from "../../../app/redux/action/EstateAction";
+import {
+    deleteEstate,
+    getEstateById,
+    getEstateStatus
+} from "../../../app/redux/reducer/EstateSlice";
+import { EmptyEstate } from "../../../common/constants";
+import { UpdateMyEstate } from "../../../app/redux/action/GetMyEstateAction";
 
 const InputInformation = () => {
     const navigate = useNavigate();
     const { _id } = useSelector(getUser);
     const [form] = Form.useForm();
+    const formEstateRef = useRef<FormInstance<IEstateUpload>>();
     const dispatch = useAppDispatch();
     const formDataEstate = useSelector(getFormData);
 
@@ -46,12 +65,112 @@ const InputInformation = () => {
         lng: 0
     });
     const [detailAddressEstate, setDetailAddressEstate] = useState("");
-    const [errorLocation, setErrorLocation] = useState<string>("");
     const estateStatus = useSelector(getEstateStatus);
 
     useEffect(() => {
         dispatch(GetEstateStatus());
     }, [dispatch]);
+    const estateById = useSelector(getEstateById);
+
+    const location = useLocation();
+    const locationPath = location?.pathname.split("/") ?? [];
+    const _idSingleEstate =
+        locationPath.length > 0 ? locationPath[locationPath.length - 1] : "";
+    const estate_action =
+        locationPath.length > 0 ? locationPath[locationPath.length - 2] : "";
+
+    const {
+        _id: _idEstate = "",
+        owner = "",
+        name: titleEstate = "",
+        address = "",
+        area = "",
+        price = "",
+        type: { _id: _idType = "", name: nameType = "" },
+        coverImg = "",
+        thumbnail = [],
+        bedRoom = 0,
+        bathRoom = 0,
+        description = "",
+        location: { coordinates = [0, 0] }
+    } = estateById;
+
+    useEffect(() => {
+        window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: "smooth"
+        });
+    }, [estateById]);
+
+    const listFileThumbnail = thumbnail?.map((img, idx) => {
+        let originFile = new File([], "", {});
+        fetch(img)
+            .then(response => response.blob())
+            .then(blob => {
+                originFile = new File([blob], img, { type: blob.type });
+            });
+        const file = {
+            uid: `-${idx}`,
+            name: img?.split("/")[img?.split("/").length - 1],
+            url: img,
+            status: "done",
+            originFileObj: originFile
+        };
+        return file;
+    });
+
+    useEffect(() => {
+        dispatch(deleteUploadFormData());
+        if (estate_action === "update-estate") {
+            if (_idSingleEstate) {
+                dispatch(GetEstateById(_idSingleEstate)).then(res => {
+                    const _idEstateFind = res.payload.data?.records?._id || "";
+
+                    if (_idEstateFind === "") {
+                        navigate("*");
+                    }
+                });
+            } else {
+                navigate("*");
+            }
+        } else if (_idSingleEstate === "upload-estate") {
+            dispatch(deleteEstate());
+            formEstateRef.current?.resetFields();
+        }
+    }, [dispatch, _idSingleEstate, navigate, estate_action, form]);
+
+    useEffect(() => {
+        if (estateById !== EmptyEstate && estate_action === "update-estate") {
+            form.setFieldsValue({ name: titleEstate });
+            form.setFieldsValue({
+                type: {
+                    value: _idType,
+                    label: nameType
+                } as ISelectOption
+            });
+            form.setFieldsValue({ area: area });
+            form.setFieldsValue({ bathRoom: bathRoom });
+            form.setFieldsValue({ bedRoom: bedRoom });
+            form.setFieldsValue({ price: price });
+            form.setFieldsValue({ description: description });
+            form.setFieldsValue({
+                thumbnail: listFileThumbnail
+            });
+        }
+    }, [
+        _idType,
+        area,
+        bathRoom,
+        bedRoom,
+        description,
+        estateById,
+        estate_action,
+        form,
+        nameType,
+        price,
+        titleEstate
+    ]);
 
     const onFinish = (estate: IEstateUpload) => {
         if (estate.thumbnail === undefined) {
@@ -62,9 +181,14 @@ const InputInformation = () => {
             );
         } else if (addressEstate.lat !== 0 && addressEstate.lng !== 0) {
             const [coverImg, ...rest] = estate.thumbnail;
+
             const fileList = estate.thumbnail?.map(
                 (file: UploadFile) => file.originFileObj as RcFile
             );
+            const fileThumbnailDeleted = listFileThumbnail?.filter(
+                img1 => !estate.thumbnail?.some(img2 => img1.uid === img2.uid)
+            );
+            const listImageRemoved = fileThumbnailDeleted?.map(img => img.url);
 
             const estateAction: IUploadAction = {
                 owner: _id,
@@ -75,7 +199,7 @@ const InputInformation = () => {
                 currentStatus:
                     estateStatus.find(status => status.name === "Available")
                         ?._id || "",
-                type: estate.type.key,
+                type: estate.type.value,
                 coverImg: coverImg,
                 fileList: fileList,
                 bedRoom: estate.bedRoom,
@@ -84,28 +208,53 @@ const InputInformation = () => {
                 _id: "",
                 updateAt: "",
                 createAt: "",
-                coordinates: addressEstate
+                coordinates: addressEstate,
+                imagesRemoved:
+                    estate_action === "update-estate" &&
+                    listImageRemoved.length !== 0
+                        ? listImageRemoved
+                        : null
             };
+
             dispatch(setUploadFormData(estateAction));
 
             if (formDataEstate.values !== null) {
-                dispatch(UploadNewEstate(formDataEstate)).then(res => {
-                    const _idEstateUpload =
-                        res.payload.data?.records?._id ?? "";
-                    const message = res.payload?.message ?? "";
+                if (estate_action === "update-estate") {
+                    dispatch(
+                        UpdateMyEstate({
+                            idEstate: _idEstate,
+                            formData: formDataEstate
+                        })
+                    ).then(res => {
+                        const _idEstateUpload =
+                            res.payload.data?.records?._id ?? "";
+                        const message = res.payload?.message ?? "";
+                        if (_idEstateUpload !== "") {
+                            dispatch(deleteUploadFormData());
+                            navigate(`/single-estate/${_idEstateUpload}`);
+                        } else if (message !== "") {
+                            dispatch(setErrorNotification(message));
+                        }
+                    });
+                } else if (_idSingleEstate === "upload-estate") {
+                    dispatch(UploadNewEstate(formDataEstate)).then(res => {
+                        const _idEstateUpload =
+                            res.payload.data?.records?._id ?? "";
+                        const message = res.payload?.message ?? "";
 
-                    if (_idEstateUpload !== "") {
-                        dispatch(deleteUploadFormData());
-                        navigate(`/single-estate/${_idEstateUpload}`);
-                    } else if (message !== "") {
-                        dispatch(setErrorNotification(message));
-                    }
-                });
+                        if (_idEstateUpload !== "") {
+                            dispatch(deleteUploadFormData());
+                            navigate(`/single-estate/${_idEstateUpload}`);
+                        } else if (message !== "") {
+                            dispatch(setErrorNotification(message));
+                        }
+                    });
+                }
             } else {
                 dispatch(setErrorNotification("Error"));
             }
         } else {
-            setErrorLocation("Please choose your location!");
+            dispatch(setErrorNotification("Please choose your location!"));
         }
     };
 
@@ -117,12 +266,26 @@ const InputInformation = () => {
                     onFinish={onFinish}
                     form={form}
                     id="uploadForm"
+                    ref={
+                        formEstateRef as React.MutableRefObject<
+                            FormInstance<IEstateUpload>
+                        >
+                    }
+                    autoComplete="off"
                 >
-                    <Form.Item name="thumbnail">
+                    <Form.Item
+                        name="thumbnail"
+                        valuePropName="fileListThumbnail"
+                    >
                         <UploadImage
                             handleChangeValue={(value: UploadFile[]) => {
-                                form.setFieldsValue({ thumbnail: value });
+                                form.setFieldsValue({
+                                    thumbnail: value
+                                });
                             }}
+                            fileListThumbnail={formEstateRef.current?.getFieldValue(
+                                "fileListThumbnail"
+                            )}
                         />
                     </Form.Item>
                     <h1 className="input-infomation-h1">
@@ -138,13 +301,25 @@ const InputInformation = () => {
                         </Form.Item>
                     </Col>
                     <Col xs={{ span: 6 }}>
-                        <Form.Item label="Type:" name="type" rules={TypeRule}>
+                        <Form.Item
+                            label="Type:"
+                            name="type"
+                            rules={TypeRule}
+                            valuePropName="valueSelectType"
+                        >
                             <SelecType
                                 handleChangeValue={(
                                     value: ISelectOption | ISelectOption[]
                                 ) => {
-                                    form.setFieldsValue({ type: value });
+                                    form.setFieldsValue({
+                                        type: value as ISelectOption
+                                    });
                                 }}
+                                valueSelectType={
+                                    (formEstateRef.current?.getFieldValue(
+                                        "valueSelectType"
+                                    ) as ISelectOption)?.value
+                                }
                             />
                         </Form.Item>
                     </Col>
@@ -232,7 +407,7 @@ const InputInformation = () => {
                         setAddressEstate(address);
                         setDetailAddressEstate(addressEstate);
                     }}
-                    errorCoordinate={errorLocation}
+                    estateCoordinates={coordinates}
                 />
                 <Button
                     className="input-information-button"
