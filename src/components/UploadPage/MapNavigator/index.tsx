@@ -1,4 +1,12 @@
-import { Button, Divider, Form, Input, Steps, Tooltip } from "antd";
+import {
+    Button,
+    Divider,
+    Form,
+    FormInstance,
+    Input,
+    Steps,
+    Tooltip
+} from "antd";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import "./MapNavigate.css";
 import { RightOutlined } from "@ant-design/icons";
@@ -25,7 +33,8 @@ import {
     getWards
 } from "../../../app/api/MapApi";
 import { ILocation } from "../../../app/api/MapApi/MapType";
-import useDebounce from "../../../common/hooks/Debounce";
+import { useAppDispatch } from "../../../app/redux/store";
+import { setErrorNotification } from "../../../app/redux/reducer/NotificationSlice";
 
 const { Item } = Form;
 
@@ -33,7 +42,6 @@ const EmptyOption: IAddressOption = { value: "", label: "" };
 
 const ZOOM_LEVEL = 18;
 
-const DebounceEstateTime = 1000;
 const Step1 = 1;
 const Step2 = 2;
 const Step3 = 3;
@@ -41,7 +49,7 @@ const Step4 = 4;
 
 export const MapNavigator: React.FC<IMapNavigate> = ({
     handleGetEstateLocation,
-    errorCoordinate = ""
+    estateCoordinates = [0, 0]
 }) => {
     const [current, setCurrent] = useState<number>(0);
     const [city, setCity] = useState<IAddressOption>(EmptyOption);
@@ -51,6 +59,8 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
     const [provinceList, setProvinceList] = useState<IAddressOption[]>([]);
     const [districtList, setDistrictList] = useState<IAddressOption[]>([]);
     const [wardList, setWardList] = useState<IAddressOption[]>([]);
+    const formMapRef = useRef<FormInstance<IEstateLocation>>();
+    const dispatch = useAppDispatch();
 
     const [isAddressSelectShown, setIsAddressSelectShown] = useState<boolean>(
         false
@@ -58,35 +68,99 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
     const [isShowCurrentLocation, setIsShowCurrentLocation] = useState<boolean>(
         false
     );
-    const [estateLocation, setEstateLocation] = useState<[number, number]>([
+    const [estateLocation, setEstateLocation] = useState<[number, number]>(
+        estateCoordinates
+    );
+    const [previousLocation, setPreviousLocation] = useState<[number, number]>([
         0,
         0
     ]);
 
-    const debouncedEstateLocation = useDebounce<[number, number]>(
-        estateLocation,
-        DebounceEstateTime
-    );
-
     const [isLocationChange, setIsLocationChange] = useState<boolean>(false);
-    const [errorLocation, setErrorLocation] = useState<string>("");
+    const [addressEstate, setAddressEstate] = useState<string>("");
 
     const location = useGeoLocation();
 
     const [form] = Form.useForm();
     const mapRef = useRef<L.Map>();
 
-    const addressEstate = `${form.getFieldValue("addressNumber") || ""}, ${
-        form.getFieldValue("ward") || ""
-    }, ${form.getFieldValue("district") || ""}, ${
-        form.getFieldValue("city") || ""
-    }`;
+    const handleGetAddressFromCoordinates = useCallback(
+        (latLng: [number, number]) => {
+            setCurrent(Step4);
+            getAddressByCoordinates({
+                lat: latLng[0],
+                lng: latLng[1]
+            })
+                .then(response => {
+                    setIsAddressSelectShown(true);
+                    const {
+                        records: {
+                            data: {
+                                street = "",
+                                district = "",
+                                city = "",
+                                county = ""
+                            }
+                        }
+                    } = response;
+                    form.setFieldsValue({
+                        city: { value: "", label: county } as IAddressOption
+                    });
+                    form.setFieldsValue({
+                        district: { value: "", label: city } as IAddressOption
+                    });
+                    form.setFieldsValue({
+                        ward: { value: "", label: district } as IAddressOption
+                    });
+                    form.setFieldsValue({ addressNumber: street });
+                    setCity({ value: "", label: county });
+                    setDistrict({ value: "", label: city });
+                    setWard({ value: "", label: district });
+                    setAddressEstate(
+                        `${street}, ${district}, ${city}, ${county}`
+                    );
+                })
+                .catch(error => {
+                    dispatch(setErrorNotification(error));
+                });
+        },
+        [dispatch, form]
+    );
 
     useEffect(() => {
-        if (errorCoordinate) {
-            setErrorLocation(errorCoordinate);
+        setEstateLocation([estateCoordinates[1], estateCoordinates[0]]);
+        if (estateCoordinates[0] !== 0 && estateCoordinates[1] !== 0) {
+            handleGetAddressFromCoordinates([
+                estateCoordinates[1],
+                estateCoordinates[0]
+            ]);
+        } else {
+            handleClearForm();
         }
-    }, [errorCoordinate]);
+    }, [estateCoordinates]);
+
+    useEffect(() => {
+        if (
+            (estateLocation[0] !== 0 && estateLocation[1] !== 0) ||
+            (previousLocation[0] !== 0 && previousLocation[1] !== 0)
+        ) {
+            const location =
+                estateLocation[0] !== 0 && estateLocation[1] !== 0
+                    ? estateLocation
+                    : previousLocation;
+            setIsShowCurrentLocation(true);
+
+            mapRef.current?.flyTo(
+                [location[0] ?? 0, location[1] ?? 0],
+                ZOOM_LEVEL,
+                {
+                    animate: true
+                }
+            );
+        } else {
+            setIsShowCurrentLocation(false);
+        }
+    }, [addressEstate, estateLocation, previousLocation]);
 
     useEffect(() => {
         if (current === Step1) {
@@ -99,100 +173,115 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
         } else if (current === Step3) {
             form.resetFields(["addressNumber"]);
         }
-    }, [current]);
+    }, [current, form]);
 
     useEffect(() => {
         getProvinces()
             .then(response => {
-                const provinceOption: IAddressOption[] = [];
-                response?.data?.records?.map(({ code, name }: ILocation) =>
-                    provinceOption.push({ value: code, label: name })
+                const provinceOption: IAddressOption[] = response?.data?.records?.map(
+                    ({ code, name }: ILocation) => {
+                        return { value: code, label: name } as IAddressOption;
+                    }
                 );
                 setProvinceList(provinceOption ?? []);
-            })
-            .then(() => {
-                form.resetFields(["district", "ward"]);
+                if (!city.value && city.label) {
+                    const cityValue =
+                        provinceOption?.find(
+                            cityItem => cityItem.label === city.label
+                        ) ?? EmptyOption;
+                    setCity(cityValue);
+                    form.setFieldsValue({ city: cityValue });
+                }
             })
             .catch(error => {
-                setErrorLocation(`ERROR: ${error}`);
+                dispatch(setErrorNotification(`ERROR: ${error}`));
             });
-    }, [form]);
+    }, [city.label, city.value, dispatch, form]);
 
     useEffect(() => {
         if (city.value !== "") {
             getDistricts(city.value)
                 .then(response => {
-                    const districtOption: IAddressOption[] = [];
-                    response?.data?.records?.map(({ code, name }: ILocation) =>
-                        districtOption.push({ value: code, label: name })
+                    const districtOption: IAddressOption[] = response?.data?.records?.map(
+                        ({ code, name }: ILocation) => {
+                            return { value: code, label: name };
+                        }
                     );
                     setDistrictList(districtOption ?? []);
                     if (!district.value && district.label) {
-                        setDistrict(
+                        const districtValue =
                             districtOption?.find(
                                 districtItem =>
                                     districtItem.label === district.label
-                            ) ?? EmptyOption
-                        );
+                            ) ?? EmptyOption;
+                        setDistrict(districtValue);
+                        form.setFieldsValue({ district: districtValue });
                     }
                 })
                 .catch(error => {
-                    setErrorLocation(`ERROR: ${error}`);
+                    dispatch(setErrorNotification(`ERROR: ${error}`));
                 });
         }
-    }, [city.value]);
+    }, [city?.value, dispatch, district?.label, district?.value, form]);
 
     useEffect(() => {
         if (district.value !== "") {
             getWards(district.value)
                 .then(response => {
-                    const wardOption: IAddressOption[] = [];
-                    response?.data?.records?.map(({ code, name }: ILocation) =>
-                        wardOption.push({ value: code, label: name })
+                    const wardOption: IAddressOption[] = response?.data?.records?.map(
+                        ({ code, name }: ILocation) => {
+                            return { value: code, label: name };
+                        }
                     );
                     setWardList(wardOption ?? []);
+                    if (!ward.value && ward.label) {
+                        const wardValue =
+                            wardOption?.find(
+                                wardItem => wardItem.label === ward.label
+                            ) ?? EmptyOption;
+                        setWard(wardValue);
+                        form.setFieldsValue({ ward: wardValue });
+                    }
                 })
                 .catch(error => {
-                    setErrorLocation(`ERROR: ${error}`);
+                    dispatch(setErrorNotification(`ERROR: ${error}`));
                 });
         }
-    }, [district.value]);
+    }, [dispatch, district.value, form, ward?.label, ward?.value]);
 
     const handleFindLocation = (valueLocation: IEstateLocation) => {
-        setErrorLocation("");
         if (valueLocation.city?.value || valueLocation.addressNumber) {
             const addressFinding = `${valueLocation.addressNumber ?? ""} ${
-                valueLocation.ward ?? ""
-            } ${valueLocation.district ?? ""} ${valueLocation.city ?? ""}`;
+                valueLocation.ward?.label ?? ""
+            } ${valueLocation.district?.label ?? ""} ${
+                valueLocation.city?.label ?? ""
+            }`;
+            setAddressEstate(addressFinding);
             getCoordinatesByAddress(addressFinding)
                 .then(response => {
                     const lat = response.data?.records?.lat ?? 0;
                     const lng = response.data?.records?.lng ?? 0;
                     if (lat !== 0 && lng !== 0) {
                         setEstateLocation([lat, lng]);
-
                         handleGetEstateLocation(
                             { lat: lat, lng: lng },
-                            addressFinding
+                            addressEstate
                         );
                         setIsShowCurrentLocation(true);
-                        mapRef.current?.flyTo(
-                            [lat ?? 0, lng ?? 0],
-                            ZOOM_LEVEL,
-                            {
-                                animate: true
-                            }
-                        );
                     } else {
-                        setErrorLocation("Cannot find your location!");
+                        dispatch(
+                            setErrorNotification("Cannot find your location!")
+                        );
                     }
                 })
                 .catch(error => {
-                    setErrorLocation(`ERROR: ${error}`);
+                    dispatch(setErrorNotification(`ERROR: ${error}`));
                 });
         } else {
-            setErrorLocation(
-                "Please input your house number or city/province,district,ward to find location!"
+            dispatch(
+                setErrorNotification(
+                    "Please input your house number or city/province,district,ward to find location!"
+                )
             );
         }
     };
@@ -214,8 +303,7 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
         setCity(EmptyOption);
         setCurrent(0);
         setIsAddressSelectShown(false);
-        setErrorLocation("");
-        form.resetFields();
+        form.resetFields(["ward", "city", "district", "addressNumber"]);
     }, [form]);
 
     const showMyLocation = useCallback(() => {
@@ -233,71 +321,36 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
                     location.coordinates.lng ?? 0
                 ]);
 
-                mapRef.current?.flyTo(
-                    [
-                        location.coordinates.lat ?? 0,
-                        location.coordinates.lng ?? 0
-                    ],
-                    ZOOM_LEVEL,
-                    { animate: true }
-                );
-
-                handleGetAddressFromClickOnMap([
+                handleGetAddressFromCoordinates([
                     location.coordinates?.lat,
                     location.coordinates?.lng
                 ]);
-
                 handleGetEstateLocation(
                     {
-                        lat: location.coordinates?.lat,
-                        lng: location.coordinates?.lng
+                        lat: location.coordinates.lat ?? 0,
+                        lng: location.coordinates.lng ?? 0
                     },
                     addressEstate
                 );
             }
         } else {
-            setErrorLocation(
-                "ERROR: Cannot get current location. Please try again "
+            dispatch(
+                setErrorNotification(
+                    "ERROR: Cannot get current location. Please try again "
+                )
             );
         }
     }, [
+        addressEstate,
+        dispatch,
         estateLocation,
+        handleGetAddressFromCoordinates,
         handleGetEstateLocation,
         isShowCurrentLocation,
         location.coordinates.lat,
         location.coordinates.lng,
         location.loaded
     ]);
-
-    const handleGetAddressFromClickOnMap = (latLng: [number, number]) => {
-        setCurrent(4);
-        getAddressByCoordinates({
-            lat: latLng[0],
-            lng: latLng[1]
-        }).then(response => {
-            setIsAddressSelectShown(true);
-            const {
-                records: {
-                    data: { street = "", district = "", city = "", county = "" }
-                }
-            } = response;
-            form.setFieldsValue({
-                city: county
-            });
-            form.setFieldsValue({
-                district: city
-            });
-            form.setFieldsValue({
-                ward: district
-            });
-            form.setFieldsValue({ addressNumber: street });
-            setCity(
-                provinceList.find(province => province.label === county) ??
-                    EmptyOption
-            );
-            setDistrict({ value: "", label: city });
-        });
-    };
 
     return (
         <div className="map-navigator">
@@ -306,13 +359,21 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
                 Use my current location
             </Button>
             <Divider className="map-addr-divider">Or</Divider>
-            <Form form={form} onFinish={handleFindLocation} autoComplete="off">
+            <Form
+                form={form}
+                onFinish={handleFindLocation}
+                autoComplete="off"
+                ref={
+                    formMapRef as React.MutableRefObject<
+                        FormInstance<IEstateLocation>
+                    >
+                }
+            >
                 <div className="map-input-addr">
                     <Button
                         className="map-city-addr"
                         onClick={() => {
                             setIsAddressSelectShown(!isAddressSelectShown);
-                            setErrorLocation("");
                         }}
                     >
                         <div className="map-button-content">
@@ -335,7 +396,11 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
                                             ? "addr-step-line"
                                             : "",
                                     description: (
-                                        <Item name="city" rules={CityRule}>
+                                        <Item
+                                            name="city"
+                                            rules={CityRule}
+                                            valuePropName="valueAddress"
+                                        >
                                             <AddressSelect
                                                 placeholder="City/Province"
                                                 handleChangeValue={(
@@ -347,8 +412,7 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
                                                         addressValue as IAddressOption
                                                     );
                                                     form.setFieldsValue({
-                                                        city: (addressValue as IAddressOption)
-                                                            .label
+                                                        city: addressValue as IAddressOption
                                                     });
 
                                                     if (
@@ -358,9 +422,11 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
                                                         setCurrent(Step1);
                                                 }}
                                                 arrayOption={provinceList}
-                                                value={form.getFieldValue(
-                                                    "city"
-                                                )}
+                                                valueAddress={
+                                                    (formMapRef.current?.getFieldValue(
+                                                        "valueAddress"
+                                                    ) as IAddressOption)?.value
+                                                }
                                             />
                                         </Item>
                                     )
@@ -379,6 +445,7 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
                                         <Item
                                             name="district"
                                             rules={DistrictRule}
+                                            valuePropName="valueAddress"
                                         >
                                             <AddressSelect
                                                 placeholder="District"
@@ -391,8 +458,7 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
                                                         addressValue as IAddressOption
                                                     );
                                                     form.setFieldsValue({
-                                                        district: (addressValue as IAddressOption)
-                                                            .label
+                                                        district: addressValue as IAddressOption
                                                     });
                                                     if (
                                                         (addressValue as IAddressOption)
@@ -401,9 +467,11 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
                                                         setCurrent(Step2);
                                                 }}
                                                 arrayOption={districtList}
-                                                value={form.getFieldValue(
-                                                    "district"
-                                                )}
+                                                valueAddress={
+                                                    (formMapRef.current?.getFieldValue(
+                                                        "valueAddress"
+                                                    ) as IAddressOption)?.value
+                                                }
                                             />
                                         </Item>
                                     )
@@ -421,7 +489,11 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
                                     description: form.getFieldValue(
                                         "district"
                                     ) !== undefined && (
-                                        <Item name="ward" rules={WardRule}>
+                                        <Item
+                                            name="ward"
+                                            rules={WardRule}
+                                            valuePropName="valueAddress"
+                                        >
                                             <AddressSelect
                                                 placeholder="Ward"
                                                 handleChangeValue={(
@@ -433,15 +505,16 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
                                                         addressValue as IAddressOption
                                                     );
                                                     form.setFieldsValue({
-                                                        ward: (addressValue as IAddressOption)
-                                                            .label
+                                                        ward: addressValue as IAddressOption
                                                     });
                                                     setCurrent(Step3);
                                                 }}
                                                 arrayOption={wardList}
-                                                value={form.getFieldValue(
-                                                    "ward"
-                                                )}
+                                                valueAddress={
+                                                    (form.getFieldValue(
+                                                        "valueAddress"
+                                                    ) as IAddressOption)?.value
+                                                }
                                             />
                                         </Item>
                                     )
@@ -457,12 +530,13 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
                                         <Item
                                             name="addressNumber"
                                             rules={AddressNumberRule}
+                                            valuePropName="value"
                                         >
                                             <Input
                                                 placeholder="House number, Street"
-                                                className="map-city-addr"
-                                                value={form.getFieldValue(
-                                                    "addressNumber"
+                                                className="house-number-street"
+                                                value={formMapRef.current?.getFieldValue(
+                                                    "value"
                                                 )}
                                             />
                                         </Item>
@@ -490,13 +564,15 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
             </Form>
 
             <div className="map-show-location">
-                {errorLocation && (
-                    <p className="error-location">{errorLocation}</p>
-                )}
                 {isShowCurrentLocation && (
                     <div>
                         <EstateMap
-                            positionCenter={estateLocation}
+                            positionCenter={
+                                estateLocation[0] !== 0 &&
+                                estateLocation[1] !== 0
+                                    ? estateLocation
+                                    : previousLocation
+                            }
                             mapRef={mapRef}
                             ZOOM_LEVEL={ZOOM_LEVEL}
                             popupMarker={
@@ -511,9 +587,7 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
                                 latLng: [number, number]
                             ) => {
                                 setEstateLocation(latLng);
-                                handleGetAddressFromClickOnMap(
-                                    debouncedEstateLocation
-                                );
+                                handleGetAddressFromCoordinates(latLng);
                             }}
                         />
                         <div className="map-show-location-button">
@@ -529,6 +603,12 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
                                     className="map-show-location-submit"
                                     onClick={() => {
                                         setIsLocationChange(true);
+                                        setPreviousLocation(estateLocation);
+                                        setEstateLocation([0, 0]);
+                                        handleGetEstateLocation(
+                                            { lat: 0, lng: 0 },
+                                            addressEstate
+                                        );
                                     }}
                                 >
                                     Choose another location

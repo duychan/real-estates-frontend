@@ -1,26 +1,41 @@
 import React, { useState, useEffect } from "react";
 import "./SelectType.css";
 import { Select } from "antd";
-import {
-    ISelect,
-    ISelectItemType,
-    ISelectOption,
-    ISelectType
-} from "./SelectItemType";
+import { ISelect, ISelectOption } from "./SelectItemType";
 import { getListType } from "../../../app/api/TypeEstateApi";
 
-const SelecType: React.FC<ISelect> = ({ handleChangeValue }) => {
-    const [listType, setListType] = useState<ISelectType>();
+const SelecType: React.FC<ISelect> = ({
+    handleChangeValue,
+    valueSelectType
+}) => {
+    const [listType, setListType] = useState<ISelectOption[]>();
+    const [valueSelect, setValueSelect] = useState<string>("");
+
+    useEffect(() => {
+        setValueSelect(valueSelectType);
+    }, [valueSelectType]);
+
     const handleSelectChange = (
         value: string,
         option: ISelectOption | ISelectOption[]
     ) => {
         handleChangeValue(option);
+        setValueSelect((option as ISelectOption).value);
     };
 
     useEffect(() => {
         getListType().then(res => {
-            setListType(res);
+            const listType =
+                res.data?.records?.map(
+                    ({ _id, name }: { _id: string; name: string }) => {
+                        const type = {
+                            value: _id,
+                            label: name
+                        } as ISelectOption;
+                        return type;
+                    }
+                ) || [];
+            setListType(listType);
         });
     }, []);
 
@@ -31,19 +46,14 @@ const SelecType: React.FC<ISelect> = ({ handleChangeValue }) => {
                 size="large"
                 onChange={handleSelectChange}
                 placeholder="Select type of Estate"
-            >
-                {(listType?.data?.records || []).map(
-                    (item: ISelectItemType) => {
-                        return (
-                            <Select.Option value={item.name} key={item._id}>
-                                <p className="select-option-text">
-                                    {item.name}
-                                </p>
-                            </Select.Option>
-                        );
-                    }
-                )}
-            </Select>
+                filterOption={(input, option) =>
+                    (option?.label ?? "")
+                        .toLowerCase()
+                        .includes(input.toLowerCase())
+                }
+                options={listType as ISelectOption[]}
+                value={valueSelect}
+            />
         </div>
     );
 };

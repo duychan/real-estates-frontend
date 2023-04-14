@@ -66,8 +66,17 @@ const Search: React.FC = () => {
                                                 | ISelectOption
                                                 | ISelectOption[]
                                         ) => {
-                                            form.setFieldValue("type", value);
+                                            const valueType = value as ISelectOption;
+                                            form.setFieldsValue({
+                                                type: {
+                                                    _id: valueType.value,
+                                                    name: valueType.label
+                                                }
+                                            });
                                         }}
+                                        valueSelectType={form.getFieldValue(
+                                            "type"
+                                        )}
                                     />
                                 </Form.Item>
                             </Col>

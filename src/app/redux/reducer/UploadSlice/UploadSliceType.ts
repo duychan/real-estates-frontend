@@ -20,6 +20,7 @@ export interface IUploadAction {
     createAt: string;
     fileList: RcFile[];
     coordinates: ICoordinates;
+    imagesRemoved: string[] | null;
 }
 
 export interface IUploadEstateState {

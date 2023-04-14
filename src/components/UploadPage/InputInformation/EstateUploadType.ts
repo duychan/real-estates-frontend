@@ -7,7 +7,7 @@ export interface IEstateUpload {
     area: number;
     price: number;
     currentStatus: string;
-    type: { key: string; value: string };
+    type: { value: string; label: string };
     coverImg: string;
     thumbnail: UploadFile[] | [UploadFile, ...UploadFile[]];
     bedRoom: number;

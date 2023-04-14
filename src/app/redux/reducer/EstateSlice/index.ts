@@ -27,6 +27,9 @@ export const GetEstateSlice = createSlice({
     reducers: {
         deleteNearestEstate: state => {
             return { ...state, nearestEstate: initialState.nearestEstate };
+        },
+        deleteEstate: state => {
+            return { ...state, data: { records: EmptyEstate } };
         }
     },
 
@@ -98,7 +101,7 @@ export const GetEstateSlice = createSlice({
     }
 });
 export default GetEstateSlice.reducer;
-export const { deleteNearestEstate } = GetEstateSlice.actions;
+export const { deleteNearestEstate, deleteEstate } = GetEstateSlice.actions;
 export const getEstateById = (state: RootState) => state.getEstate.data.records;
 export const ListOfNearestEstate = (state: RootState) =>
     state.getEstate.nearestEstate;
