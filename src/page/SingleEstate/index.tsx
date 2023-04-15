@@ -79,12 +79,15 @@ export const SingleEstate: React.FC = () => {
     const nameOwner = `${firstName || ""} ${lastName || ""}`;
 
     useEffect(() => {
-        if (estateUpload !== EmptyEstate) {
+        if (
+            estateUpload !== EmptyEstate &&
+            _idSingleEstate === estateUpload._id
+        ) {
             setEstate(estateUpload);
         } else {
             setEstate(estateById);
         }
-    }, [estateUpload]);
+    }, [_idSingleEstate, estateById, estateUpload]);
 
     useEffect(() => {
         window.scrollTo({
@@ -95,7 +98,7 @@ export const SingleEstate: React.FC = () => {
     }, [estate]);
 
     useEffect(() => {
-        if (estateUpload._id === "") {
+        if (estateUpload._id !== _idSingleEstate) {
             if (_idSingleEstate) {
                 dispatch(GetEstateById(_idSingleEstate)).then(res => {
                     const _idEstateFind = res.payload.data?.records?._id || "";
@@ -110,7 +113,7 @@ export const SingleEstate: React.FC = () => {
                 navigate("*");
             }
         }
-    }, [dispatch, _idSingleEstate, navigate]);
+    }, [dispatch, _idSingleEstate, navigate, estateUpload._id]);
 
     useEffect(() => {
         if (coordinates[0] !== 0 && coordinates[1] !== 0) {
@@ -135,15 +138,18 @@ export const SingleEstate: React.FC = () => {
         <div className="single-estate">
             <CarouselSingleProduct arrayImg={thumbnail} />
             <DetailInfomation
-                _id={_idEstate}
-                estateName={titleEstate}
-                address={address}
-                type={nameType}
-                price={price}
-                bedroom={bedRoom}
-                bathroom={bathRoom}
-                area={area}
+                nameType={nameType}
                 nameUser={nameOwner}
+                _idOwner={_idOwner}
+                {..._pick(estate, [
+                    "_id",
+                    "name",
+                    "address",
+                    "price",
+                    "bedRoom",
+                    "bathRoom",
+                    "area"
+                ])}
             />
             <EstateDescription description={description} />
             <div className="estate-map">

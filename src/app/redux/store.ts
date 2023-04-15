@@ -13,6 +13,9 @@ import commentReducer from "./reducer/CommentSlice/CommentSlice";
 import getAllWishesListReducer from "./reducer/GetAllWishEstatesSlice";
 import updateUserInforReducer from "./reducer/UpdateUserInforSlice";
 import deleteMyEstateReducer from "./reducer/DeleteMyEstateSlice";
+import createConversationReducer from "./reducer/ChatSlice/CreateConversation";
+import myConversationReducer from "./reducer/ChatSlice/MyConversationSlice";
+import getAllMessageReducer from "./reducer/ChatSlice/GetAllChatSingleSlice";
 
 const store = configureStore({
     reducer: {
@@ -28,7 +31,10 @@ const store = configureStore({
         comment: commentReducer,
         getAllWishesList: getAllWishesListReducer,
         updateUserInfor: updateUserInforReducer,
-        deleteMyEstate: deleteMyEstateReducer
+        deleteMyEstate: deleteMyEstateReducer,
+        createConversation: createConversationReducer,
+        myConversation: myConversationReducer,
+        getAllMessage: getAllMessageReducer
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware({

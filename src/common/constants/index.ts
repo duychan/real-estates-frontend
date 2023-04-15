@@ -52,8 +52,8 @@ export const NavbarItems: { label: string; key: string }[] = [
         key: "/upload-estate"
     },
     {
-        label: "Contact Us",
-        key: "/"
+        label: "Contact",
+        key: "/contact-page"
     }
 ];
 export const AreaList = [

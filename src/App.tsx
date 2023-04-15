@@ -84,6 +84,10 @@ function App() {
                         <Route path="/upload-estate" element={<UploadPage />} />
                         <Route
                             path="/contact-page"
+                            element={<Navigate replace to="/contact-page/id" />}
+                        />
+                        <Route
+                            path="/contact-page/:id"
                             element={<ContactChatPage />}
                         />
                         <Route

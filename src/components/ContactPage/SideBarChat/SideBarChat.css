@@ -1,13 +1,12 @@
 .sidebar-chat {
     border-right: solid 1px var(--bodyColor);
     overflow-y: auto;
-    height: 100%;
+    height: 700px;
 }
 .sidebar-chat-search {
     text-align: center;
 }
 .siderbar-chat-h1 {
-    margin-left: 40px;
     color: var(--bg1-color);
     font-family: var(--font-fml);
     font-weight: var(--font-w2);
@@ -15,30 +14,62 @@
     margin-block-start: 0.5em;
 }
 .sidebar-chatcard {
-    margin-top: 10px;
-    padding-top: 20px;
-    padding-left: 20px;
+    margin-top: 20px;
     border-bottom: 1px solid var(--bg10-color);
     cursor: pointer;
 }
-.sidebar-chatcard:hover {
+.sidebar-chatcard-item:hover {
     background-color: var(--silver2-color);
 }
 .sidebar-chatcard-username {
-    margin-block-start: 0em;
-    margin-left: 10px;
+    margin: 0px 0px;
     font-weight: var(--font-w2);
     font-size: var(--font-sz1);
     color: var(--silver-color);
+    overflow: hidden;
+    white-space: normal;
+    text-overflow: ellipsis;
+    line-height: 1.5em;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 }
 .sidebar-chatcard-lastmessage {
-    margin-block-start: 0em;
-    margin-left: 10px;
+    margin: 5px 0px;
+    overflow: hidden;
     text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    text-transform: capitalize;
 }
 .sidebar-chat-input-search .ant-input-search-button {
     background-color: var(--silver2-color);
 }
-.sidebar-chat-input-search .css-dev-only-do-not-override-1km3mtt {
-    border-radius: 15px;
+
+.sidebar-chatcard-item {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+}
+
+.sidebar-chatcard-infor {
+    margin-left: 10px;
+}
+
+.sidebar-chatcard-item-avatar {
+    text-align: left;
+}
+.siderbar-chat-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0px 10px;
+}
+
+.siderbar-chat-title-menu {
+    cursor: pointer;
 }
