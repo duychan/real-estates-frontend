@@ -46,6 +46,12 @@ export const EmailRule: Rule[] = [
         message: "Please enter a valid email"
     }
 ];
+export const GenderRules: Rule[] = [
+    {
+        required: true,
+        message: "Please choose a gender"
+    }
+];
 export const FirstNameRule: Rule[] = [
     {
         required: true,
