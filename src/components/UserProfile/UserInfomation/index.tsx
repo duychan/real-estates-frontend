@@ -14,6 +14,7 @@ import {
 import {
     EmailRule,
     FirstNameRule,
+    GenderRules,
     IDCard,
     LastNameRule,
     PhoneNumberRule
@@ -36,6 +37,7 @@ import {
     setSuccessNotification
 } from "../../../app/redux/reducer/NotificationSlice";
 import { useNavigate } from "react-router-dom";
+const timeout = 1000;
 
 const UserInformation: React.FC = () => {
     const { user } = useSelector(getUserInfo);
@@ -122,16 +124,27 @@ const UserInformation: React.FC = () => {
 
         dispatch(setUpdateFormData(userAction));
         if (formDataUser.values !== null) {
-            dispatch(UpdateUserInformationAction(formDataUser)).then(() => {
-                dispatch(
-                    setSuccessNotification(
-                        "Update user information successfully!"
-                    )
-                );
-                location.reload();
+            dispatch(UpdateUserInformationAction(formDataUser)).then(res => {
+                const messageUpdate = res.payload?.message || "";
+                if (messageUpdate === "success") {
+                    dispatch(
+                        setSuccessNotification(
+                            "Update user information successfully!"
+                        )
+                    );
+                    setTimeout(function () {
+                        location.reload();
+                    }, timeout);
+                } else {
+                    dispatch(
+                        setErrorNotification(
+                            "Cast to string failed for value, please reload page to update again!"
+                        )
+                    );
+                }
             });
         } else {
-            dispatch(setErrorNotification("Error!"));
+            dispatch(setErrorNotification("Error to update!"));
         }
     };
     return (
@@ -172,7 +185,7 @@ const UserInformation: React.FC = () => {
                                 <Input
                                     className="user-profile-input"
                                     placeholder="First Name"
-                                    value={userInfor.firstName}
+                                    value={userInfor.firstName ?? null}
                                     size="large"
                                     onChange={handleChangeFirstName}
                                 />
@@ -185,7 +198,7 @@ const UserInformation: React.FC = () => {
                                 <Input
                                     className="user-profile-input"
                                     placeholder="Last Name"
-                                    value={userInfor.lastName}
+                                    value={userInfor.lastName ?? null}
                                     size="large"
                                     onChange={handleChangeLastName}
                                 />
@@ -195,7 +208,11 @@ const UserInformation: React.FC = () => {
                 </Row>
                 <Row>
                     <Col xs={{ span: 10, offset: 1 }}>
-                        <Form.Item label="Your Gender:" name="gender">
+                        <Form.Item
+                            label="Your Gender:"
+                            name="gender"
+                            rules={GenderRules}
+                        >
                             <div className="user-profile-name">
                                 <Radio.Group
                                     value={userInfor.gender}
@@ -203,7 +220,7 @@ const UserInformation: React.FC = () => {
                                 >
                                     <Radio value="male">Male</Radio>
                                     <Radio value="female">Female</Radio>
-                                    <Radio value="other">Other</Radio>
+                                    <Radio value="others">Other</Radio>
                                 </Radio.Group>
                             </div>
                         </Form.Item>
@@ -247,7 +264,7 @@ const UserInformation: React.FC = () => {
                                     className="user-profile-input-address"
                                     placeholder="Current Address"
                                     size="large"
-                                    value={userInfor.address}
+                                    value={userInfor.address ?? null}
                                     onChange={handleChangeAddress}
                                 />
                             </div>
@@ -260,7 +277,7 @@ const UserInformation: React.FC = () => {
                                     className="user-profile-input"
                                     placeholder="Phone Number"
                                     size="large"
-                                    value={userInfor.phoneNumber}
+                                    value={userInfor.phoneNumber ?? null}
                                     onChange={handleChangePhoneNumber}
                                 />
                             </div>
