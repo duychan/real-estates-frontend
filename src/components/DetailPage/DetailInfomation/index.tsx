@@ -26,7 +26,10 @@ import {
     CreateNewContact,
     GetMyConversation
 } from "../../../app/redux/action/ChatContactAction";
-import { setErrorNotification } from "../../../app/redux/reducer/NotificationSlice";
+import {
+    setErrorNotification,
+    setWarnNotification
+} from "../../../app/redux/reducer/NotificationSlice";
 
 interface IDetailInformation {
     _id: string;
@@ -57,14 +60,19 @@ const DetailInfomation: React.FC<IDetailInformation> = ({
     const [isLiked, setIsLiked] = useState(false);
     const navigate = useNavigate();
     const { _id: idWishesList } = useSelector(getWishesEstate);
+    const { _id: idUser } = useSelector(getUser);
     const handleClick = () => {
-        setIsLiked(!isLiked);
-        if (!isLiked) {
-            dispatch(PostWishesEstate(_idEstate));
-            localStorage.setItem(`estate-${_idEstate}`, true.toString());
+        if (idUser !== "") {
+            setIsLiked(!isLiked);
+            if (!isLiked) {
+                dispatch(PostWishesEstate(_idEstate));
+                localStorage.setItem(`estate-${_idEstate}`, true.toString());
+            } else {
+                deleteWishes(idWishesList);
+                localStorage.removeItem(`estate-${_idEstate}`);
+            }
         } else {
-            deleteWishes(idWishesList);
-            localStorage.removeItem(`estate-${_idEstate}`);
+            dispatch(setWarnNotification("Please login to use this feature!"));
         }
     };
 
