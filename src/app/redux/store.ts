@@ -15,6 +15,7 @@ import updateUserInforReducer from "./reducer/UpdateUserInforSlice";
 import deleteMyEstateReducer from "./reducer/DeleteMyEstateSlice";
 import createConversationReducer from "./reducer/ChatSlice/CreateConversation";
 import myConversationReducer from "./reducer/ChatSlice/MyConversationSlice";
+import postMessageReducer from "./reducer/ChatSlice/PostMessageSlice";
 import getAllMessageReducer from "./reducer/ChatSlice/GetAllChatSingleSlice";
 
 const store = configureStore({
@@ -34,6 +35,7 @@ const store = configureStore({
         deleteMyEstate: deleteMyEstateReducer,
         createConversation: createConversationReducer,
         myConversation: myConversationReducer,
+        postMessage: postMessageReducer,
         getAllMessage: getAllMessageReducer
     },
     middleware: getDefaultMiddleware =>

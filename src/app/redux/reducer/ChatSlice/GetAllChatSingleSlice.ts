@@ -24,7 +24,7 @@ export const GetAllMessageSlice = createSlice({
     initialState,
     reducers: {
         addMessage: (state, action) => {
-            state.data.records.unshift(action.payload);
+            state.data.records.push(action.payload);
         },
         handleIdConversationClicked: (state, action) => {
             return {
@@ -66,13 +66,21 @@ export const GetAllMessageSlice = createSlice({
             })
             .addCase(GetAllChatSingle.fulfilled, (state, action) => {
                 const {
-                    data = { records: initialState.data.records, total: 0 },
+                    data: dataAllMessage = {
+                        records: initialState.data.records,
+                        total: 0
+                    },
                     message = ""
                 } = action.payload;
                 return {
                     ...state,
                     message: message,
-                    data,
+                    data: {
+                        records: (
+                            dataAllMessage.records as IGetAllChatRecord[]
+                        )?.reverse(),
+                        total: dataAllMessage.total
+                    },
                     isLoading: false
                 };
             })

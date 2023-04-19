@@ -8,7 +8,7 @@ import {
     GoogleOutlined
 } from "@ant-design/icons";
 import logo from "../../../assets/images/logo.jpg";
-const Footer: React.FC = () => {
+export const Footer: React.FC = () => {
     const ourAgencyItem = ["Services", "Insurance", "Agency", "Payment"];
     const updateItem = [
         "Updated Estate",
@@ -87,5 +87,3 @@ const Footer: React.FC = () => {
         </div>
     );
 };
-
-export default Footer;

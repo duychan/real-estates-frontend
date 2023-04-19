@@ -27,7 +27,7 @@ export interface IPostMessage {
     message: string;
     data: {
         conversation: string;
-        postedByUser: string;
+        postedByUser: IUserInformation;
         messageContent: string;
         type: string;
         isRecall: boolean;
@@ -47,6 +47,18 @@ export interface IGetAllChatRecord {
     isRecall: boolean;
     createdAt: string;
     updatedAt: string;
+}
+export interface IMessageResponse {
+    message: {
+        _id: string;
+        conversation: string;
+        postedByUser: IUserInformation;
+        messageContent: string;
+        type: string;
+        isRecall: boolean;
+        createdAt: string;
+        updatedAt: string;
+    };
 }
 
 export interface IGetAllChatSingle {

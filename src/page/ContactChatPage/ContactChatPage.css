@@ -5,4 +5,5 @@
     background-image: url("../../assets/images/geometry.png");
     background-size: cover;
     background-repeat: no-repeat;
+    min-height: 420px;
 }

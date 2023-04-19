@@ -16,7 +16,6 @@ export const getAllChatSingleApi = async (conversationId: string) => {
         res => res.data
     );
 };
-
 export const createNewContact = async (idEstate: string) => {
     return await BaseApi.post(`estates/${idEstate}/conversations`).then(
         res => res.data
