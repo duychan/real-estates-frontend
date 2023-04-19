@@ -1,19 +1,30 @@
 .main-chat {
     background-size: cover;
 }
-.main-chat-conversation {
+#main-chat-conversation {
     padding: 0 50px;
-    min-height: 420px;
+    max-height: 420px;
+    height: 420px;
     overflow-y: auto;
-    white-space: nowrap;
-    scroll-snap-align: start;
-}
-.main-chat-message {
     display: flex;
     flex-direction: column;
-    margin-top: 20px;
 }
 
+.main-chat-message-from-other {
+    position: relative;
+    justify-content: space-between;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+}
+.main-chat-message-from-me {
+    align-self: flex-end;
+}
+
+.main-chat-message-from-me .main-chat-message-text {
+    background-color: var(--blue2--color);
+    color: var(--white-color);
+}
 .main-chat-message-top {
     display: flex;
     align-items: center;
@@ -27,9 +38,12 @@
 .main-chat-message-text {
     padding: 10px;
     border-radius: 10px;
-    background-color: var(--blue2--color);
+    background-color: var(--silver1-color);
     color: var(--white-color);
     margin-left: 10px;
+}
+.main-chat-message-time {
+    font-size: var(--font-sz1);
 }
 
 #main-chat-files-picker {
@@ -38,18 +52,6 @@
     width: 0px;
 }
 
-.main-chat-message-time {
-    font-size: var(--font-sz1);
-}
-
-.main-chat-message.own {
-    align-items: flex-end;
-}
-
-.main-chat-message.own .main-chat-message-text {
-    background-color: var(--white-color);
-    color: var(--font-color13);
-}
 .main-chat-send-button {
     cursor: pointer;
     border: none;

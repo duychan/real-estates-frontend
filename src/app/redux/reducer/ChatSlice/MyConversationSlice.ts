@@ -40,7 +40,9 @@ export const MyConversationSlice = createSlice({
                     ...state,
                     message: message,
                     data: {
-                        records: (dataConversation.records as IChatInformation[])?.reverse()
+                        records: (
+                            dataConversation.records as IChatInformation[]
+                        )?.reverse()
                     },
                     isLoading: false
                 };
