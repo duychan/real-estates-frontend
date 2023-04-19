@@ -86,50 +86,62 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
 
     const handleGetAddressFromCoordinates = useCallback(
         (latLng: [number, number]) => {
-            setCurrent(Step4);
-            getAddressByCoordinates({
-                lat: latLng[0],
-                lng: latLng[1]
-            })
-                .then(response => {
-                    setIsAddressSelectShown(true);
-                    const {
-                        records: {
-                            data: {
-                                street = "",
-                                district = "",
-                                city = "",
-                                county = ""
-                            }
-                        }
-                    } = response;
-                    form.setFieldsValue({
-                        city: { value: "", label: county } as IAddressOption
-                    });
-                    form.setFieldsValue({
-                        district: { value: "", label: city } as IAddressOption
-                    });
-                    form.setFieldsValue({
-                        ward: { value: "", label: district } as IAddressOption
-                    });
-                    form.setFieldsValue({ addressNumber: street });
-                    setCity({ value: "", label: county });
-                    setDistrict({ value: "", label: city });
-                    setWard({ value: "", label: district });
-                    setAddressEstate(
-                        `${street}, ${district}, ${city}, ${county}`
-                    );
+            if (latLng[0] !== 0 && latLng[1] !== 0) {
+                setCurrent(Step4);
+                getAddressByCoordinates({
+                    lat: latLng[0],
+                    lng: latLng[1]
                 })
-                .catch(error => {
-                    dispatch(setErrorNotification(error));
-                });
+                    .then(response => {
+                        setIsAddressSelectShown(true);
+                        const {
+                            records: {
+                                data: {
+                                    street = "",
+                                    district = "",
+                                    city = "",
+                                    county = ""
+                                }
+                            }
+                        } = response;
+                        form.setFieldsValue({
+                            city: { value: "", label: county } as IAddressOption
+                        });
+                        form.setFieldsValue({
+                            district: {
+                                value: "",
+                                label: city
+                            } as IAddressOption
+                        });
+                        form.setFieldsValue({
+                            ward: {
+                                value: "",
+                                label: district
+                            } as IAddressOption
+                        });
+                        form.setFieldsValue({ addressNumber: street });
+                        setCity({ value: "", label: county });
+                        setDistrict({ value: "", label: city });
+                        setWard({ value: "", label: district });
+                        setAddressEstate(
+                            `${street}, ${district}, ${city}, ${county}`
+                        );
+                    })
+                    .catch(error => {
+                        dispatch(
+                            setErrorNotification(
+                                "Cannot find address in detail!"
+                            )
+                        );
+                    });
+            }
         },
         [dispatch, form]
     );
 
     useEffect(() => {
-        setEstateLocation([estateCoordinates[1], estateCoordinates[0]]);
         if (estateCoordinates[0] !== 0 && estateCoordinates[1] !== 0) {
+            setEstateLocation([estateCoordinates[1], estateCoordinates[0]]);
             handleGetAddressFromCoordinates([
                 estateCoordinates[1],
                 estateCoordinates[0]
@@ -179,7 +191,7 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
         getProvinces()
             .then(response => {
                 const provinceOption: IAddressOption[] = response?.data?.records?.map(
-                    ({ code, name }: ILocation) => {
+                    ({ code = "", name = "" }: ILocation) => {
                         return { value: code, label: name } as IAddressOption;
                     }
                 );
@@ -203,7 +215,7 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
             getDistricts(city.value)
                 .then(response => {
                     const districtOption: IAddressOption[] = response?.data?.records?.map(
-                        ({ code, name }: ILocation) => {
+                        ({ code = "", name = "" }: ILocation) => {
                             return { value: code, label: name };
                         }
                     );
@@ -229,7 +241,7 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
             getWards(district.value)
                 .then(response => {
                     const wardOption: IAddressOption[] = response?.data?.records?.map(
-                        ({ code, name }: ILocation) => {
+                        ({ code = "", name = "" }: ILocation) => {
                             return { value: code, label: name };
                         }
                     );
@@ -275,7 +287,9 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
                     }
                 })
                 .catch(error => {
-                    dispatch(setErrorNotification(`ERROR: ${error}`));
+                    dispatch(
+                        setErrorNotification("Cannot find your location!")
+                    );
                 });
         } else {
             dispatch(
@@ -322,8 +336,8 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
                 ]);
 
                 handleGetAddressFromCoordinates([
-                    location.coordinates?.lat,
-                    location.coordinates?.lng
+                    location.coordinates?.lat ?? 0,
+                    location.coordinates?.lng ?? 0
                 ]);
                 handleGetEstateLocation(
                     {

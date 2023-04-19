@@ -407,7 +407,10 @@ const InputInformation = () => {
                         setAddressEstate(address);
                         setDetailAddressEstate(addressEstate);
                     }}
-                    estateCoordinates={coordinates}
+                    estateCoordinates={[
+                        coordinates[0] ?? 0,
+                        coordinates[1] ?? 0
+                    ]}
                 />
                 <Button
                     className="input-information-button"

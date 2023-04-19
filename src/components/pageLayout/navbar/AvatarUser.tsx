@@ -8,6 +8,8 @@ import { useAppDispatch } from "../../../app/redux/store";
 import { getUser, logout } from "../../../app/redux/reducer/AuthSlice";
 import { useSelector } from "react-redux";
 import { AvatarComponent } from "./AvatarComponent";
+import { deleteCurrentUserChat } from "../../../app/redux/reducer/ChatSlice/GetAllChatSingleSlice";
+import { resetListMyConversation } from "../../../app/redux/reducer/ChatSlice/MyConversationSlice";
 
 export const AvatarUser: React.FC = () => {
     const SubMenu = Menu.SubMenu;
@@ -20,6 +22,8 @@ export const AvatarUser: React.FC = () => {
     const handleLogout = () => {
         dispatch(logout());
         navigate("/");
+        dispatch(deleteCurrentUserChat());
+        dispatch(resetListMyConversation());
     };
 
     return (

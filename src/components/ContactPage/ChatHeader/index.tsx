@@ -5,21 +5,30 @@ import {
     VideoCameraOutlined
 } from "@ant-design/icons";
 import "./ChatHeader.css";
-import { Avatar, Col, Form, Input, Row } from "antd";
+import { Col, Row } from "antd";
+import { useSelector } from "react-redux";
+import { getSellerInfo } from "../../../app/redux/reducer/ChatSlice/GetAllChatSingleSlice";
+import { AvatarComponent } from "../../pageLayout/Navbar/AvatarComponent";
 
 export const ChatHeader: React.FC = () => {
+    const { profileImage, firstName, lastName, idUser } = useSelector(
+        getSellerInfo
+    );
     return (
         <div className="chat-header">
             <Row>
                 <Col>
-                    <Avatar
-                        className="chat-header-avatar"
-                        src="https://joesch.moe/api/v1/random?key=1"
+                    <AvatarComponent
+                        imgUser={profileImage}
+                        firstName={firstName}
+                        lastName={lastName}
                     />
                 </Col>
                 <Col xs={{ span: 17, offset: 0 }}>
                     <div className="chat-header-text">
-                        <div className="chat-header-title">hang doan</div>
+                        <div className="chat-header-title">
+                            {firstName} {lastName}
+                        </div>
                         <div className="chat-header-subtitle">Online</div>
                     </div>
                 </Col>

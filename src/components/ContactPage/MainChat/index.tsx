@@ -1,20 +1,29 @@
 import React from "react";
 import "./MainChat.css";
 import { PaperClipOutlined, SendOutlined } from "@ant-design/icons";
-import { Button, Col, Form, Input, Row, Avatar } from "antd";
+import { Button, Col, Form, Input, Row } from "antd";
 import TextArea from "antd/es/input/TextArea";
+import { useSelector } from "react-redux";
+import {
+    getIdConversation,
+    getSellerInfo
+} from "../../../app/redux/reducer/ChatSlice/GetAllChatSingleSlice";
+import { AvatarComponent } from "../../pageLayout/Navbar/AvatarComponent";
 
 export const MainChat: React.FC = () => {
+    const idConversation = useSelector(getIdConversation);
+    const { profileImage, firstName, lastName, idUser } = useSelector(
+        getSellerInfo
+    );
     return (
         <div className="main-chat">
             <div className="main-chat-conversation">
                 <div className="main-chat-message">
                     <div className="main-chat-message-top">
-                        <Avatar
-                            size={40}
-                            className="main-chat-message-avatar"
-                            src="https://joesch.moe/api/v1/random?key=1"
-                            alt=""
+                        <AvatarComponent
+                            imgUser={profileImage}
+                            firstName={firstName}
+                            lastName={lastName}
                         />
                         <p className="main-chat-message-text">
                             Hello, How are you doing?

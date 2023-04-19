@@ -9,6 +9,8 @@ import { LoginUser } from "./LoginUser";
 import { useDispatch } from "react-redux";
 import { logout } from "../../../app/redux/reducer/AuthSlice";
 import { NavbarItems } from "../../../common/constants";
+import { deleteCurrentUserChat } from "../../../app/redux/reducer/ChatSlice/GetAllChatSingleSlice";
+import { resetListMyConversation } from "../../../app/redux/reducer/ChatSlice/MyConversationSlice";
 
 export const Navbar: React.FC = () => {
     const SubMenu = Menu.SubMenu;
@@ -27,6 +29,8 @@ export const Navbar: React.FC = () => {
             return <AvatarUser />;
         } else {
             dispatch(logout());
+            dispatch(deleteCurrentUserChat());
+            dispatch(resetListMyConversation());
             return (
                 <Menu.Item>
                     <LoginUser />

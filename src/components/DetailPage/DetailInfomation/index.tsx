@@ -20,29 +20,37 @@ import { useSelector } from "react-redux";
 import { getWishesEstate } from "../../../app/redux/reducer/WishesEstateSlice";
 import { deleteWishes } from "../../../app/api/WishesListApi";
 import { useConvertPriceEstate } from "../../../common/hooks/PriceEstate";
+import { getUser } from "../../../app/redux/reducer/AuthSlice";
+import {
+    CreateNewContact,
+    GetMyConversation
+} from "../../../app/redux/action/ChatContactAction";
+import { setErrorNotification } from "../../../app/redux/reducer/NotificationSlice";
 
 interface IDetailInformation {
     _id: string;
-    estateName: string;
+    name: string;
     address: string;
-    type: string;
+    nameType: string;
     price: string;
-    bedroom: number;
-    bathroom: number;
+    bedRoom: number;
+    bathRoom: number;
     area: string;
     nameUser: string;
+    _idOwner: string;
 }
 
 const DetailInfomation: React.FC<IDetailInformation> = ({
-    _id,
-    estateName,
-    address,
-    type,
-    price,
-    bedroom,
-    bathroom,
-    area,
-    nameUser
+    _id: _idEstate = "",
+    name: titleEstate = "",
+    address = "",
+    nameType = "",
+    price = "",
+    bedRoom = "",
+    bathRoom = "",
+    area = "",
+    nameUser = "",
+    _idOwner = ""
 }) => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
@@ -52,31 +60,50 @@ const DetailInfomation: React.FC<IDetailInformation> = ({
     const handleClick = () => {
         setIsLiked(!isLiked);
         if (!isLiked) {
-            dispatch(PostWishesEstate(_id));
-            localStorage.setItem(`estate-${_id}`, true.toString());
+            dispatch(PostWishesEstate(_idEstate));
+            localStorage.setItem(`estate-${_idEstate}`, true.toString());
         } else {
             deleteWishes(idWishesList);
-            localStorage.removeItem(`estate-${_id}`);
+            localStorage.removeItem(`estate-${_idEstate}`);
         }
     };
 
     useEffect(() => {
-        const storedEstate = localStorage.getItem(`estate-${_id}`);
+        const storedEstate = localStorage.getItem(`estate-${_idEstate}`);
         if (storedEstate) {
             setIsLiked(true);
         } else {
             setIsLiked(false);
         }
-    }, [_id]);
+    }, [_idEstate]);
 
     const likeStatus = <HeartOutlined className="favorite1-icon" />;
     const unLikeStatus = <HeartOutlined className="favorite-icon" />;
+    const { _id: idOwner } = useSelector(getUser);
+
+    const handleClickContactOwner = () => {
+        dispatch(CreateNewContact(_idEstate)).then(response => {
+            const isCreated = response.payload?.data?.record?.isNew;
+            const message = response.payload?.message || "";
+            let conversationId = "";
+
+            if (isCreated) {
+                conversationId =
+                    response.payload?.data?.record?.conversationId._id || "";
+                navigate(`/contact-page/${conversationId}`);
+            } else {
+                conversationId =
+                    response.payload?.data?.record?.conversationId || "";
+                navigate(`/contact-page/${conversationId}`);
+            }
+        });
+    };
 
     return (
         <div className="detail-product">
             <div className="detail-product-content">
                 <div className="product-name">
-                    <h2>{estateName}</h2>
+                    <h2>{titleEstate}</h2>
                     <div className="favorite">
                         <Button
                             className="button-favorite"
@@ -89,11 +116,13 @@ const DetailInfomation: React.FC<IDetailInformation> = ({
                 <div className="product-info">
                     <div className="product-address">
                         <h3>{address}</h3>
-                        <h4 className="product-address-type">Type: {type}</h4>
+                        <h4 className="product-address-type">
+                            Type: {nameType}
+                        </h4>
                     </div>
                     <div className="product-fee">
                         <h1 className="product-fee-price">
-                            ${useConvertPriceEstate(price)}
+                            {useConvertPriceEstate(price)}
                         </h1>
                     </div>
                 </div>
@@ -109,7 +138,7 @@ const DetailInfomation: React.FC<IDetailInformation> = ({
                         <Col xs={{ span: 8, offset: 0 }}>
                             <p className="detail-product-p">
                                 <BedIcon className="icon-detail__svg" />
-                                Bedroom: {bedroom}
+                                Bedroom: {bedRoom}
                             </p>
 
                             <p className="detail-product-p">
@@ -129,19 +158,19 @@ const DetailInfomation: React.FC<IDetailInformation> = ({
                             </p>
                             <p className="detail-product-p">
                                 <BathIcon className="icon-detail__svg" />
-                                Bathroom: {bathroom}
+                                Bathroom: {bathRoom}
                             </p>
                         </Col>
                         <Col xs={{ span: 6, offset: 1 }}>
-                            <Button
-                                type="primary"
-                                className="button-contact"
-                                onClick={() => {
-                                    navigate("/contact-page");
-                                }}
-                            >
-                                Contact Owner
-                            </Button>
+                            {_idOwner !== idOwner && (
+                                <Button
+                                    type="primary"
+                                    className="button-contact"
+                                    onClick={handleClickContactOwner}
+                                >
+                                    Contact Owner
+                                </Button>
+                            )}
                             <div className="detail-owner">
                                 <Avatar
                                     className="user"
