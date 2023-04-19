@@ -22,7 +22,6 @@ import {
     removeWarnNotification
 } from "./app/redux/reducer/NotificationSlice";
 import { ContactChatPage } from "./page/ContactChatPage";
-import { io } from "socket.io-client";
 
 const UserAuth = (navigateComponent: ReactNode) => {
     const userToken = useSelector(getUserToken);
