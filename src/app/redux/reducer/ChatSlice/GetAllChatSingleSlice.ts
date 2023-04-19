@@ -56,6 +56,9 @@ export const GetAllMessageSlice = createSlice({
                 _idConversation: "",
                 chatUserInfo: initialState.chatUserInfo
             };
+        },
+        deleteAllMessage: state => {
+            return { ...state, data: initialState.data, message: "" };
         }
     },
 
@@ -76,9 +79,7 @@ export const GetAllMessageSlice = createSlice({
                     ...state,
                     message: message,
                     data: {
-                        records: (
-                            dataAllMessage.records as IGetAllChatRecord[]
-                        )?.reverse(),
+                        records: (dataAllMessage.records as IGetAllChatRecord[])?.reverse(),
                         total: dataAllMessage.total
                     },
                     isLoading: false

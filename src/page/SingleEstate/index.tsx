@@ -34,7 +34,12 @@ export const SingleEstate: React.FC = () => {
     const [estate, setEstate] = useState<IEstate>(EmptyEstate);
     const {
         _id: _idEstate = "",
-        owner: { _id: _idOwner = "", firstName = "", lastName = "" },
+        owner: {
+            _id: _idOwner = "",
+            firstName = "",
+            lastName = "",
+            profileImage = ""
+        },
         name: titleEstate = "",
         address = "",
         area = "",
@@ -141,6 +146,7 @@ export const SingleEstate: React.FC = () => {
                 nameType={nameType}
                 nameUser={nameOwner}
                 _idOwner={_idOwner}
+                imgOwner={profileImage}
                 {..._pick(estate, [
                     "_id",
                     "name",

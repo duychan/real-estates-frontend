@@ -1,17 +1,10 @@
-import React, { useEffect } from "react";
+import React, { MutableRefObject, useRef } from "react";
 import "./Search.css";
-import { Input, Col, Row, Form, Button, InputNumber } from "antd";
+import { Input, Col, Row, Form, Button, InputNumber, FormInstance } from "antd";
 import { useNavigate } from "react-router-dom";
-import {
-    SearchOutlined,
-    EnvironmentOutlined,
-    ProfileOutlined,
-    ToolOutlined,
-    MoneyCollectOutlined
-} from "@ant-design/icons";
+import { SearchOutlined, EnvironmentOutlined } from "@ant-design/icons";
 import SelecType from "../../UploadPage/SelectType";
 import { ISelectOption } from "../../UploadPage/SelectType/SelectItemType";
-import { useDispatch, useSelector } from "react-redux";
 import { ISearchHomePage } from "./SearchType";
 import { useAppDispatch } from "../../../app/redux/store";
 import { SearchHomePage } from "../../../app/redux/action/SearchResultAction";
@@ -23,6 +16,7 @@ const Search: React.FC = () => {
         dispatch(SearchHomePage(query)).then(() => navigate("/search-page"));
     };
     const [form] = Form.useForm();
+    const formSearchRef = useRef<FormInstance<ISearchHomePage>>();
 
     return (
         <div className="search">
@@ -41,7 +35,16 @@ const Search: React.FC = () => {
                 </div>
 
                 <div data-aos="fade-up" className="card-div">
-                    <Form layout="vertical" form={form} onFinish={onFinish}>
+                    <Form
+                        layout="vertical"
+                        form={form}
+                        onFinish={onFinish}
+                        ref={
+                            formSearchRef as MutableRefObject<
+                                FormInstance<ISearchHomePage>
+                            >
+                        }
+                    >
                         <Row>
                             <Col
                                 xs={{ span: 6, offset: 1 }}
@@ -74,7 +77,7 @@ const Search: React.FC = () => {
                                                 }
                                             });
                                         }}
-                                        valueSelectType={form.getFieldValue(
+                                        valueSelectType={formSearchRef.current?.getFieldValue(
                                             "type"
                                         )}
                                     />

@@ -67,6 +67,8 @@ const InputInformation = () => {
     const [detailAddressEstate, setDetailAddressEstate] = useState("");
     const estateStatus = useSelector(getEstateStatus);
 
+    const [isUploadEstate, setIsUploadEstate] = useState<boolean>(false);
+
     useEffect(() => {
         dispatch(GetEstateStatus());
     }, [dispatch]);
@@ -123,6 +125,7 @@ const InputInformation = () => {
     useEffect(() => {
         dispatch(deleteUploadFormData());
         if (estate_action === "update-estate") {
+            setIsUploadEstate(false);
             if (_idSingleEstate) {
                 dispatch(GetEstateById(_idSingleEstate)).then(res => {
                     const _idEstateFind = res.payload.data?.records?._id || "";
@@ -137,6 +140,7 @@ const InputInformation = () => {
         } else if (_idSingleEstate === "upload-estate") {
             dispatch(deleteEstate());
             formEstateRef.current?.resetFields();
+            setIsUploadEstate(true);
         }
     }, [dispatch, _idSingleEstate, navigate, estate_action, form]);
 
@@ -232,6 +236,7 @@ const InputInformation = () => {
                         if (_idEstateUpload !== "") {
                             dispatch(deleteUploadFormData());
                             navigate(`/single-estate/${_idEstateUpload}`);
+                            setIsUploadEstate(false);
                         } else if (message !== "") {
                             dispatch(setErrorNotification(message));
                         }
@@ -245,6 +250,7 @@ const InputInformation = () => {
                         if (_idEstateUpload !== "") {
                             dispatch(deleteUploadFormData());
                             navigate(`/single-estate/${_idEstateUpload}`);
+                            setIsUploadEstate(false);
                         } else if (message !== "") {
                             dispatch(setErrorNotification(message));
                         }
@@ -411,6 +417,7 @@ const InputInformation = () => {
                         coordinates[0] ?? 0,
                         coordinates[1] ?? 0
                     ]}
+                    isUploadEstate={isUploadEstate}
                 />
                 <Button
                     className="input-information-button"

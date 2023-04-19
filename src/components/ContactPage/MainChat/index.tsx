@@ -20,13 +20,13 @@ import {
 import { setErrorNotification } from "../../../app/redux/reducer/NotificationSlice";
 import { Socket, io } from "socket.io-client";
 import { getUser } from "../../../app/redux/reducer/AuthSlice";
-import { AvatarComponent } from "../../pageLayout/Navbar/AvatarComponent";
 import { DefaultEventsMap } from "@socket.io/component-emitter";
 import {
     IGetAllChatRecord,
     IMessageResponse
 } from "../../../app/redux/reducer/ChatSlice/ChatSliceType";
 import { IUserInformation } from "../../../app/redux/reducer/AuthSlice/AuthSliceType";
+import { AvatarComponent } from "../../pageLayout/Navbar/AvatarComponent";
 const host = "http://localhost:3000";
 let socket: Socket<DefaultEventsMap, DefaultEventsMap>;
 
@@ -124,14 +124,12 @@ export const MainChat: React.FC = () => {
                                             record.postedByUser.profileImage
                                         }
                                         firstName={
-                                            (
-                                                record.postedByUser as IUserInformation
-                                            ).firstName
+                                            (record.postedByUser as IUserInformation)
+                                                .firstName
                                         }
                                         lastName={
-                                            (
-                                                record.postedByUser as IUserInformation
-                                            ).lastName
+                                            (record.postedByUser as IUserInformation)
+                                                .lastName
                                         }
                                     />
                                     <p className="main-chat-message-text">
