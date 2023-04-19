@@ -6,7 +6,6 @@ export const PasswordRule: Rule[] = [
         required: true,
         message: "Please enter your new password"
     },
-    { min: 8 },
     {
         validator: (_, value) =>
             value &&
@@ -23,7 +22,6 @@ export const ConfirmPasswordRule: Rule[] = [
         required: true,
         message: "Please repeat your new password"
     },
-    { min: 8 },
     ({ getFieldValue }: { getFieldValue: (name: NamePath) => string }) => ({
         validator(_: RuleObject, value: string) {
             if (!value || getFieldValue("password") === value) {

@@ -20,30 +20,18 @@ import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../app/redux/store";
 import { SignupUser } from "../../app/redux/action/AuthAction";
 import { IUserRegisterInput } from "../../app/api/AuthenticationApi/AuthType";
-const timeOut = 2000;
+import { setErrorNotification } from "../../app/redux/reducer/NotificationSlice";
 
 const Register: React.FC = () => {
     const dispatch = useAppDispatch();
-    const navigate = useNavigate();
-    const [messageApi, contextHolder] = message.useMessage();
-    const { messageResponse } = useSelector((state: RootState) => state.auth);
-    const success = useCallback(() => {
-        messageApi.open({
-            type: "success",
-            content: "Login successful!"
-        });
-    }, [messageApi]);
-    const error = useCallback(() => {
-        messageApi.open({
-            type: "error",
-            content: messageResponse
-        });
-    }, [messageApi, messageResponse]);
-
     const onFinish = (user: IUserRegisterInput) => {
-        dispatch(SignupUser(user));
+        dispatch(SignupUser(user)).then(res => {
+            const messageResponse = res.payload?.message || "";
+            if (messageResponse !== "success") {
+                dispatch(setErrorNotification(messageResponse));
+            }
+        });
     };
-
     return (
         <div className="register">
             <div className="register-title">
@@ -152,7 +140,6 @@ const Register: React.FC = () => {
                     </p>
                 </div>
             </div>
-            {messageResponse !== "" ? <> {contextHolder}</> : null}
         </div>
     );
 };

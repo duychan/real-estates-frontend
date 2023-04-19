@@ -7,12 +7,18 @@ import { EmailRule, PasswordRule } from "../../common/helper/Validator";
 import { IUserLoginInput } from "../../app/api/AuthenticationApi/AuthType";
 import { useAppDispatch } from "../../app/redux/store";
 import { UserLogin } from "../../app/redux/action/AuthAction";
+import { setErrorNotification } from "../../app/redux/reducer/NotificationSlice";
 
 export const LoginPage: React.FC = () => {
     const dispatch = useAppDispatch();
 
     const handleLogin = (values: IUserLoginInput) => {
-        dispatch(UserLogin(values));
+        dispatch(UserLogin(values)).then(res => {
+            const messageResponse = res.payload?.message || "";
+            if (messageResponse !== "success") {
+                dispatch(setErrorNotification(messageResponse));
+            }
+        });
     };
 
     return (
