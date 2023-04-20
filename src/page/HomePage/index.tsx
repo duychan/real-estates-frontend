@@ -13,6 +13,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import _pick from "lodash.pick";
 import { getResultSearchPage } from "../../app/redux/reducer/SearchPageSlice";
+import { GetAllWishListEstate } from "../../app/redux/action/WishesListAction";
 
 const DaNangCode = "48";
 
@@ -31,6 +32,7 @@ export const HomePage: React.FC = () => {
                 alert(error);
             });
         dispatch(GetAllEstate());
+        dispatch(GetAllWishListEstate());
     }, [dispatch]);
 
     return (

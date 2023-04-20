@@ -8,7 +8,10 @@ import { useAppDispatch } from "../../../app/redux/store";
 import { getUser, logout } from "../../../app/redux/reducer/AuthSlice";
 import { useSelector } from "react-redux";
 import { AvatarComponent } from "./AvatarComponent";
-import { deleteCurrentUserChat } from "../../../app/redux/reducer/ChatSlice/GetAllChatSingleSlice";
+import {
+    deleteAllMessage,
+    deleteCurrentUserChat
+} from "../../../app/redux/reducer/ChatSlice/GetAllChatSingleSlice";
 import { resetListMyConversation } from "../../../app/redux/reducer/ChatSlice/MyConversationSlice";
 
 export const AvatarUser: React.FC = () => {
@@ -16,14 +19,17 @@ export const AvatarUser: React.FC = () => {
     const MenuItemGroup = Menu.ItemGroup;
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
-    const { firstName = "", lastName = "", profileImage = "" } = useSelector(
-        getUser
-    );
+    const {
+        firstName = "",
+        lastName = "",
+        profileImage = ""
+    } = useSelector(getUser);
     const handleLogout = () => {
         dispatch(logout());
         navigate("/");
         dispatch(deleteCurrentUserChat());
         dispatch(resetListMyConversation());
+        dispatch(deleteAllMessage());
     };
 
     return (

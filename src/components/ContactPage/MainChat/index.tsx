@@ -2,29 +2,20 @@ import React, { useEffect, useRef, useState } from "react";
 import "./MainChat.css";
 import { PaperClipOutlined, SendOutlined } from "@ant-design/icons";
 import { Button, Col, Form, Input, Row, Avatar } from "antd";
-import TextArea from "antd/es/input/TextArea";
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "../../../app/redux/store";
 import { format } from "timeago.js";
-
-import {
-    GetAllChatSingle,
-    PostMessageChat
-} from "../../../app/redux/action/ChatContactAction";
+import { PostMessageChat } from "../../../app/redux/action/ChatContactAction";
 import {
     addMessage,
     getAllMessage,
-    getIdConversation,
-    getSellerInfo
+    getIdConversation
 } from "../../../app/redux/reducer/ChatSlice/GetAllChatSingleSlice";
 import { setErrorNotification } from "../../../app/redux/reducer/NotificationSlice";
 import { Socket, io } from "socket.io-client";
 import { getUser } from "../../../app/redux/reducer/AuthSlice";
 import { DefaultEventsMap } from "@socket.io/component-emitter";
-import {
-    IGetAllChatRecord,
-    IMessageResponse
-} from "../../../app/redux/reducer/ChatSlice/ChatSliceType";
+import { IMessageResponse } from "../../../app/redux/reducer/ChatSlice/ChatSliceType";
 import { IUserInformation } from "../../../app/redux/reducer/AuthSlice/AuthSliceType";
 import { AvatarComponent } from "../../pageLayout/Navbar/AvatarComponent";
 const host = "http://localhost:3000";
@@ -38,12 +29,7 @@ export const MainChat: React.FC = () => {
     const scrollRef = useRef<HTMLDivElement>(null);
     let mounted = true;
     const userAuth = useSelector(getUser);
-    const {
-        _id: buyerId,
-        profileImage: imgUserAuth,
-        firstName: firstNameAuth,
-        lastName: lastNameAuth
-    } = userAuth;
+    const { _id: buyerId } = userAuth;
     useEffect(() => {
         if (idConversation !== "") {
             socket = io(host, {
@@ -99,7 +85,7 @@ export const MainChat: React.FC = () => {
     }, [recordsAllMessage]);
 
     const handleChangeMessageContent = (
-        event: React.ChangeEvent<HTMLTextAreaElement>
+        event: React.ChangeEvent<HTMLInputElement>
     ) => {
         setMessageContent(event.target.value);
     };
@@ -117,19 +103,24 @@ export const MainChat: React.FC = () => {
                             }
                             key={key}
                         >
-                            <div className="main-chat-message-container">
+                            <div
+                                className="main-chat-message-container"
+                                ref={scrollRef}
+                            >
                                 <div className="main-chat-message-top">
                                     <AvatarComponent
                                         imgUser={
                                             record.postedByUser.profileImage
                                         }
                                         firstName={
-                                            (record.postedByUser as IUserInformation)
-                                                .firstName
+                                            (
+                                                record.postedByUser as IUserInformation
+                                            ).firstName
                                         }
                                         lastName={
-                                            (record.postedByUser as IUserInformation)
-                                                .lastName
+                                            (
+                                                record.postedByUser as IUserInformation
+                                            ).lastName
                                         }
                                     />
                                     <p className="main-chat-message-text">
@@ -139,10 +130,7 @@ export const MainChat: React.FC = () => {
                                 <div className="main-chat-message-time">
                                     {format(record.createdAt)}
                                 </div>
-                                <div
-                                    style={{ float: "left", clear: "both" }}
-                                    ref={scrollRef}
-                                ></div>
+                                <div></div>
                             </div>
                         </div>
                     );
@@ -164,8 +152,7 @@ export const MainChat: React.FC = () => {
                         </Col>
                         <Col span={21}>
                             <Form.Item>
-                                <TextArea
-                                    autoSize={{ minRows: 1, maxRows: 6 }}
+                                <Input
                                     placeholder="Type something..."
                                     className="main-chat-message-input"
                                     size="large"

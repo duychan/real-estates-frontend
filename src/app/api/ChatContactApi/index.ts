@@ -12,9 +12,9 @@ export const postMessageApi = async ({
 };
 
 export const getAllChatSingleApi = async (conversationId: string) => {
-    return await BaseApi.get(`conversations/${conversationId}/messages`).then(
-        res => res.data
-    );
+    return await BaseApi.get(
+        `conversations/${conversationId}/messages?limit=1000`
+    ).then(res => res.data);
 };
 export const createNewContact = async (idEstate: string) => {
     return await BaseApi.post(`estates/${idEstate}/conversations`).then(
