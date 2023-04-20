@@ -30,6 +30,7 @@ import {
     setErrorNotification,
     setWarnNotification
 } from "../../../app/redux/reducer/NotificationSlice";
+import { getAllWishesEstate } from "../../../app/redux/reducer/GetAllWishEstatesSlice";
 
 interface IDetailInformation {
     _id: string;
@@ -63,6 +64,22 @@ const DetailInfomation: React.FC<IDetailInformation> = ({
     const navigate = useNavigate();
     const { _id: idWishesList } = useSelector(getWishesEstate);
     const { _id: idUser } = useSelector(getUser);
+    const { records: recordsAllWishList = [] } =
+        useSelector(getAllWishesEstate);
+    const recordsEstateWishListId = recordsAllWishList?.map(
+        item => item.estate._id
+    );
+
+    useEffect(() => {
+        const isCheckEstateFavorite = recordsEstateWishListId.some(
+            item => item === _idEstate
+        );
+        if (isCheckEstateFavorite === true) {
+            setIsLiked(true);
+            localStorage.setItem(`estate-${_idEstate}`, true.toString());
+        }
+    }, [_idEstate]);
+
     const handleClick = () => {
         if (idUser !== "") {
             setIsLiked(!isLiked);

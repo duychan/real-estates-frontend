@@ -15,12 +15,14 @@ const HistoryEstate: React.FC = () => {
     const navigate = useNavigate();
     const [currentPage, setCurrentPage] = useState(1);
     const dispatch = useAppDispatch();
+    const { records = [], total = 0 } = useSelector(getAllWishesEstate);
 
     useEffect(() => {
-        dispatch(GetAllWishListEstate());
-    }, [dispatch]);
+        if (records.length === 0) {
+            dispatch(GetAllWishListEstate());
+        }
+    }, [dispatch, records]);
 
-    const { records = [], total = 0 } = useSelector(getAllWishesEstate);
     const currentData = usePagination<IWishesEstate>({
         arrayData: records,
         currentPage,

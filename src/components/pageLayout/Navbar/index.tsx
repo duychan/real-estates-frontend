@@ -9,7 +9,10 @@ import { LoginUser } from "./LoginUser";
 import { useDispatch } from "react-redux";
 import { logout } from "../../../app/redux/reducer/AuthSlice";
 import { NavbarItems } from "../../../common/constants";
-import { deleteCurrentUserChat } from "../../../app/redux/reducer/ChatSlice/GetAllChatSingleSlice";
+import {
+    deleteAllMessage,
+    deleteCurrentUserChat
+} from "../../../app/redux/reducer/ChatSlice/GetAllChatSingleSlice";
 import { resetListMyConversation } from "../../../app/redux/reducer/ChatSlice/MyConversationSlice";
 
 export const Navbar: React.FC = () => {
@@ -31,6 +34,7 @@ export const Navbar: React.FC = () => {
             dispatch(logout());
             dispatch(deleteCurrentUserChat());
             dispatch(resetListMyConversation());
+            dispatch(deleteAllMessage());
             return (
                 <Menu.Item>
                     <LoginUser />
