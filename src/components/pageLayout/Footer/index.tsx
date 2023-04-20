@@ -7,7 +7,7 @@ import {
     GithubOutlined,
     GoogleOutlined
 } from "@ant-design/icons";
-import logo from "../../../assets/images/logo.jpg";
+import CES from "../../../assets/images/CES.png";
 export const Footer: React.FC = () => {
     const ourAgencyItem = ["Services", "Insurance", "Agency", "Payment"];
     const updateItem = [
@@ -25,7 +25,7 @@ export const Footer: React.FC = () => {
     return (
         <div className="row-footer">
             <div className="col footer-logo">
-                <img src={logo} className="footer-logo__css" alt="logo" />
+                <img src={CES} className="footer-logo__css" alt="CES" />
                 <div className="footer-from">
                     <div>Phone: +1 516-900-4080</div>
                     <div>

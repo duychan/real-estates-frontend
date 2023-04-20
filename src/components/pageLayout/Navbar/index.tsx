@@ -1,7 +1,7 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useState } from "react";
 import "./navbar.css";
-import { Menu, Row, Col } from "antd";
-import RicciCoLogo from "../../../assets/images/RicciCoLogo-crop.png";
+import { Menu } from "antd";
+import CES from "../../../assets/images/CES.png";
 import { CaretDownOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { AvatarUser } from "./AvatarUser";
@@ -42,7 +42,7 @@ export const Navbar: React.FC = () => {
     return (
         <div className="nav">
             <img
-                src={RicciCoLogo}
+                src={CES}
                 className="header-logo"
                 onClick={() => navigate("/")}
             />

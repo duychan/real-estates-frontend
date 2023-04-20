@@ -21,7 +21,10 @@ export const AvatarComponent: React.FC<IAvatarComponent> = ({
     firstName = "",
     lastName = ""
 }) => {
-    const avatarName = firstName[0]?.toUpperCase() + lastName[0]?.toUpperCase();
+    const avatarName =
+        firstName &&
+        lastName &&
+        firstName[0]?.toUpperCase() + lastName[0]?.toUpperCase();
     return (
         <Avatar
             src={

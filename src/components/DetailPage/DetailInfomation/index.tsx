@@ -42,6 +42,7 @@ interface IDetailInformation {
     area: string;
     nameUser: string;
     _idOwner: string;
+    imgOwner: string;
 }
 
 const DetailInfomation: React.FC<IDetailInformation> = ({
@@ -54,7 +55,8 @@ const DetailInfomation: React.FC<IDetailInformation> = ({
     bathRoom = "",
     area = "",
     nameUser = "",
-    _idOwner = ""
+    _idOwner = "",
+    imgOwner = ""
 }) => {
     const dispatch = useAppDispatch();
     const [isLiked, setIsLiked] = useState(false);
@@ -183,7 +185,10 @@ const DetailInfomation: React.FC<IDetailInformation> = ({
                                 <Avatar
                                     className="user"
                                     size={50}
-                                    icon={<UserOutlined />}
+                                    icon={
+                                        imgOwner === "" ? <UserOutlined /> : ""
+                                    }
+                                    src={imgOwner !== "" ? imgOwner : ""}
                                 />
                                 <p className="detail-owner-name">{nameUser}</p>
                             </div>

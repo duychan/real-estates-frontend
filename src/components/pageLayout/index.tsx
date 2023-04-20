@@ -5,8 +5,8 @@ import { Outlet, useNavigate } from "react-router-dom";
 import { UserProfile } from "../../app/redux/action/AuthAction";
 import { getUser } from "../../app/redux/reducer/AuthSlice";
 import { useAppDispatch } from "../../app/redux/store";
-import { Footer } from "./Footer";
 import "./Layout.css";
+import { Footer } from "./Footer";
 import { Navbar } from "./Navbar";
 
 const { Content } = Layout;

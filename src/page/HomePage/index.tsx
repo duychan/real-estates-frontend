@@ -4,7 +4,7 @@ import { InformationCard } from "../../components/homePage/InformationCard";
 import ProductCard from "../../components/homePage/ProductCard";
 import Search from "../../components/homePage/Search";
 import "./HomePage.css";
-import { AreaSlider } from "../../components/homePage/AreaCard";
+import { AreaSlider } from "../../components/homePage/areaCard";
 import { getDistricts } from "../../app/api/MapApi";
 import { ILocation } from "../../app/api/MapApi/MapType";
 import { useAppDispatch } from "../../app/redux/store";

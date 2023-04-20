@@ -49,7 +49,8 @@ const Step4 = 4;
 
 export const MapNavigator: React.FC<IMapNavigate> = ({
     handleGetEstateLocation,
-    estateCoordinates = [0, 0]
+    estateCoordinates = [0, 0],
+    isUploadEstate = false
 }) => {
     const [current, setCurrent] = useState<number>(0);
     const [city, setCity] = useState<IAddressOption>(EmptyOption);
@@ -68,9 +69,10 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
     const [isShowCurrentLocation, setIsShowCurrentLocation] = useState<boolean>(
         false
     );
-    const [estateLocation, setEstateLocation] = useState<[number, number]>(
-        estateCoordinates
-    );
+    const [estateLocation, setEstateLocation] = useState<[number, number]>([
+        0,
+        0
+    ]);
     const [previousLocation, setPreviousLocation] = useState<[number, number]>([
         0,
         0
@@ -141,13 +143,21 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
 
     useEffect(() => {
         if (estateCoordinates[0] !== 0 && estateCoordinates[1] !== 0) {
-            setEstateLocation([estateCoordinates[1], estateCoordinates[0]]);
-            handleGetAddressFromCoordinates([
-                estateCoordinates[1],
-                estateCoordinates[0]
-            ]);
+            if (
+                estateLocation[0] === 0 &&
+                estateLocation[1] === 0 &&
+                previousLocation[0] === 0 &&
+                previousLocation[1] === 0
+            ) {
+                setEstateLocation([estateCoordinates[1], estateCoordinates[0]]);
+                handleGetAddressFromCoordinates([
+                    estateCoordinates[1],
+                    estateCoordinates[0]
+                ]);
+            }
         } else {
             handleClearForm();
+            setIsShowCurrentLocation(false);
         }
     }, [estateCoordinates]);
 
@@ -161,7 +171,6 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
                     ? estateLocation
                     : previousLocation;
             setIsShowCurrentLocation(true);
-
             mapRef.current?.flyTo(
                 [location[0] ?? 0, location[1] ?? 0],
                 ZOOM_LEVEL,
@@ -196,10 +205,10 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
                     }
                 );
                 setProvinceList(provinceOption ?? []);
-                if (!city.value && city.label) {
+                if (!city?.value && city?.label) {
                     const cityValue =
-                        provinceOption?.find(
-                            cityItem => cityItem.label === city.label
+                        provinceOption?.find(cityItem =>
+                            cityItem.label.includes(city?.label)
                         ) ?? EmptyOption;
                     setCity(cityValue);
                     form.setFieldsValue({ city: cityValue });
@@ -208,11 +217,11 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
             .catch(error => {
                 dispatch(setErrorNotification(`ERROR: ${error}`));
             });
-    }, [city.label, city.value, dispatch, form]);
+    }, [city?.value, city?.label, dispatch, form]);
 
     useEffect(() => {
-        if (city.value !== "") {
-            getDistricts(city.value)
+        if (city?.value !== "") {
+            getDistricts(city?.value)
                 .then(response => {
                     const districtOption: IAddressOption[] = response?.data?.records?.map(
                         ({ code = "", name = "" }: ILocation) => {
@@ -220,11 +229,10 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
                         }
                     );
                     setDistrictList(districtOption ?? []);
-                    if (!district.value && district.label) {
+                    if (!district?.value && district?.label) {
                         const districtValue =
-                            districtOption?.find(
-                                districtItem =>
-                                    districtItem.label === district.label
+                            districtOption?.find(districtItem =>
+                                districtItem?.label.includes(district?.label)
                             ) ?? EmptyOption;
                         setDistrict(districtValue);
                         form.setFieldsValue({ district: districtValue });
@@ -237,8 +245,8 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
     }, [city?.value, dispatch, district?.label, district?.value, form]);
 
     useEffect(() => {
-        if (district.value !== "") {
-            getWards(district.value)
+        if (district?.value !== "") {
+            getWards(district?.value)
                 .then(response => {
                     const wardOption: IAddressOption[] = response?.data?.records?.map(
                         ({ code = "", name = "" }: ILocation) => {
@@ -246,10 +254,10 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
                         }
                     );
                     setWardList(wardOption ?? []);
-                    if (!ward.value && ward.label) {
+                    if (!ward?.value && ward?.label) {
                         const wardValue =
-                            wardOption?.find(
-                                wardItem => wardItem.label === ward.label
+                            wardOption?.find(wardItem =>
+                                wardItem?.label.includes(ward?.label)
                             ) ?? EmptyOption;
                         setWard(wardValue);
                         form.setFieldsValue({ ward: wardValue });
@@ -259,7 +267,7 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
                     dispatch(setErrorNotification(`ERROR: ${error}`));
                 });
         }
-    }, [dispatch, district.value, form, ward?.label, ward?.value]);
+    }, [dispatch, district?.value, form, ward?.label, ward?.value]);
 
     const handleFindLocation = (valueLocation: IEstateLocation) => {
         if (valueLocation.city?.value || valueLocation.addressNumber) {

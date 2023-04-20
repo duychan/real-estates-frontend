@@ -247,6 +247,7 @@ const SearchProperty: React.FC = () => {
                             }
                         >
                             <Input.Search
+                                key={"input-search"}
                                 onChange={handleChangeAddress}
                                 value={searchText.section}
                                 className="search-property-input-location"
@@ -264,7 +265,10 @@ const SearchProperty: React.FC = () => {
                                 <DollarCircleOutlined className="search-property-menu-icon" />
                             }
                         >
-                            <div className="search-property-min-price">
+                            <div
+                                className="search-property-min-price"
+                                key={"input-price-min"}
+                            >
                                 <p className="search-property-price-title">
                                     Minimum price
                                 </p>
@@ -281,7 +285,10 @@ const SearchProperty: React.FC = () => {
                                     min={0}
                                 ></InputNumber>
                             </div>
-                            <div className="search-property-max-price">
+                            <div
+                                className="search-property-max-price"
+                                key={"input-price-max"}
+                            >
                                 <p className="search-property-price-title">
                                     Maximum price
                                 </p>
@@ -311,7 +318,10 @@ const SearchProperty: React.FC = () => {
                                 <ShrinkOutlined className="search-property-menu-icon" />
                             }
                         >
-                            <div className="search-property-input-location">
+                            <div
+                                className="search-property-input-location"
+                                key={"input-slider-area"}
+                            >
                                 <SliderArea setSliderValue={handleAreaChange} />
                             </div>
                         </SubMenu>
@@ -328,7 +338,10 @@ const SearchProperty: React.FC = () => {
                                 <HomeOutlined className="search-property-menu-icon" />
                             }
                         >
-                            <div className="search-property-facilities">
+                            <div
+                                className="search-property-facilities"
+                                key={"input-bedroom"}
+                            >
                                 <p className="search-property-bedroom-title">
                                     Bedroom:
                                 </p>
@@ -338,7 +351,10 @@ const SearchProperty: React.FC = () => {
                                     min={0}
                                 />
                             </div>
-                            <div className="search-property-facilities">
+                            <div
+                                className="search-property-facilities"
+                                key={"input-bathroom"}
+                            >
                                 <p className="search-property-bathroom-title">
                                     Bathroom:
                                 </p>
@@ -361,7 +377,10 @@ const SearchProperty: React.FC = () => {
                                 <SettingOutlined className="search-property-menu-icon" />
                             }
                         >
-                            <div className="search-property-type-select">
+                            <div
+                                className="search-property-type-select"
+                                key={"input-type"}
+                            >
                                 <RadioType setValueOption={handleTypeChange} />
                             </div>
                         </SubMenu>
