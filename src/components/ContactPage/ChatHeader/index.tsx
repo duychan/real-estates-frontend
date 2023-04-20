@@ -11,13 +11,12 @@ import { getSellerInfo } from "../../../app/redux/reducer/ChatSlice/GetAllChatSi
 import { AvatarComponent } from "../../pageLayout/Navbar/AvatarComponent";
 
 export const ChatHeader: React.FC = () => {
-    const { profileImage, firstName, lastName, idUser } = useSelector(
-        getSellerInfo
-    );
+    const { profileImage, firstName, lastName, idUser } =
+        useSelector(getSellerInfo);
     return (
         <div className="chat-header">
             <Row>
-                <Col>
+                <Col className="chat-header-avatar">
                     <AvatarComponent
                         imgUser={profileImage}
                         firstName={firstName}
