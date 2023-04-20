@@ -4,7 +4,6 @@ import { PaperClipOutlined, SendOutlined } from "@ant-design/icons";
 import { Button, Col, Form, Input, Row, Avatar } from "antd";
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "../../../app/redux/store";
-import { format } from "timeago.js";
 import { PostMessageChat } from "../../../app/redux/action/ChatContactAction";
 import {
     addMessage,
@@ -18,6 +17,8 @@ import { DefaultEventsMap } from "@socket.io/component-emitter";
 import { IMessageResponse } from "../../../app/redux/reducer/ChatSlice/ChatSliceType";
 import { IUserInformation } from "../../../app/redux/reducer/AuthSlice/AuthSliceType";
 import { AvatarComponent } from "../../pageLayout/Navbar/AvatarComponent";
+import moment from "moment";
+
 const host = "http://localhost:3000";
 let socket: Socket<DefaultEventsMap, DefaultEventsMap>;
 
@@ -128,7 +129,7 @@ export const MainChat: React.FC = () => {
                                     </p>
                                 </div>
                                 <div className="main-chat-message-time">
-                                    {format(record.createdAt)}
+                                    {moment(record.createdAt).fromNow()}
                                 </div>
                                 <div></div>
                             </div>
