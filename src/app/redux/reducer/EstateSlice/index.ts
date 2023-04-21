@@ -29,7 +29,7 @@ export const GetEstateSlice = createSlice({
             return { ...state, nearestEstate: initialState.nearestEstate };
         },
         deleteEstate: state => {
-            return { ...state, data: { records: EmptyEstate } };
+            return { ...state, data: initialState.data };
         }
     },
 
