@@ -34,7 +34,7 @@ const redOptions = { color: "red" };
 export const EstateMap: React.FC<IEstateMap> = ({
     positionCenter = [0, 0],
     estateNearCenter = [],
-    radius = 100,
+    radius = 1000,
     mapRef,
     ZOOM_LEVEL = 0,
     popupMarker = "",

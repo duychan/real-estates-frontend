@@ -28,7 +28,7 @@ import { getEstateUpload } from "../../app/redux/reducer/UploadSlice";
 import { ReactComponent as NoData } from "../../assets/icon/No-data-pana.svg";
 import _pick from "lodash.pick";
 
-const ZOOM_LEVEL = 18;
+const ZOOM_LEVEL = 15;
 
 export const SingleEstate: React.FC = () => {
     const [estate, setEstate] = useState<IEstate>(EmptyEstate);
@@ -133,7 +133,7 @@ export const SingleEstate: React.FC = () => {
                 GetListOfNearestEstate({
                     longitude: String(coordinates[0]),
                     latitude: String(coordinates[1]),
-                    radius: "1"
+                    radius: "1000"
                 })
             );
         }
@@ -163,7 +163,7 @@ export const SingleEstate: React.FC = () => {
                     positionCenter={[coordinates[1], coordinates[0]]}
                     mapRef={mapRef}
                     estateNearCenter={nearestEstateData}
-                    radius={100}
+                    radius={1000}
                     popupMarker={
                         <EstateMapPopup
                             imgEstate={coverImg}

@@ -49,8 +49,7 @@ const Step4 = 4;
 
 export const MapNavigator: React.FC<IMapNavigate> = ({
     handleGetEstateLocation,
-    estateCoordinates = [0, 0],
-    isUploadEstate = false
+    estateCoordinates = [0, 0]
 }) => {
     const [current, setCurrent] = useState<number>(0);
     const [city, setCity] = useState<IAddressOption>(EmptyOption);
@@ -142,22 +141,22 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
     );
 
     useEffect(() => {
-        if (estateCoordinates[0] !== 0 && estateCoordinates[1] !== 0) {
-            if (
-                estateLocation[0] === 0 &&
-                estateLocation[1] === 0 &&
-                previousLocation[0] === 0 &&
-                previousLocation[1] === 0
-            ) {
+        if (
+            estateLocation[0] === 0 &&
+            estateLocation[1] === 0 &&
+            previousLocation[0] === 0 &&
+            previousLocation[1] === 0
+        ) {
+            if (estateCoordinates[0] !== 0 && estateCoordinates[1] !== 0) {
                 setEstateLocation([estateCoordinates[1], estateCoordinates[0]]);
                 handleGetAddressFromCoordinates([
                     estateCoordinates[1],
                     estateCoordinates[0]
                 ]);
+            } else {
+                handleClearForm();
+                setIsShowCurrentLocation(false);
             }
-        } else {
-            handleClearForm();
-            setIsShowCurrentLocation(false);
         }
     }, [estateCoordinates]);
 
@@ -310,10 +309,19 @@ export const MapNavigator: React.FC<IMapNavigate> = ({
 
     const handleSaveLocation = () => {
         setIsLocationChange(false);
+        if (estateLocation[0] === 0 && estateLocation[1] === 0) {
+            setEstateLocation(previousLocation);
+        }
         handleGetEstateLocation(
             {
-                lat: estateLocation[0],
-                lng: estateLocation[1]
+                lat:
+                    estateLocation[0] !== 0
+                        ? estateLocation[0]
+                        : previousLocation[0],
+                lng:
+                    estateLocation[1] !== 0
+                        ? estateLocation[1]
+                        : previousLocation[1]
             },
             addressEstate
         );

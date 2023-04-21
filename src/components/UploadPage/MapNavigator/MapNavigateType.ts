@@ -30,5 +30,4 @@ export interface IMapNavigate {
         addressEstate: string
     ) => void;
     estateCoordinates: [number, number];
-    isUploadEstate: boolean;
 }

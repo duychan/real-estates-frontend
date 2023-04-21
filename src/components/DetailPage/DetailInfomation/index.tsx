@@ -64,10 +64,11 @@ const DetailInfomation: React.FC<IDetailInformation> = ({
     const navigate = useNavigate();
     const { _id: idWishesList } = useSelector(getWishesEstate);
     const { _id: idUser } = useSelector(getUser);
-    const { records: recordsAllWishList = [] } =
-        useSelector(getAllWishesEstate);
+    const { records: recordsAllWishList = [] } = useSelector(
+        getAllWishesEstate
+    );
     const recordsEstateWishListId = recordsAllWishList?.map(
-        item => item.estate._id
+        item => item.estate?._id !== "" && item.estate?._id
     );
 
     useEffect(() => {
