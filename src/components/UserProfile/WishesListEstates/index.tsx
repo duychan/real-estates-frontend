@@ -35,15 +35,19 @@ const HistoryEstate: React.FC = () => {
                 {records.length > 0 ? (
                     currentData?.map(item => {
                         const { _id, estate } = item;
-                        return (
-                            <WishesListResult
-                                key={_id}
-                                estateResult={estate}
-                                handleGetSingleEstate={() => {
-                                    navigate(`/single-estate/${estate._id}`);
-                                }}
-                            />
-                        );
+                        if (estate !== null) {
+                            return (
+                                <WishesListResult
+                                    key={_id}
+                                    estateResult={estate}
+                                    handleGetSingleEstate={() => {
+                                        navigate(
+                                            `/single-estate/${estate._id}`
+                                        );
+                                    }}
+                                />
+                            );
+                        }
                     })
                 ) : (
                     <div className="search-result-no-data">
