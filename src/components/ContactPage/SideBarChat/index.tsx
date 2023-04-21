@@ -30,7 +30,7 @@ export const SideBarChat: React.FC = () => {
     ListOfMyConversation.length > 0
         ? ListOfMyConversation?.map(chatItem => {
               ListOptionEstateSearch?.push(chatItem.estate?.name || "");
-              const nameOwner = `${chatItem.estate.owner.firstName} ${chatItem.estate.owner.lastName}`;
+              const nameOwner = `${chatItem.estate?.owner?.firstName} ${chatItem.estate?.owner?.lastName}`;
               if (!ListOptionOwnerSearch.includes(nameOwner)) {
                   ListOptionOwnerSearch.push(nameOwner);
               }
