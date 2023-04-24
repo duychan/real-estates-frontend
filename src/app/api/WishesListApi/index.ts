@@ -6,7 +6,7 @@ export const postWishes = async (idEstate: string) => {
     );
 };
 
-export const deleteWishes = async (idWishesList: string) => {
+export const deleteWishes = async (idWishesList: string | undefined) => {
     return await BaseApi.delete(`/wishesLists/${idWishesList}`).then(
         res => res.data
     );

@@ -64,12 +64,15 @@ const DetailInfomation: React.FC<IDetailInformation> = ({
     const navigate = useNavigate();
     const { _id: idWishesList } = useSelector(getWishesEstate);
     const { _id: idUser } = useSelector(getUser);
-    const { records: recordsAllWishList = [] } = useSelector(
-        getAllWishesEstate
-    );
+    const { records: recordsAllWishList = [] } =
+        useSelector(getAllWishesEstate);
     const recordsEstateWishListId = recordsAllWishList?.map(
         item => item.estate?._id !== "" && item.estate?._id
     );
+    const recordWishListDetailByIdEstate = recordsAllWishList?.find(
+        item => item.estate._id === _idEstate
+    );
+    const recordWishListId = recordWishListDetailByIdEstate?._id;
 
     useEffect(() => {
         const isCheckEstateFavorite = recordsEstateWishListId.some(
@@ -88,8 +91,13 @@ const DetailInfomation: React.FC<IDetailInformation> = ({
                 dispatch(PostWishesEstate(_idEstate));
                 localStorage.setItem(`estate-${_idEstate}`, true.toString());
             } else {
-                deleteWishes(idWishesList);
-                localStorage.removeItem(`estate-${_idEstate}`);
+                if (recordWishListId !== undefined) {
+                    deleteWishes(recordWishListId);
+                    localStorage.removeItem(`estate-${_idEstate}`);
+                } else {
+                    deleteWishes(idWishesList);
+                    localStorage.removeItem(`estate-${_idEstate}`);
+                }
             }
         } else {
             dispatch(setWarnNotification("Please login to use this feature!"));

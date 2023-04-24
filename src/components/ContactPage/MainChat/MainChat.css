@@ -3,8 +3,7 @@
 }
 #main-chat-conversation {
     padding: 0 50px;
-    max-height: 420px;
-    height: 420px;
+    height: 63vh;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
